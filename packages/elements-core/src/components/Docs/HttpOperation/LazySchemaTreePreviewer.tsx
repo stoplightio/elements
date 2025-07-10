@@ -224,7 +224,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          const childPath = `${itemsPath}/properties/${key}`;
+          const childPath = `${itemsPath}/${key}`;
           const childRequiredOverride = isRequiredOverride(childPath, hideData);
           const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
