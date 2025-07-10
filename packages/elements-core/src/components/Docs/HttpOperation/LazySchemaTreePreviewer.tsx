@@ -85,7 +85,6 @@ function isPropertiesAllHidden(path: string, hideData: Array<{ path: string; req
   for (let i = parts.length; i >= 2; i--) {
     if (parts[i - 1] === 'properties') {
       const ancestorPropPath = parts.slice(0, i).join('/');
-      // If an ancestor disables all children by hiding .../properties but NOT if required is set for this ancestor
       const block = hideData.find(
         h => trimSlashes(h.path) === ancestorPropPath && ancestorPropPath.endsWith('/properties'),
       );
@@ -97,10 +96,40 @@ function isPropertiesAllHidden(path: string, hideData: Array<{ path: string; req
   return false;
 }
 
-// New: check if this node's path in hideData is required true/false
 function isRequiredOverride(path: string, hideData: Array<{ path: string; required?: boolean }>) {
   const entry = hideData.find(h => trimSlashes(h.path) === trimSlashes(path));
   return entry && typeof entry.required === 'boolean' ? entry.required : undefined;
+}
+
+// New utility for array/items-based hiding
+function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const normalizedPath = trimSlashes(path);
+
+  // Direct match (root-level or property-level)
+  const direct = hideData.find(h => trimSlashes(h.path) === normalizedPath);
+  if (direct && direct.required === undefined) return true;
+
+  // Check for ancestor "properties" disables (properties/carr/properties, etc)
+  if (isPropertiesAllHidden(path, hideData)) return true;
+
+  // Check for array/items disables: e.g. properties/aircraftGroup/items/aircraft/items/aircraftGroup
+  // Go up the path looking for a hideData.path which is a prefix of this path and ends with '/items/[field]'
+  for (const h of hideData) {
+    const hPath = trimSlashes(h.path);
+    if (h.required !== undefined) continue;
+    // Must be prefix
+    if (
+      normalizedPath.length > hPath.length &&
+      normalizedPath.startsWith(hPath) &&
+      // hPath is items/field (array hiding)
+      (hPath.endsWith('/items') || (hPath.match(/\/items\/[^\/]+$/) && normalizedPath.startsWith(hPath + '/')))
+    ) {
+      // Hide all descendants under this path
+      return true;
+    }
+  }
+
+  return false;
 }
 
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
@@ -130,22 +159,13 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
   const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
 
-  // if hideData disables all properties for this node, do not show children (unless required override)
   const shouldHideAllChildren =
     (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties' && h.required === undefined)) ||
     (!isRoot && isPropertiesAllHidden(path, hideData));
 
   const shouldHideNode = useMemo(() => {
-    const currentPath = trimSlashes(path);
     if (isRoot) return false;
-
-    // If the node itself is to be hidden, but NOT if required is set
-    const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === currentPath);
-    if (hideEntry && hideEntry.required === undefined) return true;
-
-    // If an ancestor disables all children for this node's parent "properties" (unless required set for this path)
-    if (isPropertiesAllHidden(path, hideData) && thisNodeRequiredOverride === undefined) return true;
-
+    if (isPathHidden(path, hideData) && thisNodeRequiredOverride === undefined) return true;
     return false;
   }, [path, hideData, isRoot, thisNodeRequiredOverride]);
 
@@ -172,14 +192,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       for (const [key, child] of Object.entries(schema?.properties)) {
         const childPath = `${path}/properties/${key}`;
         const childRequiredOverride = isRequiredOverride(childPath, hideData);
-
-        // Hide if explicitly blocked (required is undefined), or by ancestor, UNLESS required is set for this child
-        const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
-        const shouldHideChild =
-          (hideEntry && hideEntry.required === undefined) ||
-          (isPropertiesAllHidden(childPath, hideData) && childRequiredOverride === undefined)
-            ? true
-            : false;
+        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
         const resolved = dereference(child, root);
         if (!shouldHideChild) {
@@ -213,13 +226,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
           const childPath = `${itemsPath}/properties/${key}`;
           const childRequiredOverride = isRequiredOverride(childPath, hideData);
-
-          const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
-          const shouldHideChild =
-            (hideEntry && hideEntry.required === undefined) ||
-            (isPropertiesAllHidden(childPath, hideData) && childRequiredOverride === undefined)
-              ? true
-              : false;
+          const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
           if (!shouldHideChild) {
             children.push(
@@ -242,13 +249,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
         const childRequiredOverride = isRequiredOverride(childPath, hideData);
-
-        const hideEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
-        const shouldHideChild =
-          (hideEntry && hideEntry.required === undefined) ||
-          (isPropertiesAllHidden(childPath, hideData) && childRequiredOverride === undefined)
-            ? true
-            : false;
+        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
         if (!shouldHideChild) {
           children.push(
