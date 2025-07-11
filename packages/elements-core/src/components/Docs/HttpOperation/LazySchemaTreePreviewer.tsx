@@ -6,10 +6,10 @@ interface LazySchemaTreePreviewerProps {
   root?: any;
   title?: string;
   level?: number;
-  path?: string; // This should be the absolute path from the root schema
+  path?: string;
   maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
   setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
-  hideData?: Array<{ path: string; required?: boolean }>; // hideData will now contain full absolute paths
+  hideData?: Array<{ path: string; required?: boolean }>;
   parentRequired?: string[];
   propertyKey?: string;
   subType?: string;
@@ -51,16 +51,18 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 
   if (node.$ref || node['x-iata-$ref']) {
     let refPath = node.$ref || node['x-iata-$ref'];
-    refPath = refPath.replace('__bundled__', 'definitions');
+    if (refPath.includes('#/%24defs')) {
+      refPath = refPath.replace('#/%24defs', '$defs');
+    } else {
+      refPath = refPath.replace('__bundled__', 'definitions');
+    }
     if (visited.has(node))
       return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
 
     visited.add(node);
     const target = resolvePointer(root, refPath);
-    /* handle schema node properties here */
     if (!target) return node;
     const result = { ...target };
-    // Can add more fields here if you want to override from root before reference
     if ('description' in node) result.description = node.description;
     if ('title' in node) result.title = node.title;
     return dereference(result, root, visited, depth + 1, maxDepth);
@@ -78,8 +80,61 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 }
 
 const trimSlashes = (str: string) => {
-  return str.replace(/^\/|\/$/g, ''); // Removes leading and trailing slashes
+  return str.replace(/^\/|\/$/g, '');
 };
+
+function isPropertiesAllHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const current = trimSlashes(path);
+  const parts = current.split('/');
+  for (let i = parts.length; i >= 2; i--) {
+    if (parts[i - 1] === 'properties') {
+      const ancestorPropPath = parts.slice(0, i).join('/');
+      const block = hideData.find(
+        h => trimSlashes(h.path) === ancestorPropPath && ancestorPropPath.endsWith('/properties'),
+      );
+      if (block && block.required === undefined) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function isRequiredOverride(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const entry = hideData.find(h => trimSlashes(h.path) === trimSlashes(path));
+  return entry && typeof entry.required === 'boolean' ? entry.required : undefined;
+}
+
+// New utility for array/items-based hiding
+function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const normalizedPath = trimSlashes(path);
+
+  // Direct match (root-level or property-level)
+  const direct = hideData.find(h => trimSlashes(h.path) === normalizedPath);
+  if (direct && direct.required === undefined) return true;
+
+  // Check for ancestor "properties" disables (properties/carr/properties, etc)
+  if (isPropertiesAllHidden(path, hideData)) return true;
+
+  // Check for array/items disables: e.g. properties/aircraftGroup/items/aircraft/items/aircraftGroup
+  // Go up the path looking for a hideData.path which is a prefix of this path and ends with '/items/[field]'
+  for (const h of hideData) {
+    const hPath = trimSlashes(h.path);
+    if (h.required !== undefined) continue;
+    // Must be prefix
+    if (
+      normalizedPath.length > hPath.length &&
+      normalizedPath.startsWith(hPath) &&
+      // hPath is items/field (array hiding)
+      (hPath.endsWith('/items') || (hPath.match(/\/items\/[^\/]+$/) && normalizedPath.startsWith(hPath + '/')))
+    ) {
+      // Hide all descendants under this path
+      return true;
+    }
+  }
+
+  return false;
+}
 
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   schema,
@@ -106,15 +161,17 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     return initialState;
   });
 
-  const shouldHideNode = useMemo(() => {
-    const currentPath = trimSlashes(path);
+  const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
 
-    const data = hideData.some(hideEntry => {
-      const hideEntryPath = trimSlashes(hideEntry.path);
-      return hideEntryPath === currentPath;
-    });
-    return data;
-  }, [path, hideData]);
+  const shouldHideAllChildren =
+    (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties' && h.required === undefined)) ||
+    (!isRoot && isPropertiesAllHidden(path, hideData));
+
+  const shouldHideNode = useMemo(() => {
+    if (isRoot) return false;
+    if (isPathHidden(path, hideData) && thisNodeRequiredOverride === undefined) return true;
+    return false;
+  }, [path, hideData, isRoot, thisNodeRequiredOverride]);
 
   if (!schema || shouldHideNode) {
     return null;
@@ -130,6 +187,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   };
 
   const renderChildren = () => {
+    if (shouldHideAllChildren) return null;
     if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
@@ -137,7 +195,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     if (schema?.type === 'object' && schema?.properties) {
       for (const [key, child] of Object.entries(schema?.properties)) {
         const childPath = `${path}/properties/${key}`;
-        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
+        const childRequiredOverride = isRequiredOverride(childPath, hideData);
+        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
+
         const resolved = dereference(child, root);
         if (!shouldHideChild) {
           children.push(
@@ -168,9 +228,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          // Path for properties within array items - adjusted to include 'properties' (KEPT)
-          const childPath = `${itemsPath}/properties/${key}`;
-          const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
+          const childPath = `${itemsPath}/${key}`;
+          const childRequiredOverride = isRequiredOverride(childPath, hideData);
+          const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
           if (!shouldHideChild) {
             children.push(
@@ -192,8 +252,8 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         }
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
-
-        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
+        const childRequiredOverride = isRequiredOverride(childPath, hideData);
+        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
         if (!shouldHideChild) {
           children.push(
@@ -264,6 +324,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     showRequiredLabel = true;
   }
 
+  if(schema?.$ref){
+    schema = dereference(schema, root);
+  }
+
   return (
     <div className="mb-1">
       <Flex maxW="full" pl={3} py={2} data-test="schema-row" pos="relative">
@@ -291,7 +355,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 <span className="sl-truncate sl-text-muted">
                   {schema?.type === 'object' ? schema?.title : schema?.type || root?.title}
                   {schema?.items && schema?.items?.title !== undefined ? ` [${schema?.items?.title}] ` : null}
-                  {subType ? `[${subType}]` : ''}
                 </span>
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
               </Box>

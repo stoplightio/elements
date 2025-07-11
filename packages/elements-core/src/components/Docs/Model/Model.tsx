@@ -62,8 +62,9 @@ const ModelComponent: React.FC<ModelProps> = ({
         </HStack>
         <NodeAnnotation change={titleChanged} />
       </Box>
-
-      {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
+      {localStorage.getItem('use_new_mask_workflow') === 'true'
+        ? null
+        : exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
     </Flex>
   );
 
@@ -79,7 +80,11 @@ const ModelComponent: React.FC<ModelProps> = ({
         const { location, paths } = configEntry;
         paths.forEach((item: any) => {
           const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
-          absolutePathsToHide.push({ path: fullPath });
+          let object: any = { path: fullPath };
+          if (item.hasOwnProperty('required')) {
+            object = { ...object, required: item?.required };
+          }
+          absolutePathsToHide.push(object);
         });
       });
     }

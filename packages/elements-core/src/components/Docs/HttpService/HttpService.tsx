@@ -42,8 +42,9 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
               </Heading>
               <NodeAnnotation change={nameChanged} />
             </Box>
-
-            {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
+            {localStorage.getItem('use_new_mask_workflow') === 'true'
+              ? null
+              : exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
           </Flex>
         )}
 
