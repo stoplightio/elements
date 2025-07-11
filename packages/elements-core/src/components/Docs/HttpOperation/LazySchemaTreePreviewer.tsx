@@ -51,7 +51,11 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 
   if (node.$ref || node['x-iata-$ref']) {
     let refPath = node.$ref || node['x-iata-$ref'];
-    refPath = refPath.replace('__bundled__', 'definitions');
+    if (refPath.includes('#/%24defs')) {
+      refPath = refPath.replace('#/%24defs', '$defs');
+    } else {
+      refPath = refPath.replace('__bundled__', 'definitions');
+    }
     if (visited.has(node))
       return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
 
@@ -318,6 +322,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   const hideDataEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(path));
   if (hideDataEntry?.required === true || (hideDataEntry?.required === undefined && isRequired)) {
     showRequiredLabel = true;
+  }
+
+  if(schema?.$ref){
+    schema = dereference(schema, root);
   }
 
   return (
