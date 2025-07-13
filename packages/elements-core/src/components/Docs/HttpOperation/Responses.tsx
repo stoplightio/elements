@@ -207,8 +207,14 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
     const configEntries = disableProps[statusCode] || [];
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
     configEntries.forEach(({ location, paths }) => {
-      paths.forEach(item => {
-        absolutePathsToHide.push({ path: location === '#' ? item?.path : `${location}/${item.path}` });
+      paths.forEach((item: any) => {
+        const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
+        let object: any = { path: fullPath };
+        if (item.hasOwnProperty('required')) {
+          object = { ...object, required: item?.required };
+        }
+        absolutePathsToHide.push(object);
+        console.log('object::', object, item);
       });
     });
     return absolutePathsToHide;

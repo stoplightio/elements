@@ -1,18 +1,18 @@
 import { Box, Flex, VStack } from '@stoplight/mosaic';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 interface LazySchemaTreePreviewerProps {
   schema: any;
   root?: any;
   title?: string;
   level?: number;
-  path?: string; // This should be the absolute path from the root schema
+  path?: string;
   maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
   setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
-  hideData?: Array<{ path: string; required?: boolean }>; // hideData will now contain full absolute paths
+  hideData?: Array<{ path: string; required?: boolean }>;
   parentRequired?: string[];
   propertyKey?: string;
-  subType?: string;
+  _subType?: string;
 }
 
 interface SchemaWithMinItems {
@@ -44,23 +44,24 @@ function detectCircularPath(path: string): boolean {
   }
   return false;
 }
-
 function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSet(), depth = 0, maxDepth = 10): any {
   if (!node || typeof node !== 'object') return node;
   if (depth > maxDepth) return node;
 
   if (node.$ref || node['x-iata-$ref']) {
     let refPath = node.$ref || node['x-iata-$ref'];
-    refPath = refPath.replace('__bundled__', 'definitions');
+    if (refPath.includes('#/%24defs')) {
+      refPath = refPath.replace('#/%24defs', '$defs');
+    } else {
+      refPath = refPath.replace('__bundled__', 'definitions');
+    }
     if (visited.has(node))
       return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
 
     visited.add(node);
     const target = resolvePointer(root, refPath);
-    /* handle schema node properties here */
     if (!target) return node;
     const result = { ...target };
-    // Can add more fields here if you want to override from root before reference
     if ('description' in node) result.description = node.description;
     if ('title' in node) result.title = node.title;
     return dereference(result, root, visited, depth + 1, maxDepth);
@@ -78,8 +79,61 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 }
 
 const trimSlashes = (str: string) => {
-  return str.replace(/^\/|\/$/g, ''); // Removes leading and trailing slashes
+  return str.replace(/^\/|\/$/g, '');
 };
+
+function isPropertiesAllHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const current = trimSlashes(path);
+  const parts = current.split('/');
+  for (let i = parts.length; i >= 2; i--) {
+    if (parts[i - 1] === 'properties') {
+      const ancestorPropPath = parts.slice(0, i).join('/');
+      const block = hideData.find(
+        h => trimSlashes(h.path) === ancestorPropPath && ancestorPropPath.endsWith('/properties'),
+      );
+      if (block && block.required === undefined) {
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
+function isRequiredOverride(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const entry = hideData.find(h => trimSlashes(h.path) === trimSlashes(path));
+  return entry && typeof entry.required === 'boolean' ? entry.required : undefined;
+}
+
+// New utility for array/items-based hiding
+function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  const normalizedPath = trimSlashes(path);
+
+  // Direct match (root-level or property-level)
+  const direct = hideData.find(h => trimSlashes(h.path) === normalizedPath);
+  if (direct && direct.required === undefined) return true;
+
+  // Check for ancestor "properties" disables (properties/carr/properties, etc)
+  if (isPropertiesAllHidden(path, hideData)) return true;
+
+  // Check for array/items disables: e.g. properties/aircraftGroup/items/aircraft/items/aircraftGroup
+  // Go up the path looking for a hideData.path which is a prefix of this path and ends with '/items/[field]'
+  for (const h of hideData) {
+    const hPath = trimSlashes(h.path);
+    if (h.required !== undefined) continue;
+    // Must be prefix
+    if (
+      normalizedPath.length > hPath.length &&
+      normalizedPath.startsWith(hPath) &&
+      // hPath is items/field (array hiding)
+      (hPath.endsWith('/items') || (hPath.match(/\/items\/[^\/]+$/) && normalizedPath.startsWith(hPath + '/')))
+    ) {
+      // Hide all descendants under this path
+      return true;
+    }
+  }
+
+  return false;
+}
 
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   schema,
@@ -90,9 +144,12 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   hideData = [],
   parentRequired,
   propertyKey,
-  subType,
+  _subType,
 }) => {
   const [expanded, setExpanded] = useState(false);
+  const [selectedSchemaIndex, setSelectedSchemaIndex] = useState(0);
+  const [showSchemaDropdown, setShowSchemaDropdown] = useState(false);
+  const [isHoveringSelector, setIsHoveringSelector] = useState(false);
   const isRoot = level === 1 && (title === undefined || path === '');
   const [_maskState, _setMaskState] = useState<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>(() => {
     const disabledPaths = hideData || [];
@@ -106,15 +163,20 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     return initialState;
   });
 
-  const shouldHideNode = useMemo(() => {
-    const currentPath = trimSlashes(path);
+  useEffect(() => {
+    setSelectedSchemaIndex(0);
+  }, [schema?.anyOf, schema?.oneOf]);
+  const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
 
-    const data = hideData.some(hideEntry => {
-      const hideEntryPath = trimSlashes(hideEntry.path);
-      return hideEntryPath === currentPath;
-    });
-    return data;
-  }, [path, hideData]);
+  const shouldHideAllChildren =
+    (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties' && h.required === undefined)) ||
+    (!isRoot && isPropertiesAllHidden(path, hideData));
+
+  const shouldHideNode = useMemo(() => {
+    if (isRoot) return false;
+    if (isPathHidden(path, hideData) && thisNodeRequiredOverride === undefined) return true;
+    return false;
+  }, [path, hideData, isRoot, thisNodeRequiredOverride]);
 
   if (!schema || shouldHideNode) {
     return null;
@@ -130,14 +192,33 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   };
 
   const renderChildren = () => {
+    if (shouldHideAllChildren) return null;
     if (!expanded && !isRoot) return null;
 
     const children: JSX.Element[] = [];
 
-    if (schema?.type === 'object' && schema?.properties) {
-      for (const [key, child] of Object.entries(schema?.properties)) {
+    if (schema?.type === 'object' && (schema?.properties || schema?.allOf || schema?.anyOf || schema?.oneOf)) {
+      let props = schema?.properties;
+
+      if (schema?.allOf) {
+        schema?.allOf.forEach((item: any) => {
+          props = { ...props, ...item.properties };
+        });
+      }
+      if (schema?.anyOf && schema?.anyOf.length > 0) {
+        const selectedSchema = schema?.anyOf[selectedSchemaIndex] || schema?.anyOf[0];
+        props = { ...props, ...selectedSchema.properties };
+      }
+      if (schema?.oneOf && schema?.oneOf.length > 0) {
+        const selectedSchema = schema?.oneOf[selectedSchemaIndex] || schema?.oneOf[0];
+        props = { ...props, ...selectedSchema.properties };
+      }
+
+      for (const [key, child] of Object.entries(props || {})) {
         const childPath = `${path}/properties/${key}`;
-        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath));
+        const childRequiredOverride = isRequiredOverride(childPath, hideData);
+        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
+
         const resolved = dereference(child, root);
         if (!shouldHideChild) {
           children.push(
@@ -151,7 +232,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey={key}
-                subType={resolved?.items?.type}
+                _subType={resolved?.items?.type}
               />
             </li>,
           );
@@ -168,9 +249,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
       if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          // Path for properties within array items - adjusted to include 'properties' (KEPT)
-          const childPath = `${itemsPath}/properties/${key}`;
-          const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
+          const childPath = `${itemsPath}/${key}`;
+          const childRequiredOverride = isRequiredOverride(childPath, hideData);
+          const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
           if (!shouldHideChild) {
             children.push(
@@ -184,7 +265,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   hideData={hideData}
                   parentRequired={resolvedItems.required}
                   propertyKey={key}
-                  subType={resolvedItems?.items?.type}
+                  _subType={resolvedItems?.items?.type}
                 />
               </li>,
             );
@@ -192,8 +273,8 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         }
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
-
-        const shouldHideChild = hideData.some(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(childPath)); // Normalizing paths here too
+        const childRequiredOverride = isRequiredOverride(childPath, hideData);
+        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
         if (!shouldHideChild) {
           children.push(
@@ -207,7 +288,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 hideData={hideData}
                 parentRequired={schema?.required}
                 propertyKey="items"
-                subType={resolvedItems?.items?.type}
+                _subType={resolvedItems?.items?.type}
               />
             </li>,
           );
@@ -215,6 +296,81 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       }
     }
     return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
+  };
+
+  const combinedSchemaSelector = () => {
+    return (
+      <>
+        <Box
+          pos="fixed"
+          top={0}
+          left={0}
+          right={0}
+          bottom={0}
+          bg="transparent"
+          style={{ zIndex: 999 }}
+          onClick={() => setShowSchemaDropdown(false)}
+        />
+        <Box
+          pos="absolute"
+          bg="canvas"
+          rounded
+          boxShadow="md"
+          style={{
+            zIndex: 1000,
+            top: '100%',
+            left: 0,
+            minWidth: '150px',
+            maxWidth: '200px',
+            marginTop: '2px',
+            border: '1px solid rgba(0, 0, 0, 0.1)',
+          }}
+          fontSize="sm"
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
+        >
+          {(schema?.anyOf || schema?.oneOf)?.map((schemaOption: any, index: number) => (
+            <Box
+              key={index}
+              px={3}
+              py={2}
+              cursor="pointer"
+              bg={selectedSchemaIndex === index ? 'primary-tint' : 'canvas'}
+              fontSize="xs"
+              display="flex"
+              alignItems="center"
+              style={{
+                borderBottom:
+                  index < (schema?.anyOf || schema?.oneOf).length - 1 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none',
+                gap: '8px',
+              }}
+              onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
+                if (selectedSchemaIndex !== index) {
+                  e.currentTarget.style.backgroundColor = 'var(--sl-color-canvas-tint)';
+                }
+              }}
+              onMouseLeave={(e: React.MouseEvent<HTMLDivElement>) => {
+                if (selectedSchemaIndex !== index) {
+                  e.currentTarget.style.backgroundColor = 'var(--sl-color-canvas)';
+                }
+              }}
+              onClick={() => {
+                setSelectedSchemaIndex(index);
+                setShowSchemaDropdown(false);
+              }}
+            >
+              <Box flex={1} color="body">
+                {schemaOption.type || 'object'}
+              </Box>
+              {selectedSchemaIndex === index && (
+                <Box color="primary" fontSize="xs">
+                  ✓
+                </Box>
+              )}
+            </Box>
+          ))}
+        </Box>
+      </>
+    );
   };
 
   const renderMinEnums = (schema: Schema) => {
@@ -257,11 +413,15 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   };
 
   const isRequired = parentRequired && propertyKey && parentRequired.includes(propertyKey);
-
   let showRequiredLabel = false;
   const hideDataEntry = hideData.find(hideEntry => trimSlashes(hideEntry.path) === trimSlashes(path));
   if (hideDataEntry?.required === true || (hideDataEntry?.required === undefined && isRequired)) {
     showRequiredLabel = true;
+  }
+
+  if (schema?.$ref) {
+    // eslint-disable-next-line no-param-reassign
+    schema = dereference(schema, root);
   }
 
   return (
@@ -287,13 +447,67 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               </Box>
             ) : null}
             {!isRoot ? (
-              <Box mr={2}>
-                <span className="sl-truncate sl-text-muted">
-                  {schema?.type === 'object' ? schema?.title : schema?.type || root?.title}
-                  {schema?.items && schema?.items?.title !== undefined ? ` [${schema?.items?.title}] ` : null}
-                  {subType ? `[${subType}]` : ''}
-                </span>
+              <Box mr={2} pos="relative">
+                <Box
+                  display="inline-flex"
+                  alignItems="center"
+                  onMouseEnter={() => {
+                    if (schema?.anyOf || schema?.oneOf) {
+                      setIsHoveringSelector(true);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (!showSchemaDropdown) {
+                      setIsHoveringSelector(false);
+                    }
+                  }}
+                  onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                    if (schema?.anyOf || schema?.oneOf) {
+                      e.stopPropagation();
+                      setShowSchemaDropdown(prev => !prev);
+                    }
+                  }}
+                  style={{
+                    cursor: schema?.anyOf || schema?.oneOf ? 'pointer' : 'default',
+                  }}
+                >
+                  <span className="sl-truncate sl-text-muted">
+                    {(() => {
+                      let typeDisplay =
+                        schema?.type === 'object' && schema?.title ? schema?.title : schema?.type || root?.title;
+
+                      if (schema?.anyOf && schema?.anyOf.length > 0) {
+                        return `any of ${typeDisplay}`;
+                      } else if (schema?.oneOf && schema?.oneOf.length > 0) {
+                        return `one of ${typeDisplay}`;
+                      }
+
+                      return typeDisplay;
+                    })()}
+                    {schema?.items && schema?.items?.title !== undefined ? ` [${schema?.items?.title}] ` : null}
+                  </span>
+                  {(schema?.anyOf || schema?.oneOf) && (
+                    <Box
+                      display="inline-flex"
+                      alignItems="center"
+                      ml={1}
+                      style={{
+                        opacity: isHoveringSelector ? 1 : 0.6,
+                        transition: 'opacity 0.2s',
+                      }}
+                    >
+                      <i
+                        className="sl-icon fas fa-chevron-down"
+                        style={{
+                          fontSize: '10px',
+                          opacity: 0.6,
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Box>
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
+                {(schema?.anyOf || schema?.oneOf) && showSchemaDropdown && combinedSchemaSelector()}
               </Box>
             ) : null}
           </Flex>

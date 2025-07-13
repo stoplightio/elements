@@ -51,10 +51,13 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
     disablePropsConfig.forEach(configEntry => {
       const { location, paths } = configEntry;
-      paths.forEach(item => {
-        // Construct the full absolute path
+      paths.forEach((item: any) => {
         const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
-        absolutePathsToHide.push({ path: fullPath });
+        let object: any = { path: fullPath };
+        if (item.hasOwnProperty('required')) {
+          object = { ...object, required: item?.required };
+        }
+        absolutePathsToHide.push(object);
       });
     });
     return absolutePathsToHide;
