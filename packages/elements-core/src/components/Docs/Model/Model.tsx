@@ -93,7 +93,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const description = (
     <VStack spacing={10}>
-      {data.description && data.type === 'object' && (
+      {data.description && (data.type === 'object' || (data.allOf?.[0] as JSONSchema7).type === 'object') && (
         <Box pos="relative">
           <MarkdownViewer role="textbox" markdown={data.description} />
           <NodeAnnotation change={descriptionChanged} />

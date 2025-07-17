@@ -135,6 +135,21 @@ describe('Model', () => {
     expect(textboxDescription).toHaveTextContent('example schema description');
   });
 
+  it('displays child description at top of doc for allOf-inheriting objects', async () => {
+    const desc = 'child schema description';
+    // allOf-inheriting properties from parent but having its own description
+    const allOfSchema: JSONSchema7 = {
+      allOf: [exampleSchema],
+      description: desc,
+    };
+    render(<Model data={allOfSchema} />);
+    const description = screen.queryAllByText(desc);
+    const textboxDescription = screen.getByRole('textbox');
+
+    expect(description).toHaveLength(1);
+    expect(textboxDescription).toHaveTextContent(desc);
+  });
+
   it('does not display description at top of doc for non-objects', async () => {
     render(<Model data={exampleStringSchema} />);
     const description = screen.queryByRole('textbox');
