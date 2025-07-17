@@ -17,7 +17,7 @@ export const TwoColumnLayout = React.forwardRef<HTMLDivElement, TwoColumnLayoutP
           {left}
         </Box>
 
-       {localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+        {localStorage.getItem('use_new_mask_workflow') === 'true' ? (
           <></>
         ) : (
           right && (
