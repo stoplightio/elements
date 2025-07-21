@@ -9,11 +9,16 @@ import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle } from '../Sections';
+import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
   onChange?: (requestBodyIndex: number) => void;
   isHttpWebhookOperation?: boolean;
+  disableProps?: Array<{
+    location: string;
+    paths: Array<{ path: string }>;
+  }>;
 }
 
 export const isBodyEmpty = (body?: BodyProps['body']) => {
@@ -24,11 +29,10 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
   return contents.length === 0 && !description?.trim();
 };
 
-export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyProps) => {
+export const Body = ({ body, onChange, isHttpWebhookOperation = false, disableProps }: BodyProps) => {
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
-
   React.useEffect(() => {
     onChange?.(chosenContent);
     // disabling because we don't want to react on `onChange` change
@@ -40,6 +44,24 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
   const { contents = [], description } = body;
   const schema = contents[chosenContent]?.schema;
   const descriptionChanged = nodeHasChanged?.({ nodeId: body.id, attr: 'description' });
+
+  /* Get Masked Properties And Pass to LazySchemaTreePreviewer */
+  const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
+    const disablePropsConfig = disableProps || [];
+    const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
+    disablePropsConfig.forEach(configEntry => {
+      const { location, paths } = configEntry;
+      paths.forEach((item: any) => {
+        const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
+        let object: any = { path: fullPath };
+        if (item.hasOwnProperty('required')) {
+          object = { ...object, required: item?.required };
+        }
+        absolutePathsToHide.push(object);
+      });
+    });
+    return absolutePathsToHide;
+  };
 
   return (
     <VStack spacing={6}>
@@ -62,16 +84,20 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
-      {isJSONSchema(schema) && (
-        <JsonSchemaViewer
-          resolveRef={refResolver}
-          maxRefDepth={maxRefDepth}
-          schema={getOriginalObject(schema)}
-          viewMode={isHttpWebhookOperation ? 'standalone' : 'write'}
-          renderRootTreeLines
-          nodeHasChanged={nodeHasChanged}
-          renderExtensionAddon={renderExtensionAddon}
-        />
+      {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+        <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+      ) : (
+        isJSONSchema(schema) && (
+          <JsonSchemaViewer
+            resolveRef={refResolver}
+            maxRefDepth={maxRefDepth}
+            schema={getOriginalObject(schema)}
+            viewMode={isHttpWebhookOperation ? 'standalone' : 'write'}
+            renderRootTreeLines
+            nodeHasChanged={nodeHasChanged}
+            renderExtensionAddon={renderExtensionAddon}
+          />
+        )
       )}
     </VStack>
   );

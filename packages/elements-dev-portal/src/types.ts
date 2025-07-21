@@ -37,6 +37,7 @@ export type Node = NodeSummary & {
   };
   outbound_edges: NodeEdge[];
   inbound_edges: NodeEdge[];
+  disableProps?: any;
 };
 
 export type NodeSummary = {
