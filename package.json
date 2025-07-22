@@ -125,8 +125,5 @@
     "extends": [
       "@commitlint/config-conventional"
     ]
-  },
-  "dependencies": {
-    "dompurify": "^3.2.3"
   }
 }
