@@ -130,6 +130,7 @@ export const NodeContent = ({
 const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefined>(undefined);
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+//LinkComponent
 const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) => {
   const ctx = React.useContext(NodeLinkContext);
   const routerKind = React.useContext(RouterTypeContext);
