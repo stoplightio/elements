@@ -126,5 +126,7 @@
       "@commitlint/config-conventional"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "dompurify": "^3.2.6"
+  }
 }
