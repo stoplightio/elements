@@ -1047,6 +1047,120 @@ describe.each([
         },
       ]);
     });
+
+    it('generates API ToC tree with x-tagGroups', () => {
+      const apiDocument: OpenAPIObject = {
+        openapi: '3.0.0',
+        info: {
+          title: 'some api',
+          version: '1.0.0',
+          description: 'some description',
+          'x-tagGroups': [
+            {
+              name: 'User Management',
+              tags: ['Users', 'Authentication'],
+            },
+            {
+              name: 'Product Catalog',
+              tags: ['Products', 'Categories'],
+            },
+          ],
+        },
+        paths: {
+          '/users': {
+            get: {
+              tags: ['Users'],
+            },
+          },
+          '/products': {
+            get: {
+              tags: ['Products'],
+            },
+          },
+          '/auth/login': {
+            post: {
+              tags: ['Authentication'],
+            },
+          },
+          '/categories': {
+            get: {
+              tags: ['Categories'],
+            },
+          },
+        },
+      };
+
+      expect(computeAPITree(transformOasToServiceNode(apiDocument)!)).toEqual([
+        {
+          id: '/',
+          meta: '',
+          slug: '/',
+          title: 'Overview',
+          type: 'overview',
+        },
+        {
+          title: 'Endpoints',
+        },
+        {
+          title: 'User Management',
+        },
+        {
+          title: 'Users',
+          items: [
+            {
+              id: '/paths/users/get',
+              meta: 'get',
+              slug: '/paths/users/get',
+              title: '/users',
+              type: NodeType.HttpOperation,
+            },
+          ],
+          itemsType: NodeType.HttpOperation,
+        },
+        {
+          title: 'Authentication',
+          items: [
+            {
+              id: '/paths/auth-login/post',
+              meta: 'post',
+              slug: '/paths/auth-login/post',
+              title: '/auth/login',
+              type: NodeType.HttpOperation,
+            },
+          ],
+          itemsType: NodeType.HttpOperation,
+        },
+        {
+          title: 'Product Catalog',
+        },
+        {
+          title: 'Products',
+          items: [
+            {
+              id: '/paths/products/get',
+              meta: 'get',
+              slug: '/paths/products/get',
+              title: '/products',
+              type: NodeType.HttpOperation,
+            },
+          ],
+          itemsType: NodeType.HttpOperation,
+        },
+        {
+          title: 'Categories',
+          items: [
+            {
+              id: '/paths/categories/get',
+              meta: 'get',
+              slug: '/paths/categories/get',
+              title: '/categories',
+              type: NodeType.HttpOperation,
+            },
+          ],
+          itemsType: NodeType.HttpOperation,
+        },
+      ]);
+    });
   });
 });
 
