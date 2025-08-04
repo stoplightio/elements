@@ -1,5 +1,5 @@
 import { Box, Flex, VStack } from '@stoplight/mosaic';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface LazySchemaTreePreviewerProps {
   schema: any;
@@ -83,6 +83,7 @@ const trimSlashes = (str: string) => {
 };
 
 function isPropertiesAllHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  if (!hideData.length) return false;
   const current = trimSlashes(path);
   const parts = current.split('/');
   for (let i = parts.length; i >= 2; i--) {
@@ -100,34 +101,46 @@ function isPropertiesAllHidden(path: string, hideData: Array<{ path: string; req
 }
 
 function isRequiredOverride(path: string, hideData: Array<{ path: string; required?: boolean }>) {
+  if (!hideData.length) return undefined;
   const entry = hideData.find(h => trimSlashes(h.path) === trimSlashes(path));
   return entry && typeof entry.required === 'boolean' ? entry.required : undefined;
 }
 
-// New utility for array/items-based hiding
 function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
   const normalizedPath = trimSlashes(path);
 
-  // Direct match (root-level or property-level)
   const direct = hideData.find(h => trimSlashes(h.path) === normalizedPath);
   if (direct && direct.required === undefined) return true;
 
-  // Check for ancestor "properties" disables (properties/carr/properties, etc)
   if (isPropertiesAllHidden(path, hideData)) return true;
 
-  // Check for array/items disables: e.g. properties/aircraftGroup/items/aircraft/items/aircraftGroup
-  // Go up the path looking for a hideData.path which is a prefix of this path and ends with '/items/[field]'
   for (const h of hideData) {
     const hPath = trimSlashes(h.path);
     if (h.required !== undefined) continue;
-    // Must be prefix
+    const oneOfPattern = hPath.match(/^(.*\/)?oneOf\/\d+\/(.*)$/);
+    const anyOfPattern = hPath.match(/^(.*\/)?anyOf\/\d+\/(.*)$/);
+    const allOfPattern = hPath.match(/^(.*\/)?allOf\/\d+\/(.*)$/);
+    const pattern = oneOfPattern || anyOfPattern || allOfPattern;
+    if (pattern) {
+      const prefix = pattern[1] || '';
+      const suffix = pattern[2] || '';
+      const schemaType = oneOfPattern ? 'oneOf' : anyOfPattern ? 'anyOf' : 'allOf';
+      const flexiblePattern = `${prefix}${schemaType}/\\d+/${suffix}`;
+      const regex = new RegExp(`^${flexiblePattern.replace(/\//g, '\\/')}$`);
+      if (regex.test(normalizedPath)) {
+        return true;
+      }
+      const flexiblePrefixPattern = `${prefix}${schemaType}/\\d+/${suffix}`;
+      const prefixRegex = new RegExp(`^${flexiblePrefixPattern.replace(/\//g, '\\/')}`);
+      if (prefixRegex.test(normalizedPath) && normalizedPath.startsWith(prefix + schemaType)) {
+        return true;
+      }
+    }
     if (
       normalizedPath.length > hPath.length &&
       normalizedPath.startsWith(hPath) &&
-      // hPath is items/field (array hiding)
       (hPath.endsWith('/items') || (hPath.match(/\/items\/[^\/]+$/) && normalizedPath.startsWith(hPath + '/')))
     ) {
-      // Hide all descendants under this path
       return true;
     }
   }
@@ -165,22 +178,14 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
   useEffect(() => {
     setSelectedSchemaIndex(0);
-  }, [schema?.anyOf, schema?.oneOf]);
-  const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
+  }, [schema?.anyOf, schema?.oneOf, schema?.allOf, schema?.items?.anyOf, schema?.items?.oneOf, schema?.items?.allOf]);
 
+  const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
   const shouldHideAllChildren =
     (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties' && h.required === undefined)) ||
     (!isRoot && isPropertiesAllHidden(path, hideData));
 
-  const shouldHideNode = useMemo(() => {
-    if (isRoot) return false;
-    if (isPathHidden(path, hideData) && thisNodeRequiredOverride === undefined) return true;
-    return false;
-  }, [path, hideData, isRoot, thisNodeRequiredOverride]);
-
-  if (!schema || shouldHideNode) {
-    return null;
-  }
+  const shouldHideNode = !isRoot && isPathHidden(path, hideData) && thisNodeRequiredOverride === undefined;
 
   const displayTitle = level === 1 && (title === undefined || path === '') ? '' : title ?? schema?.title ?? 'Node';
 
@@ -191,6 +196,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     }
   };
 
+  if (!schema || shouldHideNode) {
+    return null;
+  }
+
   const renderChildren = () => {
     if (shouldHideAllChildren) return null;
     if (!expanded && !isRoot) return null;
@@ -198,27 +207,51 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     const children: JSX.Element[] = [];
 
     if (schema?.type === 'object' && (schema?.properties || schema?.allOf || schema?.anyOf || schema?.oneOf)) {
-      let props = schema?.properties;
+      let props = schema?.properties || {};
+      let requiredFields = schema?.required || [];
 
       if (schema?.allOf) {
         schema?.allOf.forEach((item: any) => {
-          props = { ...props, ...item.properties };
+          if (item.properties) {
+            props = { ...props, ...item.properties };
+          }
+          if (item.required) {
+            requiredFields = [...requiredFields, ...item.required];
+          }
         });
       }
+
       if (schema?.anyOf && schema?.anyOf.length > 0) {
         const selectedSchema = schema?.anyOf[selectedSchemaIndex] || schema?.anyOf[0];
-        props = { ...props, ...selectedSchema.properties };
+        if (selectedSchema.properties) {
+          props = { ...props, ...selectedSchema.properties };
+        }
+        if (selectedSchema.required) {
+          requiredFields = [...requiredFields, ...selectedSchema.required];
+        }
       }
+
       if (schema?.oneOf && schema?.oneOf.length > 0) {
         const selectedSchema = schema?.oneOf[selectedSchemaIndex] || schema?.oneOf[0];
-        props = { ...props, ...selectedSchema.properties };
+        if (selectedSchema.properties) {
+          props = { ...props, ...selectedSchema.properties };
+        }
+        if (selectedSchema.required) {
+          requiredFields = [...requiredFields, ...selectedSchema.required];
+        }
       }
 
       for (const [key, child] of Object.entries(props || {})) {
-        const childPath = `${path}/properties/${key}`;
+        let childPath = `${path}/properties/${key}`;
+        if (schema?.oneOf && schema?.oneOf.length > 0) {
+          childPath = `${path}/oneOf/${selectedSchemaIndex}/properties/${key}`;
+        } else if (schema?.anyOf && schema?.anyOf.length > 0) {
+          childPath = `${path}/anyOf/${selectedSchemaIndex}/properties/${key}`;
+        } else if (schema?.allOf && schema?.allOf.length > 0) {
+          childPath = `${path}/allOf/${selectedSchemaIndex}/properties/${key}`;
+        }
         const childRequiredOverride = isRequiredOverride(childPath, hideData);
         const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
-
         const resolved = dereference(child, root);
         if (!shouldHideChild) {
           children.push(
@@ -230,7 +263,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 level={level + 1}
                 path={childPath}
                 hideData={hideData}
-                parentRequired={schema?.required}
+                parentRequired={requiredFields}
                 propertyKey={key}
                 _subType={resolved?.items?.type}
               />
@@ -247,35 +280,83 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       const resolvedItems = dereference(schema?.items, root);
       const itemsPath = `${path}/items`;
 
-      if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
-        for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          const childPath = `${itemsPath}/properties/${key}`;
+      if (
+        resolvedItems &&
+        (resolvedItems.type === 'object' || resolvedItems.anyOf || resolvedItems.oneOf || resolvedItems.allOf)
+      ) {
+        if (resolvedItems.anyOf || resolvedItems.oneOf || resolvedItems.allOf) {
+          const childPath = `${path}/items`;
           const childRequiredOverride = isRequiredOverride(childPath, hideData);
           const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
+          let schemaToPass = resolvedItems;
+          if (
+            schema?.type === 'array' &&
+            schema?.items &&
+            (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf)
+          ) {
+            if (schema.items.anyOf && selectedSchemaIndex < schema.items.anyOf.length) {
+              schemaToPass = schema.items.anyOf[selectedSchemaIndex];
+            } else if (schema.items.oneOf && selectedSchemaIndex < schema.items.oneOf.length) {
+              schemaToPass = schema.items.oneOf[selectedSchemaIndex];
+            } else if (schema.items.allOf && selectedSchemaIndex < schema.items.allOf.length) {
+              schemaToPass = schema.items.allOf[selectedSchemaIndex];
+            }
+          }
+
           if (!shouldHideChild) {
             children.push(
-              <li key={key}>
+              <li key="items">
                 <LazySchemaTreePreviewer
-                  schema={dereference(child, root)}
+                  schema={schemaToPass}
                   root={root}
-                  title={key}
-                  level={level + 2}
+                  title="items"
+                  level={level + 1}
                   path={childPath}
                   hideData={hideData}
-                  parentRequired={resolvedItems.required}
-                  propertyKey={key}
-                  _subType={resolvedItems?.items?.type}
+                  parentRequired={schema?.required}
+                  propertyKey="items"
+                  _subType={schemaToPass?.items?.type}
                 />
               </li>,
             );
+          }
+        } else if (resolvedItems.properties) {
+          for (const [key, child] of Object.entries(resolvedItems.properties)) {
+            let childPath = `${itemsPath}/properties/${key}`;
+            if (schema?.items?.oneOf && schema?.items?.oneOf.length > 0) {
+              childPath = `${path}/items/oneOf/${selectedSchemaIndex}/properties/${key}`;
+            } else if (schema?.items?.anyOf && schema?.items?.anyOf.length > 0) {
+              childPath = `${path}/items/anyOf/${selectedSchemaIndex}/properties/${key}`;
+            } else if (schema?.items?.allOf && schema?.items?.allOf.length > 0) {
+              childPath = `${path}/items/allOf/${selectedSchemaIndex}/properties/${key}`;
+            }
+            const childRequiredOverride = isRequiredOverride(childPath, hideData);
+            const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
+
+            if (!shouldHideChild) {
+              children.push(
+                <li key={key}>
+                  <LazySchemaTreePreviewer
+                    schema={dereference(child, root)}
+                    root={root}
+                    title={key}
+                    level={level + 2}
+                    path={childPath}
+                    hideData={hideData}
+                    parentRequired={resolvedItems.required}
+                    propertyKey={key}
+                    _subType={resolvedItems?.items?.type}
+                  />
+                </li>,
+              );
+            }
           }
         }
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
         const childRequiredOverride = isRequiredOverride(childPath, hideData);
         const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
-
         if (!shouldHideChild) {
           children.push(
             <li key="items">
@@ -299,6 +380,18 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   };
 
   const combinedSchemaSelector = () => {
+    let schemaOptions = [];
+    if (schema?.anyOf) schemaOptions = schema.anyOf;
+    else if (schema?.oneOf) schemaOptions = schema.oneOf;
+    else if (schema?.allOf) schemaOptions = schema.allOf;
+    else if (schema?.type === 'array' && schema?.items) {
+      if (schema.items.anyOf) schemaOptions = schema.items.anyOf;
+      else if (schema.items.oneOf) schemaOptions = schema.items.oneOf;
+      else if (schema.items.allOf) schemaOptions = schema.items.allOf;
+    }
+
+    if (!schemaOptions || schemaOptions.length === 0) return null;
+
     return (
       <>
         <Box
@@ -328,7 +421,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
           fontSize="sm"
           onClick={(e: React.MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         >
-          {(schema?.anyOf || schema?.oneOf)?.map((schemaOption: any, index: number) => (
+          {schemaOptions.map((schemaOption: any, index: number) => (
             <Box
               key={index}
               px={3}
@@ -339,8 +432,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
               display="flex"
               alignItems="center"
               style={{
-                borderBottom:
-                  index < (schema?.anyOf || schema?.oneOf).length - 1 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none',
+                borderBottom: index < schemaOptions.length - 1 ? '1px solid rgba(0, 0, 0, 0.1)' : 'none',
                 gap: '8px',
               }}
               onMouseEnter={(e: React.MouseEvent<HTMLDivElement>) => {
@@ -446,13 +538,27 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 {' ' + displayTitle}
               </Box>
             ) : null}
-            {!isRoot ? (
+            {!isRoot ||
+            (isRoot &&
+              (schema?.anyOf ||
+                schema?.oneOf ||
+                schema?.allOf ||
+                (schema?.type === 'array' &&
+                  schema?.items &&
+                  (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf)))) ? (
               <Box mr={2} pos="relative">
                 <Box
                   display="inline-flex"
                   alignItems="center"
                   onMouseEnter={() => {
-                    if (schema?.anyOf || schema?.oneOf) {
+                    if (
+                      schema?.anyOf ||
+                      schema?.oneOf ||
+                      schema?.allOf ||
+                      (schema?.type === 'array' &&
+                        schema?.items &&
+                        (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
+                    ) {
                       setIsHoveringSelector(true);
                     }
                   }}
@@ -462,15 +568,41 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                     }
                   }}
                   onClick={(e: React.MouseEvent<HTMLDivElement>) => {
-                    if (schema?.anyOf || schema?.oneOf) {
+                    if (
+                      schema?.anyOf ||
+                      schema?.oneOf ||
+                      schema?.allOf ||
+                      (schema?.type === 'array' &&
+                        schema?.items &&
+                        (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
+                    ) {
                       e.stopPropagation();
                       setShowSchemaDropdown(prev => !prev);
                     }
                   }}
                   style={{
-                    cursor: schema?.anyOf || schema?.oneOf ? 'pointer' : 'default',
+                    cursor:
+                      schema?.anyOf ||
+                      schema?.oneOf ||
+                      schema?.allOf ||
+                      (schema?.type === 'array' &&
+                        schema?.items &&
+                        (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
+                        ? 'pointer'
+                        : 'default',
                   }}
                 >
+                  {isRoot &&
+                    (schema?.anyOf ||
+                      schema?.oneOf ||
+                      schema?.allOf ||
+                      (schema?.type === 'array' &&
+                        schema?.items &&
+                        (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) && (
+                      <Box mr={2} className="sl-font-mono sl-font-semibold">
+                        {title || schema?.title || 'Schema'}
+                      </Box>
+                    )}
                   <span className="sl-truncate sl-text-muted">
                     {(() => {
                       let typeDisplay =
@@ -480,13 +612,25 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                         return `any of ${typeDisplay}`;
                       } else if (schema?.oneOf && schema?.oneOf.length > 0) {
                         return `one of ${typeDisplay}`;
+                      } else if (schema?.allOf && schema?.allOf.length > 0) {
+                        return `all of ${typeDisplay}`;
                       }
 
                       return typeDisplay;
                     })()}
                     {schema?.items && schema?.items?.title !== undefined ? ` [${schema?.items?.title}] ` : null}
+                    {schema?.type === 'array' &&
+                    schema?.items &&
+                    (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf)
+                      ? ` [${schema?.items?.anyOf ? 'any of' : schema?.items?.oneOf ? 'one of' : 'all of'} object]`
+                      : null}
                   </span>
-                  {(schema?.anyOf || schema?.oneOf) && (
+                  {(schema?.anyOf ||
+                    schema?.oneOf ||
+                    schema?.allOf ||
+                    (schema?.type === 'array' &&
+                      schema?.items &&
+                      (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) && (
                     <Box
                       display="inline-flex"
                       alignItems="center"
@@ -507,7 +651,14 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   )}
                 </Box>
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
-                {(schema?.anyOf || schema?.oneOf) && showSchemaDropdown && combinedSchemaSelector()}
+                {(schema?.anyOf ||
+                  schema?.oneOf ||
+                  schema?.allOf ||
+                  (schema?.type === 'array' &&
+                    schema?.items &&
+                    (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) &&
+                  showSchemaDropdown &&
+                  combinedSchemaSelector()}
               </Box>
             ) : null}
           </Flex>
