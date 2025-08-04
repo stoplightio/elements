@@ -178,7 +178,14 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
   useEffect(() => {
     setSelectedSchemaIndex(0);
-  }, [schema?.anyOf, schema?.oneOf, schema?.allOf, schema?.items?.anyOf, schema?.items?.oneOf, schema?.items?.allOf]);
+  }, [
+    schema?.anyOf?.length,
+    schema?.oneOf?.length,
+    schema?.allOf?.length,
+    schema?.items?.anyOf?.length,
+    schema?.items?.oneOf?.length,
+    schema?.items?.allOf?.length,
+  ]);
 
   const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
   const shouldHideAllChildren =
@@ -603,9 +610,9 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                         schema?.type === 'object' && schema?.title ? schema?.title : schema?.type || root?.title;
 
                       if (schema?.anyOf && schema?.anyOf.length > 0) {
-                        return `any of ${typeDisplay}`;
+                        return `any of`;
                       } else if (schema?.oneOf && schema?.oneOf.length > 0) {
-                        return `one of ${typeDisplay}`;
+                        return `one of`;
                       }
 
                       return typeDisplay;
