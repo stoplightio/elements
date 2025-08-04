@@ -383,7 +383,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     let schemaOptions = [];
     if (schema?.anyOf) schemaOptions = schema.anyOf;
     else if (schema?.oneOf) schemaOptions = schema.oneOf;
-    else if (schema?.allOf) schemaOptions = schema.allOf;
     else if (schema?.type === 'array' && schema?.items) {
       if (schema.items.anyOf) schemaOptions = schema.items.anyOf;
       else if (schema.items.oneOf) schemaOptions = schema.items.oneOf;
@@ -542,7 +541,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
             (isRoot &&
               (schema?.anyOf ||
                 schema?.oneOf ||
-                schema?.allOf ||
                 (schema?.type === 'array' &&
                   schema?.items &&
                   (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf)))) ? (
@@ -554,7 +552,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                     if (
                       schema?.anyOf ||
                       schema?.oneOf ||
-                      schema?.allOf ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
@@ -571,7 +568,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                     if (
                       schema?.anyOf ||
                       schema?.oneOf ||
-                      schema?.allOf ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
@@ -584,7 +580,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                     cursor:
                       schema?.anyOf ||
                       schema?.oneOf ||
-                      schema?.allOf ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
@@ -595,7 +590,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   {isRoot &&
                     (schema?.anyOf ||
                       schema?.oneOf ||
-                      schema?.allOf ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) && (
@@ -612,8 +606,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                         return `any of ${typeDisplay}`;
                       } else if (schema?.oneOf && schema?.oneOf.length > 0) {
                         return `one of ${typeDisplay}`;
-                      } else if (schema?.allOf && schema?.allOf.length > 0) {
-                        return `all of ${typeDisplay}`;
                       }
 
                       return typeDisplay;
@@ -627,7 +619,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   </span>
                   {(schema?.anyOf ||
                     schema?.oneOf ||
-                    schema?.allOf ||
                     (schema?.type === 'array' &&
                       schema?.items &&
                       (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) && (
@@ -653,7 +644,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
                 {(schema?.anyOf ||
                   schema?.oneOf ||
-                  schema?.allOf ||
                   (schema?.type === 'array' &&
                     schema?.items &&
                     (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) &&
