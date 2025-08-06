@@ -176,6 +176,18 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     return initialState;
   });
 
+  const nestedSchemaKey = schema?.allOf
+    ? JSON.stringify(
+        schema.allOf.map((item: any) => {
+          const resolved = dereference(item, root);
+          return {
+            oneOfLength: resolved.oneOf?.length,
+            anyOfLength: resolved.anyOf?.length,
+          };
+        }),
+      )
+    : null;
+
   useEffect(() => {
     setSelectedSchemaIndex(0);
   }, [
@@ -185,6 +197,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     schema?.items?.anyOf?.length,
     schema?.items?.oneOf?.length,
     schema?.items?.allOf?.length,
+    nestedSchemaKey,
   ]);
 
   const thisNodeRequiredOverride = isRequiredOverride(path, hideData);
@@ -203,10 +216,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     }
   };
 
-  if (!schema || shouldHideNode) {
-    return null;
-  }
-
   const renderChildren = () => {
     if (shouldHideAllChildren) return null;
     if (!expanded && !isRoot) return null;
@@ -218,12 +227,34 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       let requiredFields = schema?.required || [];
 
       if (schema?.allOf) {
-        schema?.allOf.forEach((item: any) => {
-          if (item.properties) {
-            props = { ...props, ...item.properties };
+        schema?.allOf.forEach((item: any, allOfIndex: number) => {
+          const resolvedItem = dereference(item, root);
+          if (resolvedItem.properties) {
+            props = { ...props, ...resolvedItem.properties };
           }
-          if (item.required) {
-            requiredFields = [...requiredFields, ...item.required];
+          if (resolvedItem.required) {
+            requiredFields = [...requiredFields, ...resolvedItem.required];
+          }
+          // Handle nested oneOf/anyOf within allOf items
+          if (resolvedItem.oneOf && resolvedItem.oneOf.length > 0) {
+            const selectedNestedSchema = resolvedItem.oneOf[selectedSchemaIndex] || resolvedItem.oneOf[0];
+            const resolvedNested = dereference(selectedNestedSchema, root);
+            if (resolvedNested.properties) {
+              props = { ...props, ...resolvedNested.properties };
+            }
+            if (resolvedNested.required) {
+              requiredFields = [...requiredFields, ...resolvedNested.required];
+            }
+          }
+          if (resolvedItem.anyOf && resolvedItem.anyOf.length > 0) {
+            const selectedNestedSchema = resolvedItem.anyOf[selectedSchemaIndex] || resolvedItem.anyOf[0];
+            const resolvedNested = dereference(selectedNestedSchema, root);
+            if (resolvedNested.properties) {
+              props = { ...props, ...resolvedNested.properties };
+            }
+            if (resolvedNested.required) {
+              requiredFields = [...requiredFields, ...resolvedNested.required];
+            }
           }
         });
       }
@@ -250,12 +281,42 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
       for (const [key, child] of Object.entries(props || {})) {
         let childPath = `${path}/properties/${key}`;
-        if (schema?.oneOf && schema?.oneOf.length > 0) {
-          childPath = `${path}/oneOf/${selectedSchemaIndex}/properties/${key}`;
-        } else if (schema?.anyOf && schema?.anyOf.length > 0) {
-          childPath = `${path}/anyOf/${selectedSchemaIndex}/properties/${key}`;
-        } else if (schema?.allOf && schema?.allOf.length > 0) {
-          childPath = `${path}/allOf/${selectedSchemaIndex}/properties/${key}`;
+        let foundInNestedSchema = false;
+        // Check if this property comes from a nested oneOf/anyOf within allOf
+        if (schema?.allOf) {
+          for (let allOfIndex = 0; allOfIndex < schema.allOf.length; allOfIndex++) {
+            const allOfItem = dereference(schema.allOf[allOfIndex], root);
+            // Check if property is in a oneOf within this allOf item
+            if (allOfItem.oneOf && allOfItem.oneOf.length > 0) {
+              const selectedNestedSchema = allOfItem.oneOf[selectedSchemaIndex] || allOfItem.oneOf[0];
+              const resolvedNested = dereference(selectedNestedSchema, root);
+              if (resolvedNested.properties && resolvedNested.properties[key]) {
+                childPath = `${path}/allOf/${allOfIndex}/oneOf/${selectedSchemaIndex}/properties/${key}`;
+                foundInNestedSchema = true;
+                break;
+              }
+            }
+            // Check if property is in an anyOf within this allOf item
+            if (allOfItem.anyOf && allOfItem.anyOf.length > 0) {
+              const selectedNestedSchema = allOfItem.anyOf[selectedSchemaIndex] || allOfItem.anyOf[0];
+              const resolvedNested = dereference(selectedNestedSchema, root);
+              if (resolvedNested.properties && resolvedNested.properties[key]) {
+                childPath = `${path}/allOf/${allOfIndex}/anyOf/${selectedSchemaIndex}/properties/${key}`;
+                foundInNestedSchema = true;
+                break;
+              }
+            }
+          }
+        }
+        // Handle top-level oneOf/anyOf if not found in nested schemas
+        if (!foundInNestedSchema) {
+          if (schema?.oneOf && schema?.oneOf.length > 0) {
+            childPath = `${path}/oneOf/${selectedSchemaIndex}/properties/${key}`;
+          } else if (schema?.anyOf && schema?.anyOf.length > 0) {
+            childPath = `${path}/anyOf/${selectedSchemaIndex}/properties/${key}`;
+          } else if (schema?.allOf && schema?.allOf.length > 0) {
+            childPath = `${path}/allOf/${selectedSchemaIndex}/properties/${key}`;
+          }
         }
         const childRequiredOverride = isRequiredOverride(childPath, hideData);
         const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
@@ -388,9 +449,24 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
   const combinedSchemaSelector = () => {
     let schemaOptions = [];
-    if (schema?.anyOf) schemaOptions = schema.anyOf;
-    else if (schema?.oneOf) schemaOptions = schema.oneOf;
-    else if (schema?.type === 'array' && schema?.items) {
+    // Check for top-level combinations first
+    if (schema?.anyOf) {
+      schemaOptions = schema.anyOf;
+    } else if (schema?.oneOf) {
+      schemaOptions = schema.oneOf;
+    } else if (schema?.allOf) {
+      // For allOf, check if any items have nested oneOf/anyOf
+      for (const allOfItem of schema.allOf) {
+        const resolvedItem = dereference(allOfItem, root);
+        if (resolvedItem.oneOf && resolvedItem.oneOf.length > 0) {
+          schemaOptions = resolvedItem.oneOf;
+          break;
+        } else if (resolvedItem.anyOf && resolvedItem.anyOf.length > 0) {
+          schemaOptions = resolvedItem.anyOf;
+          break;
+        }
+      }
+    } else if (schema?.type === 'array' && schema?.items) {
       if (schema.items.anyOf) schemaOptions = schema.items.anyOf;
       else if (schema.items.oneOf) schemaOptions = schema.items.oneOf;
       else if (schema.items.allOf) schemaOptions = schema.items.allOf;
@@ -522,6 +598,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     schema = dereference(schema, root);
   }
 
+  // Early return for hidden/invalid schemas
+  if (!schema || shouldHideNode) {
+    return null;
+  }
+
   return (
     <div className="mb-1">
       <Flex maxW="full" pl={3} py={2} data-test="schema-row" pos="relative">
@@ -548,6 +629,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
             (isRoot &&
               (schema?.anyOf ||
                 schema?.oneOf ||
+                (schema?.allOf &&
+                  schema.allOf.some((item: any) => {
+                    const resolved = dereference(item, root);
+                    return resolved.oneOf || resolved.anyOf;
+                  })) ||
                 (schema?.type === 'array' &&
                   schema?.items &&
                   (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf)))) ? (
@@ -559,6 +645,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                     if (
                       schema?.anyOf ||
                       schema?.oneOf ||
+                      (schema?.allOf &&
+                        schema.allOf.some((item: any) => {
+                          const resolved = dereference(item, root);
+                          return resolved.oneOf || resolved.anyOf;
+                        })) ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
@@ -575,6 +666,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                     if (
                       schema?.anyOf ||
                       schema?.oneOf ||
+                      (schema?.allOf &&
+                        schema.allOf.some((item: any) => {
+                          const resolved = dereference(item, root);
+                          return resolved.oneOf || resolved.anyOf;
+                        })) ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
@@ -587,6 +683,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                     cursor:
                       schema?.anyOf ||
                       schema?.oneOf ||
+                      (schema?.allOf &&
+                        schema.allOf.some((item: any) => {
+                          const resolved = dereference(item, root);
+                          return resolved.oneOf || resolved.anyOf;
+                        })) ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))
@@ -597,6 +698,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   {isRoot &&
                     (schema?.anyOf ||
                       schema?.oneOf ||
+                      (schema?.allOf &&
+                        schema.allOf.some((item: any) => {
+                          const resolved = dereference(item, root);
+                          return resolved.oneOf || resolved.anyOf;
+                        })) ||
                       (schema?.type === 'array' &&
                         schema?.items &&
                         (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) && (
@@ -626,6 +732,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                   </span>
                   {(schema?.anyOf ||
                     schema?.oneOf ||
+                    (schema?.allOf &&
+                      schema.allOf.some((item: any) => {
+                        const resolved = dereference(item, root);
+                        return resolved.oneOf || resolved.anyOf;
+                      })) ||
                     (schema?.type === 'array' &&
                       schema?.items &&
                       (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) && (
@@ -651,6 +762,11 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 <span className="text-gray-500">{schema?.format !== undefined ? `<${schema?.format}>` : null}</span>
                 {(schema?.anyOf ||
                   schema?.oneOf ||
+                  (schema?.allOf &&
+                    schema.allOf.some((item: any) => {
+                      const resolved = dereference(item, root);
+                      return resolved.oneOf || resolved.anyOf;
+                    })) ||
                   (schema?.type === 'array' &&
                     schema?.items &&
                     (schema?.items?.anyOf || schema?.items?.oneOf || schema?.items?.allOf))) &&
