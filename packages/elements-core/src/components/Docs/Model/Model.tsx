@@ -104,7 +104,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       {localStorage.getItem('use_new_mask_workflow') !== 'true' && isCompact && modelExamples}
       {data && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-        <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} />
+        <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} complexData = {disableProps?.models}/>
       ) : (
         <JsonSchemaViewer
           resolveRef={resolveRef}

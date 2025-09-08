@@ -10,6 +10,7 @@ interface LazySchemaTreePreviewerProps {
   maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
   setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
   hideData?: Array<{ path: string; required?: boolean }>;
+  complexData?: complexData;
   parentRequired?: string[];
   propertyKey?: string;
   _subType?: string;
@@ -22,6 +23,8 @@ interface SchemaWithMinItems {
 interface SchemaWithEnum {
   enum?: any[];
 }
+
+type complexData = Array<{ location: string; isComplex?: boolean; paths: Array<{ path: string; required?: boolean }> }>;
 
 type Schema = SchemaWithMinItems | SchemaWithEnum | object;
 
@@ -105,35 +108,53 @@ function isRequiredOverride(path: string, hideData: Array<{ path: string; requir
 }
 
 // New utility for array/items-based hiding
-function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>) {
-  const normalizedPath = trimSlashes(path);
+function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>, complexData: complexData) {
+  const isComplex = checkIfIsComplex(path, complexData);
 
-  // Direct match (root-level or property-level)
-  const direct = hideData.find(h => trimSlashes(h.path) === normalizedPath);
-  if (direct && direct.required === undefined) return true;
+  if (isComplex === null) {
+    return false;
+  } else if (isComplex) {
+    const normalizedPath = trimSlashes(path);
 
-  // Check for ancestor "properties" disables (properties/carr/properties, etc)
-  if (isPropertiesAllHidden(path, hideData)) return true;
+    // Direct match (root-level or property-level)
+    const direct = hideData.find(h => trimSlashes(h.path) === normalizedPath);
+    if (direct && direct.required === undefined) return true;
 
-  // Check for array/items disables: e.g. properties/aircraftGroup/items/aircraft/items/aircraftGroup
-  // Go up the path looking for a hideData.path which is a prefix of this path and ends with '/items/[field]'
-  for (const h of hideData) {
-    const hPath = trimSlashes(h.path);
-    if (h.required !== undefined) continue;
-    // Must be prefix
-    if (
-      normalizedPath.length > hPath.length &&
-      normalizedPath.startsWith(hPath) &&
-      // hPath is items/field (array hiding)
-      (hPath.endsWith('/items') || (hPath.match(/\/items\/[^\/]+$/) && normalizedPath.startsWith(hPath + '/')))
-    ) {
-      // Hide all descendants under this path
-      return true;
+    // Check for ancestor "properties" disables (properties/carr/properties, etc)
+    if (isPropertiesAllHidden(path, hideData)) return true;
+
+    // Check for array/items disables: e.g. properties/aircraftGroup/items/aircraft/items/aircraftGroup
+    // Go up the path looking for a hideData.path which is a prefix of this path and ends with '/items/[field]'
+    for (const h of hideData) {
+      const hPath = trimSlashes(h.path);
+      if (h.required !== undefined) continue;
+      // Must be prefix
+      if (
+        normalizedPath.length > hPath.length &&
+        normalizedPath.startsWith(hPath) &&
+        // hPath is items/field (array hiding)
+        (hPath.endsWith('/items') || (hPath.match(/\/items\/[^\/]+$/) && normalizedPath.startsWith(hPath + '/')))
+      ) {
+        // Hide all descendants under this path
+        return true;
+      }
+    }
+    return false;
+  } else {
+    return !hideData.some(h => h.path === path || h.path.startsWith(path + '/'));
+  }
+}
+
+const checkIfIsComplex = (path: string, complexData: complexData) => {
+  let isComplex = null;
+  for (const complex of complexData) {
+    if (path.startsWith(complex.location)) {
+      isComplex = complex?.isComplex;
+      break;
     }
   }
-
-  return false;
-}
+  return isComplex;
+};
 
 const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   schema,
@@ -142,6 +163,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   level = 1,
   path = '',
   hideData = [],
+  complexData = [],
   parentRequired,
   propertyKey,
   _subType,
@@ -151,17 +173,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   const [showSchemaDropdown, setShowSchemaDropdown] = useState(false);
   const [isHoveringSelector, setIsHoveringSelector] = useState(false);
   const isRoot = level === 1 && (title === undefined || path === '');
-  const [_maskState, _setMaskState] = useState<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>(() => {
-    const disabledPaths = hideData || [];
-    const initialState: Record<string, { checked: boolean; required: 0 | 1 | 2 }> = {};
-    if (disabledPaths) {
-      for (const p of disabledPaths) {
-        const { path }: any = p;
-        initialState[path] = { checked: false, required: 0 };
-      }
-    }
-    return initialState;
-  });
 
   useEffect(() => {
     setSelectedSchemaIndex(0);
@@ -174,7 +185,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
 
   const shouldHideNode = useMemo(() => {
     if (isRoot) return false;
-    if (isPathHidden(path, hideData) && thisNodeRequiredOverride === undefined) return true;
+    if (isPathHidden(path, hideData, complexData) && thisNodeRequiredOverride === undefined) return true;
     return false;
   }, [path, hideData, isRoot, thisNodeRequiredOverride]);
 
@@ -217,9 +228,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       for (const [key, child] of Object.entries(props || {})) {
         const childPath = `${path}/properties/${key}`;
         const childRequiredOverride = isRequiredOverride(childPath, hideData);
-        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
 
+        const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
         const resolved = dereference(child, root);
+
         if (!shouldHideChild) {
           children.push(
             <li key={key}>
@@ -230,6 +242,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 level={level + 1}
                 path={childPath}
                 hideData={hideData}
+                complexData={complexData}
                 parentRequired={schema?.required}
                 propertyKey={key}
                 _subType={resolved?.items?.type}
@@ -251,18 +264,21 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
         for (const [key, child] of Object.entries(resolvedItems.properties)) {
           const childPath = `${itemsPath}/properties/${key}`;
           const childRequiredOverride = isRequiredOverride(childPath, hideData);
-          const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
+
+          const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
+          const resolved = dereference(child, root);
 
           if (!shouldHideChild) {
             children.push(
               <li key={key}>
                 <LazySchemaTreePreviewer
-                  schema={dereference(child, root)}
+                  schema={resolved}
                   root={root}
                   title={key}
                   level={level + 2}
                   path={childPath}
                   hideData={hideData}
+                  complexData={complexData}
                   parentRequired={resolvedItems.required}
                   propertyKey={key}
                   _subType={resolvedItems?.items?.type}
@@ -274,7 +290,8 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
         const childPath = `${path}/items`;
         const childRequiredOverride = isRequiredOverride(childPath, hideData);
-        const shouldHideChild = isPathHidden(childPath, hideData) && childRequiredOverride === undefined;
+
+        const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
 
         if (!shouldHideChild) {
           children.push(
@@ -286,6 +303,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
                 level={level + 1}
                 path={childPath}
                 hideData={hideData}
+                complexData={complexData}
                 parentRequired={schema?.required}
                 propertyKey="items"
                 _subType={resolvedItems?.items?.type}

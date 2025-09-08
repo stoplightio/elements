@@ -35,6 +35,7 @@ import { Parameters } from './Parameters';
 interface DisablePropEntry {
   location: string;
   paths: Array<{ path: string }>;
+  isComplex: boolean;
 }
 
 interface DisablePropsByStatus {
@@ -249,7 +250,7 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
             </Flex>
           </SectionSubtitle>
           {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-            <LazySchemaTreePreviewer schema={schema} path="" hideData={getMaskProperties()} />
+            <LazySchemaTreePreviewer schema={schema} path="" hideData={getMaskProperties()} complexData = {disableProps && statusCode ? disableProps[statusCode] :[]}/>
           ) : (
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}

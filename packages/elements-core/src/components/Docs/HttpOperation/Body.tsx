@@ -85,7 +85,7 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
         </Box>
       )}
       {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-        <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} />
+        <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} complexData={disableProps} />
       ) : (
         isJSONSchema(schema) && (
           <JsonSchemaViewer
