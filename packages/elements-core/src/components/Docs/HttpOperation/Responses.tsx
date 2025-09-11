@@ -207,15 +207,19 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
     if (!disableProps || !statusCode) return [];
     const configEntries = disableProps[statusCode] || [];
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
-    configEntries.forEach(({ location, paths }) => {
-      paths.forEach((item: any) => {
-        const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
-        let object: any = { path: fullPath };
-        if (item.hasOwnProperty('required')) {
-          object = { ...object, required: item?.required };
-        }
-        absolutePathsToHide.push(object);
-      });
+    configEntries.forEach(({ location, paths, isComplex }) => {
+      if (paths.length === 0 && !isComplex) {
+        absolutePathsToHide.push({ path: location });
+      } else {
+        paths.forEach((item: any) => {
+          const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
+          let object: any = { path: fullPath };
+          if (item.hasOwnProperty('required')) {
+            object = { ...object, required: item?.required };
+          }
+          absolutePathsToHide.push(object);
+        });
+      }
     });
     return absolutePathsToHide;
   };
@@ -250,7 +254,12 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
             </Flex>
           </SectionSubtitle>
           {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-            <LazySchemaTreePreviewer schema={schema} path="" hideData={getMaskProperties()} complexData = {disableProps && statusCode ? disableProps[statusCode] :[]}/>
+            <LazySchemaTreePreviewer
+              schema={schema}
+              path=""
+              hideData={getMaskProperties()}
+              complexData={disableProps && statusCode ? disableProps[statusCode] : []}
+            />
           ) : (
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}

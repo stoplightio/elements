@@ -17,7 +17,8 @@ export interface BodyProps {
   isHttpWebhookOperation?: boolean;
   disableProps?: Array<{
     location: string;
-    paths: Array<{ path: string }>;
+    paths: Array<{ path: string; required?: boolean }>;
+    isComplex?: boolean;
   }>;
 }
 
@@ -50,15 +51,19 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
     const disablePropsConfig = disableProps || [];
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
     disablePropsConfig.forEach(configEntry => {
-      const { location, paths } = configEntry;
-      paths.forEach((item: any) => {
-        const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
-        let object: any = { path: fullPath };
-        if (item.hasOwnProperty('required')) {
-          object = { ...object, required: item?.required };
-        }
-        absolutePathsToHide.push(object);
-      });
+      const { location, paths, isComplex } = configEntry;
+      if (paths.length === 0 && !isComplex) {
+        absolutePathsToHide.push({ path: location });
+      } else {
+        paths.forEach((item: any) => {
+          const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
+          let object: any = { path: fullPath };
+          if (item.hasOwnProperty('required')) {
+            object = { ...object, required: item?.required };
+          }
+          absolutePathsToHide.push(object);
+        });
+      }
     });
     return absolutePathsToHide;
   };

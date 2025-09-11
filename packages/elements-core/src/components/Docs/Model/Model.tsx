@@ -77,15 +77,19 @@ const ModelComponent: React.FC<ModelProps> = ({
     const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
     if (disableProps?.models) {
       disablePropsConfig.forEach((configEntry: any) => {
-        const { location, paths } = configEntry;
-        paths.forEach((item: any) => {
-          const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
-          let object: any = { path: fullPath };
-          if (item.hasOwnProperty('required')) {
-            object = { ...object, required: item?.required };
-          }
-          absolutePathsToHide.push(object);
-        });
+        const { location, paths, isComplex } = configEntry;
+        if (paths.length === 0 && !isComplex) {
+          absolutePathsToHide.push({ path: location });
+        } else {
+          paths.forEach((item: any) => {
+            const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
+            let object: any = { path: fullPath };
+            if (item.hasOwnProperty('required')) {
+              object = { ...object, required: item?.required };
+            }
+            absolutePathsToHide.push(object);
+          });
+        }
       });
     }
     return absolutePathsToHide;
@@ -104,7 +108,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       {localStorage.getItem('use_new_mask_workflow') !== 'true' && isCompact && modelExamples}
       {data && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-        <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} complexData = {disableProps?.models}/>
+        <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} complexData={disableProps?.models} />
       ) : (
         <JsonSchemaViewer
           resolveRef={resolveRef}
