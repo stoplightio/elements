@@ -62,9 +62,7 @@ const ModelComponent: React.FC<ModelProps> = ({
         </HStack>
         <NodeAnnotation change={titleChanged} />
       </Box>
-      {localStorage.getItem('use_new_mask_workflow') === 'true'
-        ? null
-        : exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
+      {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
     </Flex>
   );
 
@@ -94,7 +92,8 @@ const ModelComponent: React.FC<ModelProps> = ({
     }
     return absolutePathsToHide;
   };
-
+  const shouldUseLazySchema = disableProps?.some((entry: { isComplex: boolean }) => entry.isComplex === true);
+  console.log('!!!!! shouldUseLazySchema model!!!!', shouldUseLazySchema);
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && (
@@ -106,8 +105,8 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       <NodeVendorExtensions data={data} />
 
-      {localStorage.getItem('use_new_mask_workflow') !== 'true' && isCompact && modelExamples}
-      {data && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+      {/* {localStorage.getItem('use_new_mask_workflow') !== 'true' && isCompact && modelExamples} */}
+      {data && shouldUseLazySchema ? (
         <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} complexData={disableProps?.models} />
       ) : (
         <JsonSchemaViewer

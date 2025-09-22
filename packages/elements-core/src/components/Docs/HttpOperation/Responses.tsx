@@ -224,6 +224,8 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
     return absolutePathsToHide;
   };
 
+  const shouldUseLazySchema = (statusCode && disableProps?.[statusCode]?.some(entry => entry.isComplex)) ?? false;
+  console.log('!!!!! shouldUseLazySchema new!!!!', shouldUseLazySchema);
   return (
     <VStack spacing={8} pt={8}>
       {description && (
@@ -253,7 +255,7 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
               />
             </Flex>
           </SectionSubtitle>
-          {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+          {schema && shouldUseLazySchema ? (
             <LazySchemaTreePreviewer
               schema={schema}
               path=""

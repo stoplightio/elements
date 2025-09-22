@@ -68,6 +68,10 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
     return absolutePathsToHide;
   };
 
+  const shouldUseLazySchema = disableProps?.some(entry => entry.isComplex === true);
+
+  console.log('!!!!! shouldUseLazySchema body!!!!', shouldUseLazySchema);
+
   return (
     <VStack spacing={6}>
       <SectionSubtitle title="Body" id="request-body">
@@ -89,7 +93,7 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
           <NodeAnnotation change={descriptionChanged} />
         </Box>
       )}
-      {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
+      {schema && shouldUseLazySchema ? (
         <LazySchemaTreePreviewer schema={schema} hideData={getMaskProperties()} complexData={disableProps} />
       ) : (
         isJSONSchema(schema) && (
