@@ -87,7 +87,6 @@ export const NodeContent = ({
           <Docs
             nodeType={node.type as NodeType}
             nodeData={node.data}
-            disableProps={node?.disableProps}
             nodeTitle={node.title}
             layoutOptions={{
               compact,

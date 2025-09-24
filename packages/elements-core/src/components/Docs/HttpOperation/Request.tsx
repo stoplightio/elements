@@ -18,10 +18,6 @@ interface IRequestProps {
   hideSecurityInfo?: boolean;
   onChange?: (requestBodyIndex: number) => void;
   isHttpWebhookOperation?: boolean;
-  disableProps?: Array<{
-    location: string;
-    paths: Array<{ path: string }>;
-  }>;
 }
 
 export const Request: React.FunctionComponent<IRequestProps> = ({
@@ -39,7 +35,6 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
   hideSecurityInfo,
   onChange,
   isHttpWebhookOperation = false,
-  disableProps,
 }) => {
   if (!request || typeof request !== 'object') return null;
 
@@ -89,14 +84,7 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
         </VStack>
       )}
 
-      {body && (
-        <Body
-          onChange={onChange}
-          body={body}
-          isHttpWebhookOperation={isHttpWebhookOperation}
-          disableProps={disableProps}
-        />
-      )}
+      {body && <Body onChange={onChange} body={body} isHttpWebhookOperation={isHttpWebhookOperation} />}
     </VStack>
   );
 };
