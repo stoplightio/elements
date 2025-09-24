@@ -214,6 +214,7 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
           object = { ...object, required: item?.required };
         }
         absolutePathsToHide.push(object);
+        console.log('object::', object, item);
       });
     });
     return absolutePathsToHide;
