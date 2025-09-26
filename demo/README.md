@@ -33,7 +33,7 @@ ReactDOM.render(
 );
 ```
 2. Update the package.js to include the new dependency 
-`"@stoplight/elements-dev-portal": "^2.0.0",`
+`"@stoplight/elements-dev-portal": "2.12.0"`
 
 3. To ensure the local elements-dev-portal package is included and the app reloads on change, update the common.js webpack file to include the package. 
 ```
