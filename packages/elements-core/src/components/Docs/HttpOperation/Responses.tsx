@@ -29,23 +29,11 @@ import { useOptionsCtx } from '../../../context/Options';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { SectionSubtitle, SectionTitle } from '../Sections';
-import LazySchemaTreePreviewer from './LazySchemaTreePreviewer';
 import { Parameters } from './Parameters';
-
-interface DisablePropEntry {
-  location: string;
-  paths: Array<{ path: string }>;
-}
-
-interface DisablePropsByStatus {
-  [statusCode: string]: DisablePropEntry[];
-}
 
 interface ResponseProps {
   response: IHttpOperationResponse;
   onMediaTypeChange?: (mediaType: string) => void;
-  disableProps?: DisablePropsByStatus;
-  statusCode?: string;
 }
 
 interface ResponsesProps {
@@ -53,7 +41,6 @@ interface ResponsesProps {
   onMediaTypeChange?: (mediaType: string) => void;
   onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
-  disableProps?: DisablePropsByStatus;
 }
 
 export const Responses = ({
@@ -61,7 +48,6 @@ export const Responses = ({
   onStatusCodeChange,
   onMediaTypeChange,
   isCompact,
-  disableProps,
 }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
@@ -161,22 +147,12 @@ export const Responses = ({
       </SectionTitle>
 
       {isCompact ? (
-        <Response
-          response={response}
-          onMediaTypeChange={onMediaTypeChange}
-          disableProps={disableProps}
-          statusCode={activeResponseId}
-        />
+        <Response response={response} onMediaTypeChange={onMediaTypeChange} />
       ) : (
         <TabPanels p={0}>
           {responses.map(response => (
             <TabPanel key={response.code} id={response.code}>
-              <Response
-                response={response}
-                onMediaTypeChange={onMediaTypeChange}
-                disableProps={disableProps}
-                statusCode={response.code}
-              />
+              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
             </TabPanel>
           ))}
         </TabPanels>
@@ -186,14 +162,14 @@ export const Responses = ({
 };
 Responses.displayName = 'HttpOperation.Responses';
 
-const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: ResponseProps) => {
+const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
   const { contents = [], headers = [], description } = response;
   const [chosenContent, setChosenContent] = React.useState(0);
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
 
   const responseContent = contents[chosenContent];
-  const schema: any = responseContent?.schema;
+  const schema = responseContent?.schema;
 
   React.useEffect(() => {
     responseContent && onMediaTypeChange?.(responseContent.mediaType);
@@ -201,23 +177,6 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
   }, [responseContent]);
 
   const descriptionChanged = nodeHasChanged?.({ nodeId: response.id, attr: 'description' });
-
-  const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
-    if (!disableProps || !statusCode) return [];
-    const configEntries = disableProps[statusCode] || [];
-    const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
-    configEntries.forEach(({ location, paths }) => {
-      paths.forEach((item: any) => {
-        const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
-        let object: any = { path: fullPath };
-        if (item.hasOwnProperty('required')) {
-          object = { ...object, required: item?.required };
-        }
-        absolutePathsToHide.push(object);
-      });
-    });
-    return absolutePathsToHide;
-  };
 
   return (
     <VStack spacing={8} pt={8}>
@@ -248,9 +207,8 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
               />
             </Flex>
           </SectionSubtitle>
-          {schema && localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-            <LazySchemaTreePreviewer schema={schema} path="" hideData={getMaskProperties()} />
-          ) : (
+
+          {schema && (
             <JsonSchemaViewer
               schema={getOriginalObject(schema)}
               resolveRef={refResolver}

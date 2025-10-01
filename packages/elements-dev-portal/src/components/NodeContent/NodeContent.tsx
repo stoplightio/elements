@@ -87,7 +87,6 @@ export const NodeContent = ({
           <Docs
             nodeType={node.type as NodeType}
             nodeData={node.data}
-            disableProps={node?.disableProps}
             nodeTitle={node.title}
             layoutOptions={{
               compact,
@@ -131,6 +130,7 @@ const NodeLinkContext = React.createContext<[Node, CustomLinkComponent] | undefi
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) => {
+  console.log('LinkComponent href-----', href);
   const ctx = React.useContext(NodeLinkContext);
   const routerKind = React.useContext(RouterTypeContext);
 
@@ -162,6 +162,8 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
 
   if (href && ctx) {
     const [node, Link] = ctx;
+    console.log('LinkComponent node-----', node);
+
     // Resolve relative file URI with
     const { fileUri } = getNodeUriParts(node.uri);
     const { fileUri: hrefFileUri } = getNodeUriParts(href);
