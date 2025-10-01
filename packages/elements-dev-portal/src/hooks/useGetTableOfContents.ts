@@ -10,6 +10,8 @@ export function useGetTableOfContents({ projectId, branchSlug }: { projectId: st
   return useQuery(
     [...devPortalCacheKeys.branchTOC(projectId, branchSlug ?? ''), platformUrl, isLoggedIn],
     () => getTableOfContents({ projectId, branchSlug, platformUrl, platformAuthToken }),
-    { enabled: projectId ? true : false },
+    // Here projectId cHJqOjA is an encoded value of zero,
+    // hence avoiding the graphql call for invalid project id
+    { enabled: projectId !== 'cHJqOjA' ? true : false },
   );
 }
