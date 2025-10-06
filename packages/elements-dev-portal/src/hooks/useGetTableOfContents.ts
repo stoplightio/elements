@@ -12,6 +12,6 @@ export function useGetTableOfContents({ projectId, branchSlug }: { projectId: st
     () => getTableOfContents({ projectId, branchSlug, platformUrl, platformAuthToken }),
     // Here projectId cHJqOjA is an encoded value of zero,
     // hence avoiding the graphql call for invalid project id
-    { enabled: projectId !== 'cHJqOjA' ? true : false },
+    { enabled: projectId && projectId !== 'cHJqOjA' ? true : false },
   );
 }
