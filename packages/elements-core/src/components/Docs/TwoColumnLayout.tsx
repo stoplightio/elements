@@ -17,14 +17,10 @@ export const TwoColumnLayout = React.forwardRef<HTMLDivElement, TwoColumnLayoutP
           {left}
         </Box>
 
-        {localStorage.getItem('use_new_mask_workflow') === 'true' ? (
-          <></>
-        ) : (
-          right && (
-            <Box data-testid="two-column-right" ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
-              {right}
-            </Box>
-          )
+        {right && (
+          <Box data-testid="two-column-right" ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
+            {right}
+          </Box>
         )}
       </Flex>
     </VStack>
