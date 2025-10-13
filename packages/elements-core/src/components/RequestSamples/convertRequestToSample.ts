@@ -12,8 +12,11 @@ export const convertRequestToSample = async (
 
   try {
     const snippet = new HTTPSnippet(request);
-
+    console.log('Request -------', request);
+    console.log('SNippet -------', snippet);
     let converted = await snippet.convert(language, library);
+
+    console.log('Converted -------', converted);
 
     if (Array.isArray(converted)) {
       converted = converted[0];
@@ -22,7 +25,26 @@ export const convertRequestToSample = async (
     }
 
     if (typeof converted === 'string') {
-      converted = converted.replace(/%7B/g, '{').replace(/%7D/g, '}');
+      // Only decode curly brackets in URL path portion (before ?)
+      // This preserves placeholder parameters like {docId} in paths while keeping
+      // query parameters properly encoded
+      converted = converted.replace(/(https?:\/\/[^\s'"]+)/g, urlMatch => {
+        const queryIndex = urlMatch.indexOf('?');
+        if (queryIndex === -1) {
+          // No query string, decode all curly brackets in the URL
+          return urlMatch.replace(/%7B/g, '{').replace(/%7D/g, '}');
+        } else {
+          // Split URL into path and query parts
+          const pathPart = urlMatch.substring(0, queryIndex);
+          const queryPart = urlMatch.substring(queryIndex);
+
+          // Decode curly brackets only in path part
+          const decodedPath = pathPart.replace(/%7B/g, '{').replace(/%7D/g, '}');
+
+          // Keep query part as-is (encoded)
+          return decodedPath + queryPart;
+        }
+      });
 
       if (language === 'shell' && library === 'curl') {
         // Check if Content-Type is application/x-www-form-urlencoded
@@ -35,7 +57,7 @@ export const convertRequestToSample = async (
         }
       }
     }
-
+    console.log('COnverted after ----', converted);
     return converted;
   } catch (err) {
     console.error(err);
