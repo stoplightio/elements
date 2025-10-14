@@ -92,8 +92,8 @@ const ModelComponent: React.FC<ModelProps> = ({
     }
     return absolutePathsToHide;
   };
-  const shouldUseLazySchema = disableProps?.some((entry: { isComplex: boolean }) => entry.isComplex === true);
-  console.log('!!!!! shouldUseLazySchema model!!!!', shouldUseLazySchema);
+  const shouldUseLazySchema = disableProps && disableProps?.models ? disableProps.models.some((entry: { isComplex: boolean }) => entry.isComplex === true) : false;
+  
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && (
