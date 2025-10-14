@@ -187,7 +187,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     if (isRoot) return false;
     if (isPathHidden(path, hideData, complexData) && thisNodeRequiredOverride === undefined) return true;
     return false;
-  }, [path, hideData, isRoot, thisNodeRequiredOverride]);
+  }, [path, hideData, isRoot, thisNodeRequiredOverride, complexData]);
 
   if (!schema || shouldHideNode) {
     return null;
