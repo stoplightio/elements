@@ -25,22 +25,15 @@ export const convertRequestToSample = async (
       // This preserves placeholder parameters like {docId} in paths while keeping
       // query parameters properly encoded
       const urlRegex = /(https?:\/\/[^\s'"]+)/g;
-      converted = converted.replace(urlRegex, urlMatch => {
-        const queryIndex = urlMatch.indexOf('?');
-        if (queryIndex === -1) {
-          // No query string, decode all curly brackets in the URL
-          return urlMatch.replace(/%7B/g, '{').replace(/%7D/g, '}');
-        } else {
-          // Split URL into path and query parts
-          const pathPart = urlMatch.substring(0, queryIndex);
-          const queryPart = urlMatch.substring(queryIndex);
 
-          // Decode curly brackets only in path part
-          const decodedPath = pathPart.replace(/%7B/g, '{').replace(/%7D/g, '}');
+      converted = converted.replace(urlRegex, url => {
+        const [pathPart, queryPart] = url.split('?', 2);
 
-          // Keep query part as-is (encoded)
-          return decodedPath + queryPart;
-        }
+        // Decode only curly brackets in the path part
+        const decodedPath = pathPart.replace(/%7B/g, '{').replace(/%7D/g, '}');
+
+        // Keep the query part (if any) as-is
+        return queryPart ? `${decodedPath}?${queryPart}` : decodedPath;
       });
 
       if (language === 'shell' && library === 'curl') {
