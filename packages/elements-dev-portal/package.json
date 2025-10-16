@@ -65,7 +65,7 @@
   },
   "dependencies": {
     "@stoplight/markdown-viewer": "^5.7.1",
-    "@stoplight/mosaic": "^1.53.4",
+    "@stoplight/mosaic": "^1.53.5",
     "@stoplight/elements-core": "~9.0.8",
     "@stoplight/path": "^1.3.2",
     "@stoplight/types": "^14.0.0",
