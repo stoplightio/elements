@@ -90,15 +90,15 @@ describe('curly bracket encoding', () => {
     bodySize: -1,
   };
 
-  test('should preserve curly brackets in query parameters but decode them in path parameters', async () => {
+  it('should preserve curly brackets in query parameters but decode them in path parameters', async () => {
     const result = await convertRequestToSample('shell', 'curl', harWithCurlyBracketsInQuery);
-    
+
     expect(result).toContain('/todos/{todoId}'); // Path parameters should be decoded to show placeholders
     expect(result).toContain('%7B'); // Query parameters should remain encoded
     expect(result).toContain('%7D'); // Query parameters should remain encoded
   });
 
-  test('should handle mixed curly brackets in path and query correctly', async () => {
+  it('should handle mixed curly brackets in path and query correctly', async () => {
     const harMixed = {
       ...harWithCurlyBracketsInQuery,
       url: 'https://api.example.com/search/{docId}',
@@ -111,7 +111,7 @@ describe('curly bracket encoding', () => {
     };
 
     const result = await convertRequestToSample('shell', 'curl', harMixed);
-    
+
     expect(result).toContain('/search/{docId}'); // Path parameter should show placeholder
     expect(result).toContain('%7B%22categories%22'); // Query parameter curly brackets should be encoded
   });
