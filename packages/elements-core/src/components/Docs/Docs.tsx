@@ -215,18 +215,55 @@ export interface ParsedDocsProps extends BaseDocsProps {
   disableProps?: any;
 }
 
+type DisablePropItem = {
+  location: string;
+  paths: string;
+  isComplex: boolean;
+};
+
+type DisableProps =
+  | {
+      request?: DisablePropItem[];
+      response?: Record<string, DisablePropItem[]>;
+      models?: DisablePropItem[];
+    }
+  | null
+  | undefined;
+
+type TryItVisibility = {
+  hideOperationTryIt: boolean;
+  hideModelTryIt: boolean;
+};
+
+const getTryItVisibility = (disableProps: DisableProps): TryItVisibility => {
+  if (!disableProps)
+    return { hideOperationTryIt: false, hideModelTryIt: false };
+
+  const requestHasComplex = disableProps.request?.some(item => item.isComplex) ?? false;
+
+  const responseHasComplex = Object.values(disableProps.response || {}).some(arr => arr.some(item => item.isComplex));
+
+  const hideOperationTryIt = requestHasComplex || responseHasComplex;
+
+  const hideModelTryIt = disableProps.models?.some(item => item.isComplex) ?? false;
+
+  return { hideOperationTryIt, hideModelTryIt };
+};
+
 export const ParsedDocs = ({ node, nodeUnsupported, disableProps, ...commonProps }: ParsedDocsProps) => {
+  const { hideOperationTryIt, hideModelTryIt } = getTryItVisibility(disableProps);
+
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;
     case 'http_operation':
     case 'http_webhook':
-      return <HttpOperation data={node.data} disableProps={disableProps} {...commonProps} />;
+      return <HttpOperation data={node.data} disableProps={{ ...disableProps, hideOperationTryIt }} {...commonProps} />;
 
     case 'http_service':
       return <HttpService data={node.data} {...commonProps} />;
     case 'model':
-      return <Model data={node.data} disableProps={disableProps} {...commonProps} />;
+      return <Model data={node.data} disableProps={{ ...disableProps, hideModelTryIt }} {...commonProps} />;
     default:
       nodeUnsupported?.('invalidType');
       return null;

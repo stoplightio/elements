@@ -127,7 +127,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         className={cn('HttpOperation', className)}
         header={header}
         left={description}
-        right={!isCompact && tryItPanel}
+        right={!disableProps?.hideOperationTryIt && !isCompact && tryItPanel}
       />
     );
   },

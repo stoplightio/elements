@@ -130,7 +130,7 @@ const ModelComponent: React.FC<ModelProps> = ({
       className={cn('Model', className)}
       header={header}
       left={description}
-      right={!isCompact && modelExamples}
+      right={!disableProps?.hideModelTryIt && !isCompact && modelExamples}
     />
   );
 };
