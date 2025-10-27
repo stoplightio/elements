@@ -109,7 +109,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       <NodeVendorExtensions data={data} />
 
-      {/* {localStorage.getItem('use_new_mask_workflow') !== 'true' && isCompact && modelExamples} */}
+      {!disableProps?.hideModelTryIt && isCompact && modelExamples}
       {data && shouldUseLazySchema ? (
         <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} complexData={disableProps?.models} />
       ) : (
