@@ -173,6 +173,26 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
   disableProps?: any;
 }
 
+type DisablePropItem = {
+  location: string;
+  paths: string;
+  isComplex: boolean;
+};
+
+type DisableProps =
+  | {
+      request?: DisablePropItem[];
+      response?: Record<string, DisablePropItem[]>;
+      models?: DisablePropItem[];
+    }
+  | null
+  | undefined;
+
+type TryItVisibility = {
+  hideOperationTryIt: boolean;
+  hideModelTryIt: boolean;
+};
+
 export const Docs = React.memo<DocsProps>(
   ({
     nodeType,
@@ -212,28 +232,10 @@ export const Docs = React.memo<DocsProps>(
 
 export interface ParsedDocsProps extends BaseDocsProps {
   node: ParsedNode;
-  disableProps?: any;
+  disableProps?: DisableProps;
 }
 
-type DisablePropItem = {
-  location: string;
-  paths: string;
-  isComplex: boolean;
-};
 
-type DisableProps =
-  | {
-      request?: DisablePropItem[];
-      response?: Record<string, DisablePropItem[]>;
-      models?: DisablePropItem[];
-    }
-  | null
-  | undefined;
-
-type TryItVisibility = {
-  hideOperationTryIt: boolean;
-  hideModelTryIt: boolean;
-};
 
 const getTryItVisibility = (disableProps: DisableProps): TryItVisibility => {
   if (!disableProps) return { hideOperationTryIt: false, hideModelTryIt: false };
