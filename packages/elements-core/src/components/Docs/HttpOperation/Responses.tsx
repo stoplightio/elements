@@ -54,6 +54,7 @@ interface ResponsesProps {
   onMediaTypeChange?: (mediaType: string) => void;
   onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
+  disableProps?: DisablePropsByStatus;
 }
 
 export const Responses = ({
@@ -61,6 +62,7 @@ export const Responses = ({
   onStatusCodeChange,
   onMediaTypeChange,
   isCompact,
+  disableProps,
 }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
@@ -160,12 +162,22 @@ export const Responses = ({
       </SectionTitle>
 
       {isCompact ? (
-        <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+        <Response
+          response={response}
+          onMediaTypeChange={onMediaTypeChange}
+          disableProps={disableProps}
+          statusCode={activeResponseId}
+        />
       ) : (
         <TabPanels p={0}>
           {responses.map(response => (
             <TabPanel key={response.code} id={response.code}>
-              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
+              <Response
+                response={response}
+                onMediaTypeChange={onMediaTypeChange}
+                disableProps={disableProps}
+                statusCode={response.code}
+              />
             </TabPanel>
           ))}
         </TabPanels>
