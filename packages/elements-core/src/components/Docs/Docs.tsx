@@ -236,8 +236,7 @@ type TryItVisibility = {
 };
 
 const getTryItVisibility = (disableProps: DisableProps): TryItVisibility => {
-  if (!disableProps)
-    return { hideOperationTryIt: false, hideModelTryIt: false };
+  if (!disableProps) return { hideOperationTryIt: false, hideModelTryIt: false };
 
   const requestHasComplex = disableProps.request?.some(item => item.isComplex) ?? false;
 
