@@ -34,6 +34,7 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
+
   React.useEffect(() => {
     onChange?.(chosenContent);
     // disabling because we don't want to react on `onChange` change

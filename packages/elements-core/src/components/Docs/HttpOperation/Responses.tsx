@@ -54,7 +54,6 @@ interface ResponsesProps {
   onMediaTypeChange?: (mediaType: string) => void;
   onStatusCodeChange?: (statusCode: string) => void;
   isCompact?: boolean;
-  disableProps?: DisablePropsByStatus;
 }
 
 export const Responses = ({
@@ -62,7 +61,6 @@ export const Responses = ({
   onStatusCodeChange,
   onMediaTypeChange,
   isCompact,
-  disableProps,
 }: ResponsesProps) => {
   const responses = sortBy(
     uniqBy(unsortedResponses, r => r.code),
@@ -162,22 +160,12 @@ export const Responses = ({
       </SectionTitle>
 
       {isCompact ? (
-        <Response
-          response={response}
-          onMediaTypeChange={onMediaTypeChange}
-          disableProps={disableProps}
-          statusCode={activeResponseId}
-        />
+        <Response response={response} onMediaTypeChange={onMediaTypeChange} />
       ) : (
         <TabPanels p={0}>
           {responses.map(response => (
             <TabPanel key={response.code} id={response.code}>
-              <Response
-                response={response}
-                onMediaTypeChange={onMediaTypeChange}
-                disableProps={disableProps}
-                statusCode={response.code}
-              />
+              <Response response={response} onMediaTypeChange={onMediaTypeChange} />
             </TabPanel>
           ))}
         </TabPanels>
@@ -282,6 +270,10 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
 Response.displayName = 'HttpOperation.Response';
 
 const codeToIntentVal = (code: string): IntentVals => {
+  //Implement check here for invalid codes to avoid issues related to charAt() function
+  if (typeof code !== 'string' || code.trim() === '') {
+    return 'default';
+  }
   const firstChar = code.charAt(0);
 
   switch (firstChar) {

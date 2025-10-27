@@ -60,6 +60,7 @@ const ModelComponent: React.FC<ModelProps> = ({
             {isInternal && <InternalBadge />}
           </HStack>
         </HStack>
+
         <NodeAnnotation change={titleChanged} />
       </Box>
       {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
@@ -169,6 +170,7 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
           </Text>
         )}
       </Panel.Titlebar>
+
       <Panel.Content p={0}>
         {show || !exceedsSize(selectedExample) ? (
           <CodeViewer

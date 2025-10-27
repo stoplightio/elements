@@ -162,7 +162,6 @@ export interface DocsProps extends BaseDocsProps {
   useNodeForRefResolving?: boolean;
   refResolver?: ReferenceResolver;
   maxRefDepth?: number;
-  disableProps?: any;
 }
 
 export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
@@ -177,7 +176,6 @@ export const Docs = React.memo<DocsProps>(
   ({
     nodeType,
     nodeData,
-    disableProps,
     useNodeForRefResolving = false,
     refResolver,
     maxRefDepth,
@@ -192,7 +190,7 @@ export const Docs = React.memo<DocsProps>(
       return null;
     }
 
-    let elem = <ParsedDocs node={parsedNode} disableProps={disableProps} {...commonProps} />;
+    let elem = <ParsedDocs node={parsedNode} {...commonProps} />;
 
     if (useNodeForRefResolving) {
       elem = (
