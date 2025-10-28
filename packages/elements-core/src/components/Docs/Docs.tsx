@@ -162,6 +162,7 @@ export interface DocsProps extends BaseDocsProps {
   useNodeForRefResolving?: boolean;
   refResolver?: ReferenceResolver;
   maxRefDepth?: number;
+  disableProps?: any;
 }
 
 export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
@@ -169,12 +170,34 @@ export interface DocsComponentProps<T = unknown> extends BaseDocsProps {
    * The input data for the component to display.
    */
   data: T;
+  disableProps?: any;
 }
+
+type DisablePropItem = {
+  location: string;
+  paths: string;
+  isComplex: boolean;
+};
+
+type DisableProps =
+  | {
+      request?: DisablePropItem[];
+      response?: Record<string, DisablePropItem[]>;
+      models?: DisablePropItem[];
+    }
+  | null
+  | undefined;
+
+type TryItVisibility = {
+  hideOperationTryIt: boolean;
+  hideModelTryIt: boolean;
+};
 
 export const Docs = React.memo<DocsProps>(
   ({
     nodeType,
     nodeData,
+    disableProps,
     useNodeForRefResolving = false,
     refResolver,
     maxRefDepth,
@@ -189,7 +212,7 @@ export const Docs = React.memo<DocsProps>(
       return null;
     }
 
-    let elem = <ParsedDocs node={parsedNode} {...commonProps} />;
+    let elem = <ParsedDocs node={parsedNode} disableProps={disableProps} {...commonProps} />;
 
     if (useNodeForRefResolving) {
       elem = (
@@ -209,19 +232,37 @@ export const Docs = React.memo<DocsProps>(
 
 export interface ParsedDocsProps extends BaseDocsProps {
   node: ParsedNode;
+  disableProps?: DisableProps;
 }
 
-export const ParsedDocs = ({ node, nodeUnsupported, ...commonProps }: ParsedDocsProps) => {
+const getTryItVisibility = (disableProps: DisableProps): TryItVisibility => {
+  if (!disableProps) return { hideOperationTryIt: false, hideModelTryIt: false };
+
+  const requestHasComplex = disableProps.request?.some(item => item.isComplex) ?? false;
+
+  const responseHasComplex = Object.values(disableProps.response || {}).some(arr => arr.some(item => item.isComplex));
+
+  const hideOperationTryIt = requestHasComplex || responseHasComplex;
+
+  const hideModelTryIt = disableProps.models?.some(item => item.isComplex) ?? false;
+
+  return { hideOperationTryIt, hideModelTryIt };
+};
+
+export const ParsedDocs = ({ node, nodeUnsupported, disableProps, ...commonProps }: ParsedDocsProps) => {
+  const { hideOperationTryIt, hideModelTryIt } = getTryItVisibility(disableProps);
+
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;
     case 'http_operation':
     case 'http_webhook':
-      return <HttpOperation data={node.data} {...commonProps} />;
+      return <HttpOperation data={node.data} disableProps={{ ...disableProps, hideOperationTryIt }} {...commonProps} />;
+
     case 'http_service':
       return <HttpService data={node.data} {...commonProps} />;
     case 'model':
-      return <Model data={node.data} {...commonProps} />;
+      return <Model data={node.data} disableProps={{ ...disableProps, hideModelTryIt }} {...commonProps} />;
     default:
       nodeUnsupported?.('invalidType');
       return null;
