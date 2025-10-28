@@ -79,7 +79,7 @@ export const isResolvedObjectProxy = (someObject: object): boolean => {
 
 export const getOriginalObject = (resolvedObject: object): object => {
   if (!resolvedObject) return resolvedObject;
-  
+
   const originalObject: any = (resolvedObject as Record<symbol, object>)[originalObjectSymbol] || resolvedObject;
   if (!originalObject) {
     return resolvedObject;

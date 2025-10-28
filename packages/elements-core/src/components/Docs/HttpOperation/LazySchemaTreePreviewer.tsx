@@ -10,7 +10,7 @@ interface LazySchemaTreePreviewerProps {
   maskState?: Record<string, { checked: boolean; required: 0 | 1 | 2 }>;
   setMaskState?: React.Dispatch<React.SetStateAction<Record<string, { checked: boolean; required: 0 | 1 | 2 }>>>;
   hideData?: Array<{ path: string; required?: boolean }>;
-  complexData?: complexData;
+  complexData?: ComplexData;
   parentRequired?: string[];
   propertyKey?: string;
   _subType?: string;
@@ -24,7 +24,7 @@ interface SchemaWithEnum {
   enum?: any[];
 }
 
-type complexData = Array<{ location: string; isComplex?: boolean; paths: Array<{ path: string; required?: boolean }> }>;
+type ComplexData = Array<{ location: string; isComplex?: boolean; paths: Array<{ path: string; required?: boolean }> }>;
 
 type Schema = SchemaWithMinItems | SchemaWithEnum | object;
 
@@ -108,7 +108,7 @@ function isRequiredOverride(path: string, hideData: Array<{ path: string; requir
 }
 
 // New utility for array/items-based hiding
-function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>, complexData: complexData) {
+function isPathHidden(path: string, hideData: Array<{ path: string; required?: boolean }>, complexData: ComplexData) {
   const isComplex = checkIfIsComplex(path, complexData);
 
   if (isComplex === null) {
@@ -145,7 +145,7 @@ function isPathHidden(path: string, hideData: Array<{ path: string; required?: b
   }
 }
 
-const checkIfIsComplex = (path: string, complexData: complexData) => {
+const checkIfIsComplex = (path: string, complexData: ComplexData) => {
   let isComplex = null;
   for (const complex of complexData) {
     if (path.startsWith(complex.location)) {

@@ -235,8 +235,6 @@ export interface ParsedDocsProps extends BaseDocsProps {
   disableProps?: DisableProps;
 }
 
-
-
 const getTryItVisibility = (disableProps: DisableProps): TryItVisibility => {
   if (!disableProps) return { hideOperationTryIt: false, hideModelTryIt: false };
 
