@@ -30,10 +30,12 @@ import { Callbacks } from './Callbacks';
 import { Request } from './Request';
 import { Responses } from './Responses';
 
-export type HttpOperationProps = DocsComponentProps<IHttpEndpointOperation>;
+export type HttpOperationProps = DocsComponentProps<IHttpEndpointOperation> & {
+  disableProps?: Record<string, any>;
+};
 
 const HttpOperationComponent = React.memo<HttpOperationProps>(
-  ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy }) => {
+  ({ className, data: unresolvedData, layoutOptions, tryItCredentialsPolicy, tryItCorsProxy, disableProps }) => {
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpEndpointOperation;
     const { ref: layoutRef, isCompact } = useIsCompact(layoutOptions);
@@ -102,13 +104,16 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
           operation={data}
           hideSecurityInfo={layoutOptions?.hideSecurityInfo}
           isHttpWebhookOperation={isHttpWebhookOperation(data)}
+          disableProps={disableProps?.request}
         />
+
         {data.responses && (
           <Responses
             responses={data.responses}
             onMediaTypeChange={setResponseMediaType}
             onStatusCodeChange={setResponseStatusCode}
             isCompact={isCompact}
+            disableProps={disableProps?.response}
           />
         )}
         {data.callbacks?.length ? <Callbacks callbacks={data.callbacks} isCompact={isCompact} /> : null}
@@ -122,7 +127,7 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
         className={cn('HttpOperation', className)}
         header={header}
         left={description}
-        right={!isCompact && tryItPanel}
+        right={!disableProps?.hideOperationTryIt && !isCompact && tryItPanel}
       />
     );
   },
