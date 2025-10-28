@@ -24,7 +24,7 @@ interface SchemaWithEnum {
   enum?: any[];
 }
 
-type complexData = Array<{ location: string; isComplex?: boolean; paths: Array<{ path: string; required?: boolean }> }>;
+type ComplexData = Array<{ location: string; isComplex?: boolean; paths: Array<{ path: string; required?: boolean }> }>;
 
 type Schema = SchemaWithMinItems | SchemaWithEnum | object;
 
