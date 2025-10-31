@@ -89,7 +89,8 @@ export const createElementClass = <P extends Record<string, any>>(
 
     disconnectedCallback() {
       if (this._mountPoint) {
-        ReactDOM.unmountComponentAtNode(this._mountPoint);
+        // Trigger unmount lifecycle without using unmountComponentAtNode which is deprecated
+        ReactDOM.render(null as any, this._mountPoint);
         this.removeChild(this._mountPoint);
         this._mountPoint = undefined;
       }
