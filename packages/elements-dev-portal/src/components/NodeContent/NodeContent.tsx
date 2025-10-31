@@ -220,6 +220,9 @@ export const getNodeUriParts = (uri: string): { fileUri: string; pointer: string
   // Guard against undefined or non-string input
   if (!uri || typeof uri !== 'string') return { fileUri: '', pointer: '' };
   const parts = uri.split(/(\.yaml|\.yml|\.json|\.md)/);
+  if (parts === undefined || void 0) {
+    return { fileUri: '', pointer: '' };
+  }
   if (!parts || parts.length === 1) {
     return { fileUri: '', pointer: parts[0] || '' };
   }
