@@ -12,6 +12,7 @@ export const convertRequestToSample = async (
 
   try {
     const snippet = new HTTPSnippet(request);
+
     let converted = await snippet.convert(language, library);
 
     if (Array.isArray(converted)) {
@@ -21,20 +22,7 @@ export const convertRequestToSample = async (
     }
 
     if (typeof converted === 'string') {
-      // Only decode curly brackets in URL path portion (before ?)
-      // This preserves placeholder parameters like {docId} in paths while keeping
-      // query parameters properly encoded
-      const urlRegex = /(https?:\/\/[^\s'"]+)/g;
-
-      converted = converted.replace(urlRegex, url => {
-        const [pathPart, queryPart] = url.split('?', 2);
-
-        // Decode only curly brackets in the path part
-        const decodedPath = pathPart.replace(/%7B/g, '{').replace(/%7D/g, '}');
-
-        // Keep the query part (if any) as-is
-        return queryPart ? `${decodedPath}?${queryPart}` : decodedPath;
-      });
+      converted = converted.replace(/%7B/g, '{').replace(/%7D/g, '}');
 
       if (language === 'shell' && library === 'curl') {
         // Check if Content-Type is application/x-www-form-urlencoded
@@ -47,6 +35,7 @@ export const convertRequestToSample = async (
         }
       }
     }
+
     return converted;
   } catch (err) {
     console.error(err);
