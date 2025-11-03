@@ -15,7 +15,6 @@ import { LoadMore } from '../../LoadMore';
 import { MarkdownViewer } from '../../MarkdownViewer';
 import { DocsComponentProps } from '..';
 import { DeprecatedBadge, InternalBadge } from '../HttpOperation/Badges';
-import LazySchemaTreePreviewer from '../HttpOperation/LazySchemaTreePreviewer';
 import { ExportButton } from '../HttpService/ExportButton';
 import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { TwoColumnLayout } from '../TwoColumnLayout';
@@ -28,7 +27,6 @@ const ModelComponent: React.FC<ModelProps> = ({
   nodeTitle,
   layoutOptions,
   exportProps,
-  disableProps,
 }) => {
   const [resolveRef, maxRefDepth] = useSchemaInlineRefResolver();
   const data = useResolvedObject(unresolvedData) as JSONSchema7;
@@ -63,6 +61,7 @@ const ModelComponent: React.FC<ModelProps> = ({
 
         <NodeAnnotation change={titleChanged} />
       </Box>
+
       {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
     </Flex>
   );
@@ -70,34 +69,6 @@ const ModelComponent: React.FC<ModelProps> = ({
   const modelExamples = !layoutOptions?.hideModelExamples && <ModelExamples data={data} isCollapsible={isCompact} />;
 
   const descriptionChanged = nodeHasChanged?.({ nodeId, attr: 'description' });
-
-  const getMaskProperties = (): Array<{ path: string; required?: boolean }> => {
-    const disablePropsConfig = disableProps?.models;
-    const absolutePathsToHide: Array<{ path: string; required?: boolean }> = [];
-    if (disableProps?.models) {
-      disablePropsConfig.forEach((configEntry: any) => {
-        const { location, paths, isComplex } = configEntry;
-        if (paths.length === 0 && !isComplex) {
-          absolutePathsToHide.push({ path: location });
-        } else {
-          paths.forEach((item: any) => {
-            const fullPath = location === '#' ? item?.path : `${location}/${item.path}`;
-            let object: any = { path: fullPath };
-            if (item.hasOwnProperty('required')) {
-              object = { ...object, required: item?.required };
-            }
-            absolutePathsToHide.push(object);
-          });
-        }
-      });
-    }
-    return absolutePathsToHide;
-  };
-  const shouldUseLazySchema =
-    disableProps && disableProps?.models
-      ? disableProps.models.some((entry: { isComplex: boolean }) => entry.isComplex === true)
-      : false;
-
   const description = (
     <VStack spacing={10}>
       {data.description && data.type === 'object' && (
@@ -109,19 +80,16 @@ const ModelComponent: React.FC<ModelProps> = ({
 
       <NodeVendorExtensions data={data} />
 
-      {!disableProps?.hideModelTryIt && isCompact && modelExamples}
-      {data && shouldUseLazySchema ? (
-        <LazySchemaTreePreviewer schema={data} hideData={getMaskProperties()} complexData={disableProps?.models} />
-      ) : (
-        <JsonSchemaViewer
-          resolveRef={resolveRef}
-          maxRefDepth={maxRefDepth}
-          schema={getOriginalObject(data)}
-          nodeHasChanged={nodeHasChanged}
-          renderExtensionAddon={renderExtensionAddon}
-          skipTopLevelDescription
-        />
-      )}
+      {isCompact && modelExamples}
+
+      <JsonSchemaViewer
+        resolveRef={resolveRef}
+        maxRefDepth={maxRefDepth}
+        schema={getOriginalObject(data)}
+        nodeHasChanged={nodeHasChanged}
+        renderExtensionAddon={renderExtensionAddon}
+        skipTopLevelDescription
+      />
     </VStack>
   );
 
@@ -131,7 +99,7 @@ const ModelComponent: React.FC<ModelProps> = ({
       className={cn('Model', className)}
       header={header}
       left={description}
-      right={!disableProps?.hideModelTryIt && !isCompact && modelExamples}
+      right={!isCompact && modelExamples}
     />
   );
 };

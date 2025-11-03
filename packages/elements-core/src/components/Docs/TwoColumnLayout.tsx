@@ -16,6 +16,7 @@ export const TwoColumnLayout = React.forwardRef<HTMLDivElement, TwoColumnLayoutP
         <Box data-testid="two-column-left" w={0} flex={1}>
           {left}
         </Box>
+
         {right && (
           <Box data-testid="two-column-right" ml={16} pos="relative" w="2/5" style={{ maxWidth: 500 }}>
             {right}
