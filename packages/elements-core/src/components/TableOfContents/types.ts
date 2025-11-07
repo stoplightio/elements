@@ -28,8 +28,10 @@ export type TableOfContentsGroupItem =
 
 export type TableOfContentsGroup = {
   title: string;
+  groupId: number;
   items: TableOfContentsGroupItem[];
   itemsType?: 'article' | 'http_operation' | 'http_webhook' | 'model';
+  groupIndex?: number;
 };
 
 export type TableOfContentsExternalLink = {
@@ -46,6 +48,14 @@ export type TableOfContentsNode<
   type: T;
   meta: string;
   version?: string;
+  groupIndex?: number;
+  groupId?: number;
 };
 
 export type TableOfContentsNodeGroup = TableOfContentsNode<'http_service'> & TableOfContentsGroup;
+export type GroupContextType = {
+  lastActiveGroupIndex: number | null;
+  lastActiveGroupId: number | null;
+  setLastActiveGroupIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  setLastActiveGroupId: React.Dispatch<React.SetStateAction<number | null>>;
+};

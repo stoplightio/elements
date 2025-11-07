@@ -1,6 +1,7 @@
 import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
+import { createContext, ReactNode, useState } from 'react';
 
 import { useFirstRender } from '../../hooks/useFirstRender';
 import { resolveRelativeLink } from '../../utils/string';
@@ -15,6 +16,7 @@ import {
 } from './constants';
 import {
   CustomLinkComponent,
+  GroupContextType,
   TableOfContentsDivider,
   TableOfContentsGroup,
   TableOfContentsGroupItem,
@@ -37,6 +39,28 @@ const ActiveIdContext = React.createContext<string | undefined>(undefined);
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
 LinkContext.displayName = 'LinkContext';
 
+// Create the context with a default undefined value
+export const GroupContext = createContext<GroupContextType | undefined>(undefined);
+
+// Provider component
+const GroupProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [lastActiveGroupIndex, setLastActiveGroupIndex] = useState<number | null>(null); // default value 0
+  const [lastActiveGroupId, setLastActiveGroupId] = useState<number | null>(null);
+
+  return (
+    <GroupContext.Provider
+      value={{
+        lastActiveGroupIndex,
+        lastActiveGroupId,
+
+        setLastActiveGroupIndex,
+        setLastActiveGroupId,
+      }}
+    >
+      {children}
+    </GroupContext.Provider>
+  );
+};
 export const TableOfContents = React.memo<TableOfContentsProps>(
   ({
     tree,
@@ -47,6 +71,50 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     isInResponsiveMode = false,
     onLinkClick,
   }) => {
+    const addGroupIndex = React.useCallback(
+      (arr: any[], groupId: number | null, isHttpService: boolean, groupIndex: number | null = null): any[] => {
+        return arr.map((item, key) => {
+          // Early return for title-only items
+          if (Object.keys(item).length === 1 && item.title) {
+            return item;
+          }
+
+          const isHttpServiceItem = item?.type === 'http_service';
+          const isGroupItem = !item?.type && item?.items;
+          let GroupId = groupId;
+          if (!GroupId) {
+            GroupId = key;
+          }
+          // if (Object.keys(item).length === 2 && item?.items) {
+          //   GroupId = key;
+          // }
+          const shouldUseHttpService = !isGroupItem && (isHttpService || isHttpServiceItem);
+          const currentGroupIndex = isHttpServiceItem ? key : groupIndex ?? key;
+
+          let newItem = {
+            ...item,
+            groupIndex: shouldUseHttpService ? currentGroupIndex : key,
+          };
+          if (GroupId !== null) {
+            newItem = {
+              ...newItem,
+              groupId: GroupId,
+            };
+          }
+
+          // Process items array if it exists
+          if (Array.isArray(item.items)) {
+            newItem.items = addGroupIndex(item.items, GroupId, shouldUseHttpService, currentGroupIndex);
+          }
+
+          return newItem;
+        });
+      },
+      [],
+    );
+
+    // Example usage:
+    const updatedTree = addGroupIndex(tree, null, false);
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
     const firstRender = useFirstRender();
@@ -76,24 +144,26 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       <Box ref={container} w="full" bg={isInResponsiveMode ? 'canvas' : 'canvas-100'} overflowY="auto">
         <Box ref={child} my={3}>
           <LinkContext.Provider value={Link}>
-            <ActiveIdContext.Provider value={activeId}>
-              {tree.map((item, key) => {
-                if (isDivider(item)) {
-                  return <Divider key={key} item={item} isInResponsiveMode={isInResponsiveMode} />;
-                }
+            <GroupProvider>
+              <ActiveIdContext.Provider value={activeId}>
+                {updatedTree.map((item, key: number) => {
+                  if (isDivider(item)) {
+                    return <Divider key={key} item={item} isInResponsiveMode={isInResponsiveMode} />;
+                  }
 
-                return (
-                  <GroupItem
-                    key={key}
-                    item={item}
-                    depth={0}
-                    maxDepthOpenByDefault={maxDepthOpenByDefault}
-                    onLinkClick={onLinkClick}
-                    isInResponsiveMode={isInResponsiveMode}
-                  />
-                );
-              })}
-            </ActiveIdContext.Provider>
+                  return (
+                    <GroupItem
+                      key={key}
+                      item={item}
+                      depth={0}
+                      maxDepthOpenByDefault={maxDepthOpenByDefault}
+                      onLinkClick={onLinkClick}
+                      isInResponsiveMode={isInResponsiveMode}
+                    />
+                  );
+                })}
+              </ActiveIdContext.Provider>
+            </GroupProvider>
           </LinkContext.Provider>
         </Box>
       </Box>
@@ -198,8 +268,14 @@ const Group = React.memo<{
   onLinkClick?(): void;
 }>(({ depth, item, maxDepthOpenByDefault, isInResponsiveMode, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
+  const groupContext = React.useContext(GroupContext);
   const [isOpen, setIsOpen] = React.useState(() => isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault));
-  const hasActive = !!activeId && hasActiveItem(item.items, activeId);
+  if (groupContext?.lastActiveGroupIndex === null && item?.groupIndex !== undefined) {
+    groupContext.setLastActiveGroupIndex(item.groupId);
+  }
+
+  const hasActive =
+    groupContext?.lastActiveGroupId === item?.groupId && !!activeId && hasActiveItem(item.items, activeId);
 
   // If maxDepthOpenByDefault changes, we want to update all the isOpen states (used in live preview mode)
   React.useEffect(() => {
@@ -352,7 +428,15 @@ const Node = React.memo<{
   onLinkClick?(): void;
 }>(({ item, depth, meta, showAsActive, isInResponsiveMode, onClick, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
-  const isActive = activeId === item.slug || activeId === item.id;
+  const groupContext = React.useContext(GroupContext);
+
+  const groupIndex = item.groupIndex;
+
+  const check1 = groupIndex === groupContext?.lastActiveGroupIndex;
+  const check2 = activeId === item.slug || activeId === item.id;
+
+  // const isActive = nodeTitle === lastVisitedNodeTitle && (activeId === item.slug || activeId === item.id);
+  const isActive = check1 && check2;
   const LinkComponent = React.useContext(LinkContext);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -361,6 +445,13 @@ const Node = React.memo<{
       e.stopPropagation();
       e.preventDefault();
     } else {
+      groupContext?.setLastActiveGroupIndex(item.groupIndex || 0);
+      if (item?.groupId !== undefined) {
+        groupContext?.setLastActiveGroupId(item.groupId);
+      } else {
+        groupContext?.setLastActiveGroupId(null);
+      }
+
       onLinkClick();
     }
 
@@ -390,7 +481,7 @@ const Node = React.memo<{
         }
         meta={meta}
         isInResponsiveMode={isInResponsiveMode}
-        onClick={handleClick}
+        onClick={e => handleClick(e, item)}
       />
     </Box>
   );
