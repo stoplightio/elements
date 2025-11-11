@@ -17,33 +17,6 @@ export type TableOfContentsProps = BoxProps<'div'> & {
   isInResponsiveMode?: boolean;
   onLinkClick?(): void;
 };
-export type GroupContextType = {
-  lastActiveGroupIndex: number | null;
-  lastActiveGroupId: number | null;
-  setLastActiveGroupIndex: React.Dispatch<React.SetStateAction<number | null>>;
-  setLastActiveGroupId: React.Dispatch<React.SetStateAction<number | null>>;
-};
-export const GroupContext = React.createContext<GroupContextType | undefined>(undefined);
-
-// Provider component
-const GroupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lastActiveGroupIndex, setLastActiveGroupIndex] = React.useState<number | null>(null); // default value 0
-  const [lastActiveGroupId, setLastActiveGroupId] = React.useState<number | null>(null);
-
-  return (
-    <GroupContext.Provider
-      value={{
-        lastActiveGroupIndex,
-        lastActiveGroupId,
-
-        setLastActiveGroupIndex,
-        setLastActiveGroupId,
-      }}
-    >
-      {children}
-    </GroupContext.Provider>
-  );
-};
 
 export const TableOfContents = ({
   tableOfContents,
@@ -59,17 +32,15 @@ export const TableOfContents = ({
   return (
     <Flex bg={isInResponsiveMode ? 'canvas' : 'canvas-100'} {...boxProps} flexDirection="col" maxH="full">
       <Flex flexGrow flexShrink overflowY="auto">
-        <GroupProvider>
-          <ElementsTableOfContents
-            tree={tableOfContents.items}
-            activeId={activeId}
-            Link={Link}
-            maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
-            externalScrollbar={externalScrollbar}
-            onLinkClick={onLinkClick}
-            isInResponsiveMode={isInResponsiveMode}
-          />
-        </GroupProvider>
+        <ElementsTableOfContents
+          tree={tableOfContents.items}
+          activeId={activeId}
+          Link={Link}
+          maxDepthOpenByDefault={collapseTableOfContents ? 0 : 1}
+          externalScrollbar={externalScrollbar}
+          onLinkClick={onLinkClick}
+          isInResponsiveMode={isInResponsiveMode}
+        />
       </Flex>
 
       {tableOfContents.hide_powered_by ? null : (
