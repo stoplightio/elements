@@ -31,7 +31,7 @@ export type TableOfContentsGroup = {
   groupId: number;
   items: TableOfContentsGroupItem[];
   itemsType?: 'article' | 'http_operation' | 'http_webhook' | 'model';
-  groupIndex?: number;
+  groupIndex: number;
 };
 
 export type TableOfContentsExternalLink = {
@@ -48,8 +48,8 @@ export type TableOfContentsNode<
   type: T;
   meta: string;
   version?: string;
-  groupIndex?: number;
-  groupId?: number;
+  groupIndex: number;
+  groupId: number;
 };
 
 export type TableOfContentsNodeGroup = TableOfContentsNode<'http_service'> & TableOfContentsGroup;

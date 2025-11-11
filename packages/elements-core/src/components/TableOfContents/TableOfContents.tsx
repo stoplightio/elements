@@ -26,7 +26,6 @@ import {
 } from './types';
 import {
   getHtmlIdFromItemId,
-  hasActiveItem,
   isDivider,
   isExternalLink,
   isGroup,
@@ -91,9 +90,6 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
           if (GroupIndex === null) {
             GroupIndex = key;
           }
-          // if (Object.keys(item).length === 2 && item?.items) {
-          //   GroupId = key;
-          // }
           const shouldUseHttpService = !isGroupItem && (isHttpService || isHttpServiceItem);
           const currentGroupIndex = isHttpServiceItem ? key : GroupIndex;
 
@@ -148,9 +144,6 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       [groupContext],
     );
     const updatedTree = addGroupIndex(tree, null, false);
-    React.useEffect(() => {
-      getInitialValues(updatedTree);
-    }, [getInitialValues, updatedTree]);
 
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
@@ -183,22 +176,24 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
           <LinkContext.Provider value={Link}>
             <ActiveIdContext.Provider value={activeId}>
               <GroupProvider>
-                {updatedTree.map((item, key: number) => {
-                  if (isDivider(item)) {
-                    return <Divider key={key} item={item} isInResponsiveMode={isInResponsiveMode} />;
-                  }
+                <TOCContainer updatedTree={updatedTree}>
+                  {updatedTree.map((item, key: number) => {
+                    if (isDivider(item)) {
+                      return <Divider key={key} item={item} isInResponsiveMode={isInResponsiveMode} />;
+                    }
 
-                  return (
-                    <GroupItem
-                      key={key}
-                      item={item}
-                      depth={0}
-                      maxDepthOpenByDefault={maxDepthOpenByDefault}
-                      onLinkClick={onLinkClick}
-                      isInResponsiveMode={isInResponsiveMode}
-                    />
-                  );
-                })}
+                    return (
+                      <GroupItem
+                        key={key}
+                        item={item}
+                        depth={0}
+                        maxDepthOpenByDefault={maxDepthOpenByDefault}
+                        onLinkClick={onLinkClick}
+                        isInResponsiveMode={isInResponsiveMode}
+                      />
+                    );
+                  })}
+                </TOCContainer>
               </GroupProvider>
             </ActiveIdContext.Provider>
           </LinkContext.Provider>
@@ -230,6 +225,51 @@ const Divider = React.memo<{
 });
 Divider.displayName = 'Divider';
 
+const TOCContainer = React.memo<{
+  updatedTree: TableOfContentsGroupItem[];
+  children: React.ReactNode;
+}>(({ children, updatedTree }) => {
+  const groupContext = React.useContext(GroupContext);
+  const getInitialValues = React.useCallback(
+    (tree: any[]): boolean => {
+      for (const item of tree) {
+        if (item?.items && item.type === 'http_service') {
+          if (item?.groupId != null) {
+            groupContext?.setLastActiveGroupId(item.groupId);
+          }
+
+          if (item?.groupIndex != null) {
+            groupContext?.setLastActiveGroupIndex(item.groupIndex);
+          }
+
+          return true;
+        } else if (item?.items) {
+          const found = getInitialValues(item.items);
+          if (found) return true;
+        } else if (Object.keys(item).length !== 1 && !groupContext?.lastActiveGroupIndex) {
+          if (item?.groupId != null) {
+            groupContext?.setLastActiveGroupId(item.groupId);
+          }
+
+          if (item?.groupIndex != null) {
+            groupContext?.setLastActiveGroupIndex(item.groupIndex);
+          }
+
+          return true;
+        }
+      }
+
+      return false;
+    },
+    [groupContext],
+  );
+  React.useEffect(() => {
+    getInitialValues(updatedTree);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <Box>{children}</Box>;
+});
+TOCContainer.displayName = 'TOCContainer';
 const GroupItem = React.memo<{
   depth: number;
   item: TableOfContentsGroupItem;
@@ -237,8 +277,6 @@ const GroupItem = React.memo<{
   maxDepthOpenByDefault?: number;
   onLinkClick?(): void;
 }>(({ item, depth, maxDepthOpenByDefault, isInResponsiveMode, onLinkClick }) => {
-  // const groupContext = React.useContext(GroupContext);
-
   if (isExternalLink(item)) {
     return (
       <Box as="a" href={item.url} target="_blank" rel="noopener noreferrer" display="block">
@@ -309,12 +347,40 @@ const Group = React.memo<{
   const activeId = React.useContext(ActiveIdContext);
   const groupContext = React.useContext(GroupContext);
   const [isOpen, setIsOpen] = React.useState(() => isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault));
-  // if (groupContext?.lastActiveGroupIndex === null && item?.groupIndex !== undefined) {
-  //   groupContext.setLastActiveGroupIndex(item.groupId);
-  // }
+  function isActiveGroup(
+    items: any[],
+    activeId: string | undefined,
+    contextId: number | undefined | null,
+    contextIndex: number | undefined | null,
+  ): boolean {
+    for (const element of items) {
+      if (!('items' in element)) {
+        if ('slug' in element || 'id' in element) {
+          if (
+            !!activeId &&
+            (activeId === element.slug || activeId === element.id) &&
+            contextId === element.groupId &&
+            contextIndex === element.groupIndex
+          ) {
+            return true;
+          }
+        }
+      } else if (Array.isArray(element.items)) {
+        const found = isActiveGroup(element.items, activeId, contextId, contextIndex);
+        if (found) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
 
-  const hasActive =
-    groupContext?.lastActiveGroupId === item?.groupId && !!activeId && hasActiveItem(item.items, activeId);
+  const hasActive = isActiveGroup(
+    item.items,
+    activeId,
+    groupContext?.lastActiveGroupId,
+    groupContext?.lastActiveGroupIndex,
+  );
 
   // If maxDepthOpenByDefault changes, we want to update all the isOpen states (used in live preview mode)
   React.useEffect(() => {
@@ -333,6 +399,7 @@ const Group = React.memo<{
   }, [hasActive]);
 
   const handleClick = (e: React.MouseEvent, forceOpen?: boolean) => {
+    onLinkClick();
     setIsOpen(forceOpen ? true : !isOpen);
   };
 
@@ -474,8 +541,6 @@ const Node = React.memo<{
 
   const check1 = groupIndex === groupContext?.lastActiveGroupIndex && groupId === groupContext?.lastActiveGroupId;
   const check2 = activeId === item.slug || activeId === item.id;
-
-  // const isActive = nodeTitle === lastVisitedNodeTitle && (activeId === item.slug || activeId === item.id);
   const isActive = check1 && check2;
   const LinkComponent = React.useContext(LinkContext);
 
@@ -487,11 +552,6 @@ const Node = React.memo<{
     } else {
       groupContext?.setLastActiveGroupIndex(item.groupIndex);
       groupContext?.setLastActiveGroupId(item.groupId);
-      // if (item?.groupId !== undefined) {
-      //   groupContext?.setLastActiveGroupId(item.groupId);
-      // } else {
-      //   groupContext?.setLastActiveGroupId(null);
-      // }
 
       onLinkClick();
     }
