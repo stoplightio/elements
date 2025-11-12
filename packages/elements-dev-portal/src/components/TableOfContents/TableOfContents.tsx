@@ -28,7 +28,6 @@ export const TableOfContents = ({
   onLinkClick,
   ...boxProps
 }: TableOfContentsProps) => {
-  console.log('from packages/elements-dev-portal/src/components/TableOfContents/TableOfContents.tsx');
   return (
     <Flex bg={isInResponsiveMode ? 'canvas' : 'canvas-100'} {...boxProps} flexDirection="col" maxH="full">
       <Flex flexGrow flexShrink overflowY="auto">
