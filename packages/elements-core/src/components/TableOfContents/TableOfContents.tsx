@@ -399,7 +399,6 @@ const Group = React.memo<{
   }, [hasActive]);
 
   const handleClick = (e: React.MouseEvent, forceOpen?: boolean) => {
-    onLinkClick();
     setIsOpen(forceOpen ? true : !isOpen);
   };
 
