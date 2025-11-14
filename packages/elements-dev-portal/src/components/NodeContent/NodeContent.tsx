@@ -88,7 +88,6 @@ export const NodeContent = ({
             nodeType={node.type as NodeType}
             nodeData={node.data}
             nodeTitle={node.title}
-            disableProps={node?.disableProps}
             layoutOptions={{
               compact,
               hideTryIt: hideTryIt,
