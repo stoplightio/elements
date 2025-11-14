@@ -227,6 +227,8 @@ export const getNodeUriParts = (uri: string): { fileUri: string; pointer: string
   if (!parts || parts.length === 1) {
     return { fileUri: '', pointer: parts[0] || '' };
   }
+
   const fileUri = `${parts[0] || ''}${parts[1] || ''}`;
+
   return { fileUri, pointer: parts[2] || '' };
 };
