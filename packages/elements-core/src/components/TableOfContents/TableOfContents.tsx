@@ -71,44 +71,28 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     onLinkClick,
   }) => {
     const groupContext = React.useContext(GroupContext);
-    const addGroupIndex = React.useCallback(
-      (arr: any[], groupId: number | null, isHttpService: boolean, groupIndex: number | null = null): any[] => {
-        return arr.map((item, key) => {
-          // Early return for title-only items
+    const addGroupIndex = React.useCallback((arr: any[], groupId: number | null): any[] => {
+      return arr.map((item, key) => {
+        // Early return for title-only items
 
-          if (isDivider(item) || isExternalLink(item)) {
-            return item;
-          }
+        if (isDivider(item) || isExternalLink(item)) {
+          return item;
+        }
 
-          const isHttpServiceItem = item?.type === 'http_service';
-          const isGroupItem = !item?.type && item?.items && !('itemsType' in item);
-          let GroupId = groupId;
-          if (GroupId === null) {
-            GroupId = key;
-          }
-          let GroupIndex = groupIndex;
-          if (GroupIndex === null) {
-            GroupIndex = key;
-          }
-          const shouldUseHttpService = !isGroupItem && (isHttpService || isHttpServiceItem);
-          const currentGroupIndex = isHttpServiceItem ? key : GroupIndex;
+        let newItem = {
+          ...item,
+          groupIndex: key,
+          groupId: groupId || key,
+        };
 
-          let newItem = {
-            ...item,
-            groupIndex: shouldUseHttpService ? currentGroupIndex : key,
-            groupId: GroupId,
-          };
+        // Process items array if it exists
+        if (Array.isArray(item.items)) {
+          newItem.items = addGroupIndex(item.items, key);
+        }
 
-          // Process items array if it exists
-          if (Array.isArray(item.items)) {
-            newItem.items = addGroupIndex(item.items, GroupId, shouldUseHttpService, currentGroupIndex);
-          }
-
-          return newItem;
-        });
-      },
-      [],
-    );
+        return newItem;
+      });
+    }, []);
 
     const getInitialValues = React.useCallback(
       (tree: any[]): boolean => {
@@ -143,7 +127,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       },
       [groupContext],
     );
-    const updatedTree = addGroupIndex(tree, null, false);
+    const updatedTree = addGroupIndex(tree, null);
 
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
