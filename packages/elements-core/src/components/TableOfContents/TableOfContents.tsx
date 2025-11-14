@@ -39,20 +39,30 @@ const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefin
 LinkContext.displayName = 'LinkContext';
 
 // Create the context with a default undefined value
-export const GroupContext = createContext<GroupContextType | undefined>(undefined);
+export const GroupContext = createContext<GroupContextType>({
+  lastActiveIndex: null,
+  lastActiveParentId: null,
+  lastActiveGroupId: null,
+  setLastActiveIndex: () => {},
+  setLastActiveParentId: () => {},
+  setLastActiveGroupId: () => {},
+});
 
 // Provider component
 const GroupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lastActiveGroupIndex, setLastActiveGroupIndex] = useState<number | null>(null); // default value 0
+  const [lastActiveIndex, setLastActiveIndex] = useState<number | null>(null); // default value 0
+  const [lastActiveParentId, setLastActiveParentId] = useState<number | null>(null);
   const [lastActiveGroupId, setLastActiveGroupId] = useState<number | null>(null);
 
   return (
     <GroupContext.Provider
       value={{
-        lastActiveGroupIndex,
+        lastActiveIndex,
+        lastActiveParentId,
         lastActiveGroupId,
 
-        setLastActiveGroupIndex,
+        setLastActiveIndex,
+        setLastActiveParentId,
         setLastActiveGroupId,
       }}
     >
@@ -71,7 +81,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     onLinkClick,
   }) => {
     const groupContext = React.useContext(GroupContext);
-    const addGroupIndex = React.useCallback((arr: any[], groupId: number | null): any[] => {
+    const addGroupIndex = React.useCallback((arr: any[], groupId: number | null, parentId: number | null): any[] => {
       return arr.map((item, key) => {
         // Early return for title-only items
 
@@ -81,13 +91,19 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
 
         let newItem = {
           ...item,
-          groupIndex: key,
-          groupId: groupId || key,
+          index: key,
+          parentId: parentId !== null ? parentId : key,
+          groupId: groupId !== null ? groupId : key,
         };
 
         // Process items array if it exists
         if (Array.isArray(item.items)) {
-          newItem.items = addGroupIndex(item.items, key);
+          console.log('itemsType:::', 'itemsType' in item, ' key:::', key, ' parentId:::', parentId);
+          newItem.items = addGroupIndex(
+            item.items,
+            groupId !== null ? groupId : key,
+            'itemsType' in item ? parentId : key,
+          );
         }
 
         return newItem;
@@ -97,29 +113,19 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     const getInitialValues = React.useCallback(
       (tree: any[]): boolean => {
         for (const item of tree) {
-          if (item?.items && item.type === 'http_service') {
-            if (item?.groupId != null) {
-              groupContext?.setLastActiveGroupId(item.groupId);
-            }
+          const shouldSetValues =
+            (Array.isArray(item?.items) && item.type === 'http_service') || Object.keys(item).length !== 1;
 
-            if (item?.groupIndex != null) {
-              groupContext?.setLastActiveGroupIndex(item.groupIndex);
-            }
-
+          if (shouldSetValues) {
+            groupContext?.setLastActiveGroupId(item.groupId);
+            groupContext?.setLastActiveParentId(item.parentId);
+            groupContext?.setLastActiveIndex(item.index);
             return true;
-          } else if (item?.items) {
+          }
+
+          if (Array.isArray(item?.items)) {
             const found = getInitialValues(item.items);
             if (found) return true;
-          } else if (Object.keys(item).length !== 1 && !groupContext?.lastActiveGroupIndex) {
-            if (item?.groupId != null) {
-              groupContext?.setLastActiveGroupId(item.groupId);
-            }
-
-            if (item?.groupIndex != null) {
-              groupContext?.setLastActiveGroupIndex(item.groupIndex);
-            }
-
-            return true;
           }
         }
 
@@ -127,7 +133,8 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       },
       [groupContext],
     );
-    const updatedTree = addGroupIndex(tree, null);
+    const updatedTree = addGroupIndex(tree, null, null);
+    console.log(updatedTree);
 
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
@@ -217,29 +224,19 @@ const TOCContainer = React.memo<{
   const getInitialValues = React.useCallback(
     (tree: any[]): boolean => {
       for (const item of tree) {
-        if (item?.items && item.type === 'http_service') {
-          if (item?.groupId != null) {
-            groupContext?.setLastActiveGroupId(item.groupId);
-          }
+        const shouldSetValues =
+          (item?.items && item.type === 'http_service') || (!item?.items && Object.keys(item).length !== 1);
 
-          if (item?.groupIndex != null) {
-            groupContext?.setLastActiveGroupIndex(item.groupIndex);
-          }
-
+        if (shouldSetValues) {
+          groupContext?.setLastActiveGroupId(item.groupId);
+          groupContext?.setLastActiveParentId(item.parentId);
+          groupContext?.setLastActiveIndex(item.index);
           return true;
-        } else if (item?.items) {
+        }
+
+        if (item?.items) {
           const found = getInitialValues(item.items);
           if (found) return true;
-        } else if (Object.keys(item).length !== 1 && !groupContext?.lastActiveGroupIndex) {
-          if (item?.groupId != null) {
-            groupContext?.setLastActiveGroupId(item.groupId);
-          }
-
-          if (item?.groupIndex != null) {
-            groupContext?.setLastActiveGroupIndex(item.groupIndex);
-          }
-
-          return true;
         }
       }
 
@@ -329,13 +326,14 @@ const Group = React.memo<{
   onLinkClick?(): void;
 }>(({ depth, item, maxDepthOpenByDefault, isInResponsiveMode, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
-  const groupContext = React.useContext(GroupContext);
+  const { lastActiveGroupId, lastActiveParentId, lastActiveIndex } = React.useContext(GroupContext);
   const [isOpen, setIsOpen] = React.useState(() => isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault));
   function isActiveGroup(
     items: any[],
     activeId: string | undefined,
-    contextId: number | undefined | null,
-    contextIndex: number | undefined | null,
+    contextGroupId: number | null,
+    contextParentId: number | null,
+    contextIndex: number | null,
   ): boolean {
     for (const element of items) {
       if (!('items' in element)) {
@@ -343,14 +341,15 @@ const Group = React.memo<{
           if (
             !!activeId &&
             (activeId === element.slug || activeId === element.id) &&
-            contextId === element.groupId &&
-            contextIndex === element.groupIndex
+            contextGroupId === element.groupId &&
+            contextParentId === element.parentId &&
+            contextIndex === element.index
           ) {
             return true;
           }
         }
       } else if (Array.isArray(element.items)) {
-        const found = isActiveGroup(element.items, activeId, contextId, contextIndex);
+        const found = isActiveGroup(element.items, activeId, contextGroupId, contextParentId, contextIndex);
         if (found) {
           return true;
         }
@@ -359,12 +358,7 @@ const Group = React.memo<{
     return false;
   }
 
-  const hasActive = isActiveGroup(
-    item.items,
-    activeId,
-    groupContext?.lastActiveGroupId,
-    groupContext?.lastActiveGroupIndex,
-  );
+  const hasActive = isActiveGroup(item.items, activeId, lastActiveGroupId, lastActiveParentId, lastActiveIndex);
 
   // If maxDepthOpenByDefault changes, we want to update all the isOpen states (used in live preview mode)
   React.useEffect(() => {
@@ -517,12 +511,18 @@ const Node = React.memo<{
   onLinkClick?(): void;
 }>(({ item, depth, meta, showAsActive, isInResponsiveMode, onClick, onLinkClick = () => {} }) => {
   const activeId = React.useContext(ActiveIdContext);
-  const groupContext = React.useContext(GroupContext);
+  const {
+    lastActiveGroupId,
+    lastActiveIndex,
+    lastActiveParentId,
+    setLastActiveGroupId,
+    setLastActiveIndex,
+    setLastActiveParentId,
+  } = React.useContext(GroupContext);
+  const { groupId, parentId, index } = item;
+  // const groupId = item.groupId;
 
-  const groupIndex = item.groupIndex;
-  const groupId = item.groupId;
-
-  const check1 = groupIndex === groupContext?.lastActiveGroupIndex && groupId === groupContext?.lastActiveGroupId;
+  const check1 = index === lastActiveIndex && groupId === lastActiveGroupId && parentId === lastActiveParentId;
   const check2 = activeId === item.slug || activeId === item.id;
   const isActive = check1 && check2;
   const LinkComponent = React.useContext(LinkContext);
@@ -533,8 +533,9 @@ const Node = React.memo<{
       e.stopPropagation();
       e.preventDefault();
     } else {
-      groupContext?.setLastActiveGroupIndex(item.groupIndex);
-      groupContext?.setLastActiveGroupId(item.groupId);
+      setLastActiveIndex(index);
+      setLastActiveGroupId(groupId);
+      setLastActiveParentId(parentId);
 
       onLinkClick();
     }

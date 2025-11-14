@@ -31,7 +31,8 @@ export type TableOfContentsGroup = {
   groupId: number;
   items: TableOfContentsGroupItem[];
   itemsType?: 'article' | 'http_operation' | 'http_webhook' | 'model';
-  groupIndex: number;
+  index: number;
+  parentId: number;
 };
 
 export type TableOfContentsExternalLink = {
@@ -48,14 +49,17 @@ export type TableOfContentsNode<
   type: T;
   meta: string;
   version?: string;
-  groupIndex: number;
+  index: number;
+  parentId: number;
   groupId: number;
 };
 
 export type TableOfContentsNodeGroup = TableOfContentsNode<'http_service'> & TableOfContentsGroup;
 export type GroupContextType = {
-  lastActiveGroupIndex: number | null;
+  lastActiveIndex: number | null;
+  lastActiveParentId: number | null;
   lastActiveGroupId: number | null;
-  setLastActiveGroupIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  setLastActiveIndex: React.Dispatch<React.SetStateAction<number | null>>;
+  setLastActiveParentId: React.Dispatch<React.SetStateAction<number | null>>;
   setLastActiveGroupId: React.Dispatch<React.SetStateAction<number | null>>;
 };
