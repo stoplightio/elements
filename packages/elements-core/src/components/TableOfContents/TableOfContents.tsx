@@ -81,7 +81,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     onLinkClick,
   }) => {
     const groupContext = React.useContext(GroupContext);
-    const addGroupIndex = React.useCallback((arr: any[], groupId: number | null, parentId: number | null): any[] => {
+    const updateTocTree = React.useCallback((arr: any[], groupId: number | null, parentId: number | null): any[] => {
       return arr.map((item, key) => {
         // Early return for title-only items
 
@@ -98,8 +98,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
 
         // Process items array if it exists
         if (Array.isArray(item.items)) {
-          console.log('itemsType:::', 'itemsType' in item, ' key:::', key, ' parentId:::', parentId);
-          newItem.items = addGroupIndex(
+          newItem.items = updateTocTree(
             item.items,
             groupId !== null ? groupId : key,
             'itemsType' in item ? parentId : key,
@@ -133,8 +132,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       },
       [groupContext],
     );
-    const updatedTree = addGroupIndex(tree, null, null);
-    console.log(updatedTree);
+    const updatedTree = updateTocTree(tree, null, null);
 
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
@@ -520,14 +518,13 @@ const Node = React.memo<{
     setLastActiveParentId,
   } = React.useContext(GroupContext);
   const { groupId, parentId, index } = item;
-  // const groupId = item.groupId;
 
   const check1 = index === lastActiveIndex && groupId === lastActiveGroupId && parentId === lastActiveParentId;
   const check2 = activeId === item.slug || activeId === item.id;
   const isActive = check1 && check2;
   const LinkComponent = React.useContext(LinkContext);
 
-  const handleClick = (e: React.MouseEvent, item: any) => {
+  const handleClick = (e: React.MouseEvent) => {
     if (isActive) {
       // Don't trigger link click when we're active
       e.stopPropagation();
@@ -566,7 +563,7 @@ const Node = React.memo<{
         }
         meta={meta}
         isInResponsiveMode={isInResponsiveMode}
-        onClick={e => handleClick(e, item)}
+        onClick={e => handleClick(e)}
       />
     </Box>
   );
