@@ -42,6 +42,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
               </Heading>
               <NodeAnnotation change={nameChanged} />
             </Box>
+
             {exportProps && !layoutOptions?.hideExport && !isCompact && <ExportButton {...exportProps} />}
           </Flex>
         )}
