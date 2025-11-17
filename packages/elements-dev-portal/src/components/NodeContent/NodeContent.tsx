@@ -217,8 +217,15 @@ function getBundledUrl(url: string | undefined) {
 // fileUri = /reference/openapi.json
 // pointer = /paths/~1v2~1contact~1last_change/post#heading-anchor
 export const getNodeUriParts = (uri: string): { fileUri: string; pointer: string } => {
+  // Check: added console for debugging purpose
+  console.log('getNodeUriParts uri-----', uri, 'typeof uri:', typeof uri);
+  // Guard against undefined or non-string input
+  if (!uri || typeof uri !== 'string') return { fileUri: '', pointer: '' };
   const parts = uri.split(/(\.yaml|\.yml|\.json|\.md)/);
-  if (parts.length === 1) {
+  if (parts === undefined || void 0) {
+    return { fileUri: '', pointer: '' };
+  }
+  if (!parts || parts.length === 1) {
     return { fileUri: '', pointer: parts[0] || '' };
   }
 
