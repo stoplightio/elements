@@ -33,15 +33,12 @@ export function hasActiveItem(items: TableOfContentsGroupItem[], activeId: strin
     if ('slug' in item && activeId === item.slug) {
       return true;
     }
-
     if ('id' in item && activeId === item.id) {
       return true;
     }
-
     if ('items' in item) {
-      return hasActiveItem(item.items, activeId);
+      return hasActiveItem(item.items as TableOfContentsGroupItem[], activeId);
     }
-
     return false;
   });
 }
