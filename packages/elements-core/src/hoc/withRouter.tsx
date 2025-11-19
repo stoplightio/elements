@@ -2,6 +2,7 @@ import { DefaultComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Route, Routes, useInRouterContext } from 'react-router-dom';
 
+import { HashRouterSync } from '../components/HashRouterSync';
 import { LinkHeading } from '../components/LinkHeading';
 import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
 import { ReactRouterMarkdownLink } from '../components/MarkdownViewer/CustomComponents/ReactRouterLink';
@@ -18,7 +19,13 @@ const components: Partial<DefaultComponentMapping> = {
   h4: ({ color, ...props }) => <LinkHeading size={4} {...props} />,
 };
 
-const InternalRoutes = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const InternalRoutes = ({ 
+  children, 
+  routerType 
+}: { 
+  children: React.ReactNode;
+  routerType: string;
+}): JSX.Element => {
   return (
     <Routes>
       <Route
@@ -26,6 +33,8 @@ const InternalRoutes = ({ children }: { children: React.ReactNode }): JSX.Elemen
         element={
           <MarkdownComponentsProvider value={components}>
             <ScrollToHashElement />
+            {/* Sync hash changes with React Router when using HashRouter */}
+            {routerType === 'hash' && <HashRouterSync />}
             {children}
           </MarkdownComponentsProvider>
         }
@@ -48,7 +57,7 @@ export function withRouter<P extends RoutingProps>(
       return (
         <RouterTypeContext.Provider value={routerType}>
           <Router {...routerProps} key={basePath}>
-            <InternalRoutes>
+            <InternalRoutes routerType={routerType}>
               <WrappedComponent {...props} outerRouter={false} />
             </InternalRoutes>
           </Router>
@@ -58,7 +67,7 @@ export function withRouter<P extends RoutingProps>(
 
     return (
       <RouterTypeContext.Provider value={routerType}>
-        <InternalRoutes>
+        <InternalRoutes routerType={routerType}>
           <WrappedComponent {...props} outerRouter />
         </InternalRoutes>
       </RouterTypeContext.Provider>
