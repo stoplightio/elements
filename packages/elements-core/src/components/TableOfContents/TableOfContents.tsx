@@ -53,22 +53,19 @@ const GroupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) =>
   const [lastActiveIndex, setLastActiveIndex] = useState<number | null>(null); // default value 0
   const [lastActiveParentId, setLastActiveParentId] = useState<number | null>(null);
   const [lastActiveGroupId, setLastActiveGroupId] = useState<number | null>(null);
-
-  return (
-    <GroupContext.Provider
-      value={{
-        lastActiveIndex,
-        lastActiveParentId,
-        lastActiveGroupId,
-
-        setLastActiveIndex,
-        setLastActiveParentId,
-        setLastActiveGroupId,
-      }}
-    >
-      {children}
-    </GroupContext.Provider>
+  const value = React.useMemo(
+    () => ({
+      lastActiveIndex,
+      lastActiveParentId,
+      lastActiveGroupId,
+      setLastActiveIndex,
+      setLastActiveParentId,
+      setLastActiveGroupId,
+    }),
+    [lastActiveIndex, lastActiveParentId, lastActiveGroupId],
   );
+
+  return <GroupContext.Provider value={value}>{children}</GroupContext.Provider>;
 };
 export const TableOfContents = React.memo<TableOfContentsProps>(
   ({
@@ -84,6 +81,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     const updateTocTree = React.useCallback((arr: any[], groupId: number | null, parentId: number | null): any[] => {
       return arr.map((item, key) => {
         // Early return for title-only items
+        console.log({ item, key });
 
         if (isDivider(item) || isExternalLink(item)) {
           return item;
@@ -519,9 +517,10 @@ const Node = React.memo<{
   } = React.useContext(GroupContext);
   const { groupId, parentId, index } = item;
 
-  const check1 = index === lastActiveIndex && groupId === lastActiveGroupId && parentId === lastActiveParentId;
-  const check2 = activeId === item.slug || activeId === item.id;
-  const isActive = check1 && check2;
+  const isIndexesMatched =
+    index === lastActiveIndex && groupId === lastActiveGroupId && parentId === lastActiveParentId;
+  const isSlugMatched = activeId === item.slug || activeId === item.id;
+  const isActive = isIndexesMatched && isSlugMatched;
   const LinkComponent = React.useContext(LinkContext);
 
   const handleClick = (e: React.MouseEvent) => {
