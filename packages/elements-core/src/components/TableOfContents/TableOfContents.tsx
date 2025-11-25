@@ -80,9 +80,6 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     const groupContext = React.useContext(GroupContext);
     const updateTocTree = React.useCallback((arr: any[], groupId: number | null, parentId: number | null): any[] => {
       return arr.map((item, key) => {
-        // Early return for title-only items
-        console.log({ item, key });
-
         if (isDivider(item) || isExternalLink(item)) {
           return item;
         }
