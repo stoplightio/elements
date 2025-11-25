@@ -115,3 +115,45 @@ WithExtensionRenderer.args = {
   apiDescriptionDocument: zoomApiYaml,
 };
 WithExtensionRenderer.storyName = 'With Extension Renderer';
+
+export const TagGroupingDemo = Template.bind({});
+TagGroupingDemo.args = {
+  apiDescriptionDocument: `
+    openapi: 3.0.0
+    info:
+      title: Tag Grouping Demo API
+      version: 1.0.0
+      x-tagGroups:
+        - name: User Management
+          tags: ["Users", "Authentication"]
+        - name: Product Catalog
+          tags: ["Products", "Categories"]
+    paths:
+      /users:
+        get:
+          summary: Get all users
+          tags: ["Users"]
+      /users/{id}:
+        get:
+          summary: Get user by ID
+          tags: ["Users"]
+      /products:
+        get:
+          summary: Get all products
+          tags: ["Products"]
+      /products/{id}:
+        get:
+          summary: Get product by ID
+          tags: ["Products"]
+      /auth/login:
+        post:
+          summary: User login
+          tags: ["Authentication"]
+      /categories:
+        get:
+          summary: Get all categories
+          tags: ["Categories"]
+  `,
+  layout: 'sidebar',
+};
+TagGroupingDemo.storyName = 'Tag Grouping Demo';
