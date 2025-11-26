@@ -37,7 +37,7 @@ describe('TableOfContents', () => {
       );
 
       expect(screen.queryByTitle('Root')).toBeInTheDocument();
-      // expect(screen.queryByTitle('Target')).not.toBeInTheDocument();
+      expect(screen.queryByTitle('Target')).not.toBeInTheDocument();
 
       unmount();
     });
