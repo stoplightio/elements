@@ -182,9 +182,7 @@ const addTagGroupsToTree = <T extends GroupableNode>(
           title: node.name,
           type: node.type,
           meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
-          index: 0,
-          groupId: 0,
-          parentId: 0,
+          index: '',
         };
       })
       .filter(Boolean);
