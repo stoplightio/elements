@@ -27,11 +27,11 @@ Playground.args = {
       title: 'Overview',
       type: 'overview',
       meta: '',
-      index: '0#',
+      index: '0-',
     },
     {
       title: 'Endpoints',
-      index: '1#',
+      index: '1-',
     },
     {
       id: '/operations/get-todos',
@@ -39,7 +39,7 @@ Playground.args = {
       title: 'List Todos',
       type: 'http_operation',
       meta: 'get',
-      index: '2#',
+      index: '2-',
     },
     {
       id: '/operations/post-todos',
@@ -47,7 +47,7 @@ Playground.args = {
       title: 'Create Todo',
       type: 'http_operation',
       meta: 'post',
-      index: '3#',
+      index: '3-',
     },
     {
       id: '/operations/get-todos-id',
@@ -55,7 +55,7 @@ Playground.args = {
       title: 'Get Todo',
       type: 'http_operation',
       meta: 'get',
-      index: '4#',
+      index: '4-',
     },
     {
       id: '/operations/put-todos-id',
@@ -63,7 +63,7 @@ Playground.args = {
       title: 'Replace Todo',
       type: 'http_operation',
       meta: 'put',
-      index: '5#',
+      index: '5-',
     },
     {
       id: '/operations/delete-todos-id',
@@ -71,7 +71,7 @@ Playground.args = {
       title: 'Delete Todo',
       type: 'http_operation',
       meta: 'delete',
-      index: '6#',
+      index: '6-',
     },
     {
       id: '/operations/patch-todos-id',
@@ -79,7 +79,7 @@ Playground.args = {
       title: 'Update Todo',
       type: 'http_operation',
       meta: 'patch',
-      index: '7#',
+      index: '7-',
     },
     {
       title: 'Users',
@@ -90,7 +90,7 @@ Playground.args = {
           title: 'Get User',
           type: 'http_operation',
           meta: 'get',
-          index: '8#0#',
+          index: '8-0-',
         },
         {
           id: '/operations/delete-users-userID',
@@ -98,7 +98,7 @@ Playground.args = {
           title: 'Delete User',
           type: 'http_operation',
           meta: 'delete',
-          index: '8#1#',
+          index: '8-1-',
         },
         {
           id: '/operations/post-users-userID',
@@ -106,14 +106,14 @@ Playground.args = {
           title: 'Create User',
           type: 'http_operation',
           meta: 'post',
-          index: '8#2#',
+          index: '8-2-',
         },
       ],
-      index: '8#',
+      index: '8-',
     },
     {
       title: 'Schemas',
-      index: '9#',
+      index: '9-',
     },
     {
       id: '/schemas/Todos',
@@ -122,7 +122,7 @@ Playground.args = {
       type: 'model',
       meta: '',
       version: '1.0.2',
-      index: '10#',
+      index: '10-',
     },
     {
       id: '/schemas/User',
@@ -130,7 +130,7 @@ Playground.args = {
       title: 'User',
       type: 'model',
       meta: '',
-      index: '11#',
+      index: '11-',
     },
   ],
 };

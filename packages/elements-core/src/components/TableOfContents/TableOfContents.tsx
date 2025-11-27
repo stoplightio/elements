@@ -72,12 +72,12 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       return arr.map((item, key) => {
         let newItem = {
           ...item,
-          index: parentId + key + '#',
+          index: parentId + key + '-',
         };
 
         // Process items array if it exists
         if (Array.isArray(item.items)) {
-          newItem.items = updateTocTree(item.items, parentId + key + '#');
+          newItem.items = updateTocTree(item.items, parentId + key + '-');
         }
 
         return newItem;
