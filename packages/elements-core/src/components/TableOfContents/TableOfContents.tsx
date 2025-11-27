@@ -20,11 +20,13 @@ import {
   TableOfContentsDivider,
   TableOfContentsGroup,
   TableOfContentsGroupItem,
+  TableOfContentsItem,
   TableOfContentsNode,
   TableOfContentsNodeGroup,
   TableOfContentsProps,
 } from './types';
 import {
+  findFirstNode,
   getHtmlIdFromItemId,
   isDivider,
   isExternalLink,
@@ -46,7 +48,7 @@ export const GroupContext = createContext<GroupContextType>({
 
 // Provider component
 const GroupProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [lastActiveIndex, setLastActiveIndex] = useState<string>(''); // default value 0
+  const [lastActiveIndex, setLastActiveIndex] = useState<string>('');
   const value = React.useMemo(
     () => ({
       lastActiveIndex,
@@ -67,44 +69,24 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     isInResponsiveMode = false,
     onLinkClick,
   }) => {
-    const groupContext = React.useContext(GroupContext);
-    const updateTocTree = React.useCallback((arr: any[], parentId: string): any[] => {
+    const updateTocTree = React.useCallback((arr: TableOfContentsItem[], parentId: string): any[] => {
       return arr.map((item, key) => {
-        let newItem = {
+        let newItem: TableOfContentsItem = {
           ...item,
           index: parentId + key + '-',
         };
 
         // Process items array if it exists
-        if (Array.isArray(item.items)) {
-          newItem.items = updateTocTree(item.items, parentId + key + '-');
+        if (isGroup(item) || isNodeGroup(item)) {
+          (newItem as TableOfContentsGroup | TableOfContentsNodeGroup).items = updateTocTree(
+            item.items,
+            parentId + key + '-',
+          );
         }
 
         return newItem;
       });
     }, []);
-
-    const getInitialValues = React.useCallback(
-      (tree: any[]): boolean => {
-        for (const item of tree) {
-          const shouldSetValues =
-            (Array.isArray(item?.items) && item.type === 'http_service') || Object.keys(item).length !== 1;
-
-          if (shouldSetValues) {
-            groupContext?.setLastActiveIndex(item.index);
-            return true;
-          }
-
-          if (Array.isArray(item?.items)) {
-            const found = getInitialValues(item.items);
-            if (found) return true;
-          }
-        }
-
-        return false;
-      },
-      [groupContext],
-    );
     const updatedTree = updateTocTree(tree, '');
 
     const container = React.useRef<HTMLDivElement>(null);
@@ -192,29 +174,12 @@ const TOCContainer = React.memo<{
   children: React.ReactNode;
 }>(({ children, updatedTree }) => {
   const groupContext = React.useContext(GroupContext);
-  const getInitialValues = React.useCallback(
-    (tree: any[]): boolean => {
-      for (const item of tree) {
-        const shouldSetValues =
-          (item?.items && item.type === 'http_service') || (!item?.items && Object.keys(item).length !== 1);
-
-        if (shouldSetValues) {
-          groupContext?.setLastActiveIndex(item.index);
-          return true;
-        }
-
-        if (item?.items) {
-          const found = getInitialValues(item.items);
-          if (found) return true;
-        }
-      }
-
-      return false;
-    },
-    [groupContext],
-  );
   React.useEffect(() => {
-    getInitialValues(updatedTree);
+    const firstNode = findFirstNode(updatedTree);
+    if (firstNode) {
+      groupContext.setLastActiveIndex(firstNode.index);
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <Box>{children}</Box>;
