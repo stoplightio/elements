@@ -51,7 +51,9 @@ export type TableOfContentsNode<
 };
 
 export type TableOfContentsNodeGroup = TableOfContentsNode<'http_service'> & TableOfContentsGroup;
-export type GroupContextType = {
+
+export type ActiveItemContextType = {
+  activeId: string | undefined;
   lastActiveIndex: string;
   setLastActiveIndex: React.Dispatch<React.SetStateAction<string>>;
 };
