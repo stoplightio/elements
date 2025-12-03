@@ -173,7 +173,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   const [showSchemaDropdown, setShowSchemaDropdown] = useState(false);
   const [isHoveringSelector, setIsHoveringSelector] = useState(false);
   const isRoot = level === 1 && (title === undefined || path === '');
-
+  console.log("In LazySchemaTreePreviewer Beta 0.2:", { schema, path, isRoot });
   useEffect(() => {
     setSelectedSchemaIndex(0);
   }, [schema?.anyOf, schema?.oneOf]);
