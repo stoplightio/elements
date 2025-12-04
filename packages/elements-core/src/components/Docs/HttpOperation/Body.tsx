@@ -72,6 +72,7 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false, disablePr
   const shouldUseLazySchema = disableProps?.some(entry => entry.isComplex === true);
 
   console.log('!!!!! shouldUseLazySchema body!!!!', shouldUseLazySchema);
+  console.log("Responses 9.0.13-beta-0.2----", disableProps)
 
   return (
     <VStack spacing={6}>

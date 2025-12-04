@@ -251,7 +251,7 @@ const getTryItVisibility = (disableProps: DisableProps): TryItVisibility => {
 
 export const ParsedDocs = ({ node, nodeUnsupported, disableProps, ...commonProps }: ParsedDocsProps) => {
   const { hideOperationTryIt, hideModelTryIt } = getTryItVisibility(disableProps);
-
+  console.log("Parsed Docs 9.0.13-beta-0.2----", disableProps)
   switch (node.type) {
     case 'article':
       return <Article data={node.data} {...commonProps} />;

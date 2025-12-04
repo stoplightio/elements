@@ -225,6 +225,7 @@ const Response = ({ response, onMediaTypeChange, disableProps, statusCode }: Res
   };
 
   const shouldUseLazySchema = (statusCode && disableProps?.[statusCode]?.some(entry => entry.isComplex)) ?? false;
+  console.log("Responses 9.0.13-beta-0.2----", disableProps)
 
   return (
     <VStack spacing={8} pt={8}>

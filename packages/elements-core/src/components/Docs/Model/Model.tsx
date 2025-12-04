@@ -44,6 +44,8 @@ const ModelComponent: React.FC<ModelProps> = ({
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
 
+  console.log("ModelComponent 9.0.13-beta-0.2----", disableProps)
+  
   const titleChanged = nodeHasChanged?.({ nodeId, attr: ['title', 'internal'] });
   const header = (shouldDisplayHeader || isInternal || isDeprecated) && (
     <Flex justifyContent="between" alignItems="center">
@@ -144,7 +146,7 @@ const ModelExamples = React.memo(({ data, isCollapsible = false }: { data: JSONS
   const examples = React.useMemo(() => generateExamplesFromJsonSchema(data), [data]);
 
   const selectedExample = examples[chosenExampleIndex]?.data;
-
+  
   const handleLoadMorePress = React.useCallback(() => {
     setLoading(true);
     setTimeout(() => setShow(true), 50);

@@ -5876,6 +5876,72 @@
     "@smithy/types" "^3.2.0"
     tslib "^2.6.2"
 
+"@stoplight/elements-core@~9.0.13":
+  version "9.0.13"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements-core/-/elements-core-9.0.13.tgz#8b79c158643131af279b012e1ffb32debb483ca6"
+  integrity sha512-blYX+SbnhCqk9MmNA4/4OKt/kKeXsIRklQSbVF8h2VbC3hLTwaCT0KCOcjnqb9ItRvFhf09lCGCKoUe8vJM1Gw==
+  dependencies:
+    "@stoplight/http-spec" "^7.1.0"
+    "@stoplight/json" "^3.21.0"
+    "@stoplight/json-schema-ref-parser" "^9.2.7"
+    "@stoplight/json-schema-sampler" "0.3.0"
+    "@stoplight/json-schema-tree" "^4.0.0"
+    "@stoplight/json-schema-viewer" "4.16.3"
+    "@stoplight/markdown-viewer" "^5.7.1"
+    "@stoplight/mosaic" "^1.53.5"
+    "@stoplight/mosaic-code-editor" "^1.53.5"
+    "@stoplight/mosaic-code-viewer" "^1.53.5"
+    "@stoplight/path" "^1.3.2"
+    "@stoplight/react-error-boundary" "^3.0.0"
+    "@stoplight/types" "^14.1.1"
+    "@stoplight/yaml" "^4.3.0"
+    classnames "^2.2.6"
+    httpsnippet-lite "^3.0.5"
+    jotai "1.3.9"
+    json-schema "^0.4.0"
+    lodash "^4.17.21"
+    nanoid "^3.1.32"
+    prop-types "^15.7.2"
+    react-query "^3.34.19"
+    react-router-dom "^6.28.0"
+    tslib "^2.1.0"
+    urijs "^1.19.11"
+    util "^0.12.4"
+    xml-formatter "^3.6.3"
+
+"@stoplight/elements-dev-portal@^3.0.0":
+  version "3.0.13"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements-dev-portal/-/elements-dev-portal-3.0.13.tgz#9d8969b093c76618beb3431fa22c5ae0d8cb326e"
+  integrity sha512-XstIFhrK2jYHLF+ARXZ9so31GnKw01W+TuNXMhilJmhHAVR5fGukJcdf1VMt8PdOgM5a6ttzuBUMTZETd6HloA==
+  dependencies:
+    "@stoplight/elements-core" "~9.0.13"
+    "@stoplight/markdown-viewer" "^5.7.1"
+    "@stoplight/mosaic" "^1.53.5"
+    "@stoplight/path" "^1.3.2"
+    "@stoplight/types" "^14.0.0"
+    classnames "^2.2.6"
+    lodash "^4.17.21"
+    react-query "^3.34.19"
+    react-router-dom "^6.28.0"
+    use-debounce "^6.0.1"
+
+"@stoplight/elements@^9.0.0":
+  version "9.0.13"
+  resolved "https://registry.yarnpkg.com/@stoplight/elements/-/elements-9.0.13.tgz#78d8413074a6cb5e5768036e88a063fe4a85bd9b"
+  integrity sha512-dPUBrLg8lXrS/Po/AUCbxvYjhAFcXCTlz0oj8T2jmyYDFIXLM0xrLit94vaZTkUXv6Lk3U2OerzfgWDmjQlsQg==
+  dependencies:
+    "@stoplight/elements-core" "~9.0.13"
+    "@stoplight/http-spec" "^7.1.0"
+    "@stoplight/json" "^3.18.1"
+    "@stoplight/mosaic" "^1.53.5"
+    "@stoplight/types" "^14.1.1"
+    "@stoplight/yaml" "^4.3.0"
+    classnames "^2.2.6"
+    file-saver "^2.0.5"
+    lodash "^4.17.21"
+    react-query "^3.34.19"
+    react-router-dom "^6.28.0"
+
 "@stoplight/eslint-config@2.1.0":
   version "2.1.0"
   resolved "https://registry.npmjs.org/@stoplight/eslint-config/-/eslint-config-2.1.0.tgz"
