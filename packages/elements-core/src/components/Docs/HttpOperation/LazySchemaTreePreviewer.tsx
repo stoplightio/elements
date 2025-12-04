@@ -41,6 +41,7 @@ function detectCircularPath(path: string): boolean {
   for (let i = 0; i < parts.length - 1; i++) {
     const current = parts[i];
     const rest = parts.slice(i + 1);
+    console.log('DetectCircularPath 9.0.13-beta-0.2----', current, rest);
     if (rest.includes(current)) {
       return true;
     }
@@ -53,11 +54,19 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 
   if (node.$ref || node['x-iata-$ref']) {
     let refPath = node.$ref || node['x-iata-$ref'];
-    if (refPath.includes('#/%24defs')) {
-      refPath = refPath.replace('#/%24defs', '$defs');
-    } else {
-      refPath = refPath.replace('__bundled__', 'definitions');
+
+    try {
+      if (refPath.includes('#/%24defs')) {
+        refPath = refPath.replace('#/%24defs', '$defs');
+      } else {
+        refPath = refPath.replace('__bundled__', 'definitions');
+      }
+    } catch (error) {
+      console.error('Error processing refPath:', error);
+      console.log('RefPath 9.0.13-beta-0.2----', refPath, node);
+      return node;
     }
+
     if (visited.has(node))
       return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
 
