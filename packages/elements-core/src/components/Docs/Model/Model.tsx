@@ -43,8 +43,6 @@ const ModelComponent: React.FC<ModelProps> = ({
 
   const shouldDisplayHeader =
     !layoutOptions?.noHeading && (title !== undefined || (exportProps && !layoutOptions?.hideExport));
-
-  console.log("ModelComponent 9.0.13-beta-0.2----", disableProps)
   
   const titleChanged = nodeHasChanged?.({ nodeId, attr: ['title', 'internal'] });
   const header = (shouldDisplayHeader || isInternal || isDeprecated) && (

@@ -41,7 +41,6 @@ function detectCircularPath(path: string): boolean {
   for (let i = 0; i < parts.length - 1; i++) {
     const current = parts[i];
     const rest = parts.slice(i + 1);
-    console.log('DetectCircularPath 9.0.13-beta-0.2----', current, rest);
     if (rest.includes(current)) {
       return true;
     }
@@ -62,8 +61,6 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
         refPath = refPath.replace('__bundled__', 'definitions');
       }
     } catch (error) {
-      console.error('Error processing refPath:', error);
-      console.log('RefPath 9.0.13-beta-0.2----', refPath, node);
       return node;
     }
 
@@ -182,8 +179,6 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   const [showSchemaDropdown, setShowSchemaDropdown] = useState(false);
   const [isHoveringSelector, setIsHoveringSelector] = useState(false);
   const isRoot = level === 1 && (title === undefined || path === '');
-
-  if (isRoot) console.log('LazySchemaTreePreviewer  9.0.13-beta-0.2----------', schema);
 
   useEffect(() => {
     setSelectedSchemaIndex(0);

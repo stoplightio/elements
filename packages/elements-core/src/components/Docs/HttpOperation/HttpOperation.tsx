@@ -50,7 +50,6 @@ const HttpOperationComponent = React.memo<HttpOperationProps>(
 
     const prettyName = (data.summary || data.iid || '').trim();
     const hasBadges = isDeprecated || isInternal;
-    console.log("HttpOperationComponent 9.0.13-beta-0.2----", disableProps)
 
     let path: string;
     if (isHttpOperation(data)) {
