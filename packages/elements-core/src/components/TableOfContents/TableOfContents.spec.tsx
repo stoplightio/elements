@@ -27,6 +27,7 @@ describe('TableOfContents', () => {
                   slug: 'target',
                   type: 'article',
                   meta: '',
+                  index: '0-',
                 },
               ],
             },
@@ -55,6 +56,7 @@ describe('TableOfContents', () => {
                   slug: 'target',
                   type: 'article',
                   meta: '',
+                  index: '0-',
                 },
               ],
             },
@@ -87,8 +89,10 @@ describe('TableOfContents', () => {
                       slug: 'target',
                       type: 'article',
                       meta: '',
+                      index: '0-0-',
                     },
                   ],
+                  index: '0-',
                 },
               ],
             },
@@ -119,6 +123,7 @@ describe('TableOfContents', () => {
                   slug: 'target',
                   type: 'article',
                   meta: '',
+                  index: '0-',
                 },
               ],
             },
@@ -154,6 +159,7 @@ describe('TableOfContents', () => {
                   slug: 'target',
                   type: 'article',
                   meta: '',
+                  index: '0-',
                 },
               ],
             },
@@ -191,6 +197,7 @@ describe('TableOfContents', () => {
                   items: [],
                   meta: '',
                   version: '2',
+                  index: '0-',
                 },
                 {
                   id: 'def',
@@ -199,6 +206,7 @@ describe('TableOfContents', () => {
                   type: 'model',
                   meta: '',
                   version: '1.0.1',
+                  index: '1-',
                 },
                 {
                   id: 'ghi',
@@ -207,6 +215,7 @@ describe('TableOfContents', () => {
                   type: 'http_operation',
                   meta: 'get',
                   version: '1.0.2',
+                  index: '2-',
                 },
               ],
             },
@@ -238,6 +247,7 @@ describe('utils', () => {
               type: 'article',
               slug: 'abc-doc',
               meta: '',
+              index: '0-',
             },
             {
               id: 'targetId',
@@ -245,6 +255,7 @@ describe('utils', () => {
               slug: 'target',
               type: 'article',
               meta: '',
+              index: '1-',
             },
           ],
         },
@@ -258,6 +269,7 @@ describe('utils', () => {
         type: 'article',
         slug: 'abc-doc',
         meta: '',
+        index: '0-',
       });
     });
 
@@ -276,6 +288,7 @@ describe('utils', () => {
               slug: 'def-get-todo',
               type: 'http_operation',
               meta: 'get',
+              index: '0-',
             },
             {
               id: 'ghi',
@@ -283,6 +296,7 @@ describe('utils', () => {
               slug: 'ghi-add-todo',
               type: 'http_operation',
               meta: 'post',
+              index: '1-',
             },
           ],
         },
@@ -295,6 +309,7 @@ describe('utils', () => {
         slug: 'def-get-todo',
         type: 'http_operation',
         meta: 'get',
+        index: '0-',
       });
     });
   });
