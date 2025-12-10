@@ -14,7 +14,12 @@ const booleanOptions = [
 ];
 
 function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
-  const options = map(enumValues, v => ({ value: typeof v === 'number' ? v : String(v) }));
+  const options = map(enumValues, v => {
+    // Handle objects and arrays by stringifying them
+    const value =
+      typeof v === 'object' && v !== null ? safeStringify(v) ?? String(v) : typeof v === 'number' ? v : String(v);
+    return { value, label: String(value) };
+  });
   return required ? options : [{ label: 'Not Set', value: '' }, ...options];
 }
 
@@ -48,16 +53,15 @@ export function parameterSupportsFileUpload(parameter?: Pick<ParameterSpec, 'sch
 }
 
 function stringifyValue(value: unknown) {
-  return typeof value === 'object' ? JSON.stringify(value) : escapeQuotes(String(value));
+  if (typeof value === 'object' && value !== null) {
+    return safeStringify(value) ?? String(value);
+  }
+  return String(value);
 }
 
 function exampleValue(example: Omit<INodeExample, 'id'> | Omit<INodeExternalExample, 'id'>) {
   const value = 'value' in example ? example.value : example.externalValue;
   return stringifyValue(value);
-}
-
-function escapeQuotes(value: string) {
-  return value.replace(/"/g, '\\"');
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {
@@ -89,14 +93,16 @@ const getValueForParameter = (parameter: ParameterSpec) => {
     return { value: stringifyValue(defaultValue), isDefault: true };
   }
 
-  const examples = parameter.examples ?? [];
-  if (examples.length > 0) {
-    return { value: exampleValue(examples[0]) };
-  }
-
+  // If the parameter has enums, prioritize using the first enum value
+  // over examples, as examples might not match the enum values
   const enums = parameter.schema?.enum ?? [];
   if (enums.length > 0) {
     return { value: stringifyValue(enums[0]) };
+  }
+
+  const examples = parameter.examples ?? [];
+  if (examples.length > 0) {
+    return { value: exampleValue(examples[0]) };
   }
 
   return { value: '' };

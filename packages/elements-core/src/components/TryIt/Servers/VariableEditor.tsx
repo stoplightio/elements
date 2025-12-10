@@ -25,7 +25,7 @@ export const VariableEditor: React.FC<VariableProps> = ({ variable, value, onCha
           <Select
             flex={1}
             aria-label={variable.name}
-            options={variable.enum.map(s => ({ value: s }))}
+            options={variable.enum.map(s => ({ value: s, label: String(s) }))}
             value={value || variable.default}
             onChange={onChange}
           />
