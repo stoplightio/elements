@@ -13,12 +13,65 @@ const booleanOptions = [
   { label: 'True', value: 'true' },
 ];
 
+/**
+ * Encodes a value to be safe for use in CSS selectors (data-key attributes).
+ * Special characters like quotes, brackets, etc. can break querySelector,
+ * so we encode them using base64.
+ */
+function encodeSafeSelectorValue(value: string | number): string | number {
+  // Numbers are safe to use as-is
+  if (typeof value === 'number') {
+    return value;
+  }
+  // Check if the value contains characters that would break CSS selectors
+  // This includes quotes, brackets, backslashes, etc.
+  const hasSpecialChars = /["'\[\]\\(){}]/.test(value);
+  if (!hasSpecialChars) {
+    return value;
+  }
+  // Encode to base64 to make it safe for CSS selectors
+  // We prefix with 'b64:' so we can decode it later if needed
+  try {
+    return 'b64:' + btoa(value);
+  } catch (e) {
+    // If btoa fails (e.g., with unicode), fallback to encodeURIComponent
+    return 'enc:' + encodeURIComponent(value);
+  }
+}
+
+/**
+ * Decodes a value that was encoded by encodeSafeSelectorValue
+ */
+export function decodeSafeSelectorValue(value: string | number): string | number {
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  if (value.startsWith('b64:')) {
+    try {
+      return atob(value.substring(4));
+    } catch (e) {
+      return value;
+    }
+  }
+  if (value.startsWith('enc:')) {
+    try {
+      return decodeURIComponent(value.substring(4));
+    } catch (e) {
+      return value;
+    }
+  }
+  return value;
+}
+
 function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
   const options = map(enumValues, v => {
     // Handle objects and arrays by stringifying them
-    const value =
+    const stringValue =
       typeof v === 'object' && v !== null ? safeStringify(v) ?? String(v) : typeof v === 'number' ? v : String(v);
-    return { value, label: String(value) };
+    // Encode the value to be safe for CSS selectors, but keep the original label
+    const safeValue = encodeSafeSelectorValue(stringValue);
+    return { value: safeValue, label: String(stringValue) };
   });
   return required ? options : [{ label: 'Not Set', value: '' }, ...options];
 }
