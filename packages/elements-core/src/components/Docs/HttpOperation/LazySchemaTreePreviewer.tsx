@@ -510,7 +510,7 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
     <div className="mb-1">
       <Flex maxW="full" pl={3} py={2} data-test="schema-row" pos="relative">
         <VStack spacing={1} maxW="full" className="w-full">
-          <Flex onClick={!isRoot ? handleToggle : undefined} className={`w-full ${isRoot ? '' : 'cursor-pointer'}`}>
+          <Flex onClick={!isRoot ? handleToggle : undefined} className={`w-full ${(isRoot || !hasExpandableChildren)  ? '' : 'cursor-pointer'}`}>
             {!isRoot ? (
               <Box mr={2} className="sl-font-mono sl-font-semibold sl-mr-2">
                 {hasExpandableChildren &&
