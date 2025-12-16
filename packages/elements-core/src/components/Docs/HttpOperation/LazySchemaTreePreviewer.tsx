@@ -53,7 +53,6 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
 
   if (node.$ref || node['x-iata-$ref']) {
     let refPath = node.$ref || node['x-iata-$ref'];
-
     try {
       if (refPath.includes('#/%24defs')) {
         refPath = refPath.replace('#/%24defs', '$defs');
@@ -63,7 +62,6 @@ function dereference(node: any, root: any, visited: WeakSet<object> = new WeakSe
     } catch (error) {
       return node;
     }
-
     if (visited.has(node))
       return { circular: true, $ref: refPath, title: node.title, type: 'any', description: node.description };
 
@@ -188,6 +186,66 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
   const shouldHideAllChildren =
     (isRoot && hideData.some(h => trimSlashes(h.path) === 'properties' && h.required === undefined)) ||
     (!isRoot && isPropertiesAllHidden(path, hideData));
+
+  // Check if the node has expandable children
+  const hasExpandableChildren = useMemo(() => {
+    if (shouldHideAllChildren) return false;
+    if (schema?.type === 'object' && (schema?.properties || schema?.allOf || schema?.anyOf || schema?.oneOf)) {
+      let props = schema?.properties;
+      if (schema?.allOf) {
+        schema?.allOf.forEach((item: any) => {
+          props = { ...props, ...item.properties };
+        });
+      }
+      if (schema?.anyOf && schema?.anyOf.length > 0) {
+        const selectedSchema = schema?.anyOf[selectedSchemaIndex] || schema?.anyOf[0];
+        props = { ...props, ...selectedSchema.properties };
+      }
+      if (schema?.oneOf && schema?.oneOf.length > 0) {
+        const selectedSchema = schema?.oneOf[selectedSchemaIndex] || schema?.oneOf[0];
+        props = { ...props, ...selectedSchema.properties };
+      }
+
+      if (props && Object.keys(props).length > 0) {
+        for (const [key] of Object.entries(props)) {
+          const childPath = `${path}/properties/${key}`;
+          const childRequiredOverride = isRequiredOverride(childPath, hideData);
+          const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
+          if (!shouldHideChild) return true;
+        }
+      }
+    }
+    if (
+      schema?.type === 'array' &&
+      schema?.items &&
+      Object.keys(schema?.items).length > 0 &&
+      !schema?.items?.circular
+    ) {
+      const resolvedItems = dereference(schema?.items, root);
+      const itemsPath = `${path}/items`;
+
+      if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
+        for (const [key] of Object.entries(resolvedItems.properties)) {
+          const childPath = `${itemsPath}/properties/${key}`;
+          const childRequiredOverride = isRequiredOverride(childPath, hideData);
+          const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
+          if (!shouldHideChild) return true;
+        }
+      } else if (
+        resolvedItems &&
+        resolvedItems.type === 'array' &&
+        resolvedItems.items &&
+        resolvedItems.items.length > 0
+      ) {
+        const childPath = `${path}/items`;
+        const childRequiredOverride = isRequiredOverride(childPath, hideData);
+        const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
+        if (!shouldHideChild) return true;
+      }
+    }
+
+    return false;
+  }, [schema, path, hideData, complexData, shouldHideAllChildren, root, selectedSchemaIndex]);
 
   const shouldHideNode = useMemo(() => {
     if (isRoot) return false;
@@ -455,7 +513,8 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
           <Flex onClick={!isRoot ? handleToggle : undefined} className={`w-full ${isRoot ? '' : 'cursor-pointer'}`}>
             {!isRoot ? (
               <Box mr={2} className="sl-font-mono sl-font-semibold sl-mr-2">
-                {!TYPES.includes(schema?.type) &&
+                {hasExpandableChildren &&
+                !TYPES.includes(schema?.type) &&
                 !detectCircularPath(path) &&
                 !schema?.items?.circular &&
                 !schema?.circular ? (
