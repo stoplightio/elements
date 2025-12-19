@@ -3,49 +3,7 @@ import * as React from 'react';
 
 import { useUniqueId } from '../../../hooks/useUniqueId';
 import { ServerVariable } from '../../../utils/http-spec/IServer';
-
-/**
- * Encodes a value to be safe for use in CSS selectors (data-key attributes).
- * Special characters like quotes, brackets, etc. can break querySelector.
- */
-function encodeSafeSelectorValue(value: string): string {
-  // Check if the value contains characters that would break CSS selectors
-  const hasSpecialChars = /["'\[\]\\(){}]/.test(value);
-  if (!hasSpecialChars) {
-    return value;
-  }
-
-  // Encode to base64 to make it safe for CSS selectors
-  try {
-    return 'b64:' + btoa(value);
-  } catch (e) {
-    // If btoa fails (e.g., with unicode), fallback to encodeURIComponent
-    return 'enc:' + encodeURIComponent(value);
-  }
-}
-
-/**
- * Decodes a value that was encoded by encodeSafeSelectorValue
- */
-function decodeSafeSelectorValue(value: string): string {
-  if (value.startsWith('b64:')) {
-    try {
-      return atob(value.substring(4));
-    } catch (e) {
-      return value;
-    }
-  }
-
-  if (value.startsWith('enc:')) {
-    try {
-      return decodeURIComponent(value.substring(4));
-    } catch (e) {
-      return value;
-    }
-  }
-
-  return value;
-}
+import { decodeSafeSelectorValue, encodeSafeSelectorValue } from '../Parameters/parameter-utils';
 
 interface VariableProps {
   variable: ServerVariable;

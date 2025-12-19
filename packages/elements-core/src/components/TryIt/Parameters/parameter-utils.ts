@@ -18,7 +18,7 @@ const booleanOptions = [
  * Special characters like quotes, brackets, etc. can break querySelector,
  * so we encode them using base64.
  */
-function encodeSafeSelectorValue(value: string | number): string | number {
+export function encodeSafeSelectorValue(value: string | number): string | number {
   // Numbers are safe to use as-is
   if (typeof value === 'number') {
     return value;
