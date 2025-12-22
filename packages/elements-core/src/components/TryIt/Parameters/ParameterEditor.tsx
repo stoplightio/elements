@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { useUniqueId } from '../../../hooks/useUniqueId';
 import {
+  decodeSafeSelectorValue,
   exampleOptions,
   getPlaceholderForParameter,
   getPlaceholderForSelectedParameter,
@@ -37,6 +38,15 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
   const parameterDisplayName = `${parameter.name}${parameter.required ? '*' : ''}`;
 
+  // Find the encoded value that matches the current (decoded) value
+  const encodedValue = React.useMemo(() => {
+    if (!value || !parameterValueOptions) return value || '';
+    const matchingOption = parameterValueOptions.find(opt => {
+      return String(decodeSafeSelectorValue(opt.value as string | number)) === value;
+    });
+    return matchingOption ? String(matchingOption.value) : value;
+  }, [value, parameterValueOptions]);
+
   const requiredButEmpty = validate && parameter.required && !value;
 
   return (
@@ -51,8 +61,8 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
             flex={1}
             aria-label={parameter.name}
             options={parameterValueOptions}
-            value={value || ''}
-            onChange={onChange}
+            value={encodedValue}
+            onChange={val => onChange && onChange(String(decodeSafeSelectorValue(val as string | number)))}
             placeholder={getPlaceholderForSelectedParameter(parameter)}
           />
         ) : (
