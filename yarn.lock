@@ -5876,7 +5876,7 @@
     "@smithy/types" "^3.2.0"
     tslib "^2.6.2"
 
-"@stoplight/elements-core@~9.0.13", "@stoplight/elements-core@~9.0.13-alpha-0.0":
+"@stoplight/elements-core@~9.0.13":
   version "9.0.13"
   resolved "https://registry.yarnpkg.com/@stoplight/elements-core/-/elements-core-9.0.13.tgz#8b79c158643131af279b012e1ffb32debb483ca6"
   integrity sha512-blYX+SbnhCqk9MmNA4/4OKt/kKeXsIRklQSbVF8h2VbC3hLTwaCT0KCOcjnqb9ItRvFhf09lCGCKoUe8vJM1Gw==
