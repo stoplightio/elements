@@ -37,7 +37,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
   const examples = exampleOptions(parameter);
   const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
   const parameterDisplayName = `${parameter.name}${parameter.required ? '*' : ''}`;
-
+  console.log("Inside Parameter Editor in APLHA BRANCH");
   // Find the encoded value that matches the current (decoded) value
   const encodedValue = React.useMemo(() => {
     if (!value || !parameterValueOptions) return value || '';
