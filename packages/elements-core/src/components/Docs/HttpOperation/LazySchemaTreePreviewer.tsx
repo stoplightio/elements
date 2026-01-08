@@ -322,42 +322,10 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
       !schema?.items?.circular
     ) {
       const resolvedItems = dereference(schema?.items, root);
-      const itemsPath = `${path}/items`;
+      const childPath = `${path}/items`;
+      const shouldHideChild = isPathHidden(childPath, hideData, complexData)
 
-      if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
-        for (const [key, child] of Object.entries(resolvedItems.properties)) {
-          const childPath = `${itemsPath}/properties/${key}`;
-          const childRequiredOverride = isRequiredOverride(childPath, hideData);
-
-          const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
-          const resolved = dereference(child, root);
-
-          if (!shouldHideChild) {
-            children.push(
-              <li key={key}>
-                <LazySchemaTreePreviewer
-                  schema={resolved}
-                  root={root}
-                  title={key}
-                  level={level + 2}
-                  path={childPath}
-                  hideData={hideData}
-                  complexData={complexData}
-                  parentRequired={resolvedItems.required}
-                  propertyKey={key}
-                  _subType={resolvedItems?.items?.type}
-                />
-              </li>,
-            );
-          }
-        }
-      } else if (resolvedItems && resolvedItems.type === 'array' && resolvedItems.items.length > 0) {
-        const childPath = `${path}/items`;
-        const childRequiredOverride = isRequiredOverride(childPath, hideData);
-
-        const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
-
-        if (!shouldHideChild) {
+      if (!shouldHideChild) {
           children.push(
             <li key="items">
               <LazySchemaTreePreviewer
@@ -375,7 +343,64 @@ const LazySchemaTreePreviewer: React.FC<LazySchemaTreePreviewerProps> = ({
             </li>,
           );
         }
-      }
+
+      // if (resolvedItems && resolvedItems.type === 'object' && resolvedItems.properties) {
+      //   for (const [key, child] of Object.entries(resolvedItems.properties)) {
+      //     const childPath = `${itemsPath}/properties/${key}`;
+      //     const childRequiredOverride = isRequiredOverride(childPath, hideData);
+
+      //     const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
+      //     const resolved = dereference(child, root);
+
+      //     if (!shouldHideChild) {
+      //       children.push(
+      //         <li key={key}>
+      //           <LazySchemaTreePreviewer
+      //             schema={resolved}
+      //             root={root}
+      //             title={key}
+      //             level={level + 2}
+      //             path={childPath}
+      //             hideData={hideData}
+      //             complexData={complexData}
+      //             parentRequired={resolvedItems.required}
+      //             propertyKey={key}
+      //             _subType={resolvedItems?.items?.type}
+      //           />
+      //         </li>,
+      //       );
+      //     }
+      //   }
+      // } else if (resolvedItems && resolvedItems?.items) {
+      //   const childPath = `${itemsPath}/items`;
+      //   const childRequiredOverride = isRequiredOverride(childPath, hideData);
+
+      //   const shouldHideChild = isPathHidden(childPath, hideData, complexData) && childRequiredOverride === undefined;
+        
+      //   const resolved = dereference(resolvedItems?.items, root);
+      //   // console.log('Test second array resolvedItems.type-----', resolved?.type);
+      //   console.log('Test second array itemsPath ----', childPath);
+      //   // console.log('Test second array resolvedItems-----', resolved);
+
+      //   if (!shouldHideChild) {
+      //     children.push(
+      //       <li key="items">
+      //         <LazySchemaTreePreviewer
+      //           schema={resolved}
+      //           root={root}
+      //           title="items"
+      //           level={level + 1}
+      //           path={childPath}
+      //           hideData={hideData}
+      //           complexData={complexData}
+      //           parentRequired={schema?.required}
+      //           propertyKey="items"
+      //           _subType={resolvedItems?.items?.type}
+      //         />
+      //       </li>,
+      //     );
+      //   }
+      // }
     }
     return children.length > 0 ? <ul className="ml-6 border-l border-gray-200 pl-2">{children}</ul> : null;
   };
