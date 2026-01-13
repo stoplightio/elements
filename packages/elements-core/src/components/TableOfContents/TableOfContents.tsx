@@ -1,9 +1,10 @@
 import { Box, Flex, Icon, ITextColorProps } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
 import * as React from 'react';
+import { useState } from 'react';
 
-import { useRouterType } from '../../context/RouterType';
 import { useFirstRender } from '../../hooks/useFirstRender';
+import { resolveRelativeLink } from '../../utils/string';
 import { VersionBadge } from '../Docs/HttpOperation/Badges';
 import {
   NODE_GROUP_ICON,
@@ -14,17 +15,19 @@ import {
   NODE_TYPE_TITLE_ICON,
 } from './constants';
 import {
+  ActiveItemContextType,
   CustomLinkComponent,
   TableOfContentsDivider,
   TableOfContentsGroup,
   TableOfContentsGroupItem,
+  TableOfContentsItem,
   TableOfContentsNode,
   TableOfContentsNodeGroup,
   TableOfContentsProps,
 } from './types';
 import {
+  findFirstNode,
   getHtmlIdFromItemId,
-  hasActiveItem,
   isDivider,
   isExternalLink,
   isGroup,
@@ -33,7 +36,11 @@ import {
   isNodeGroup,
 } from './utils';
 
-const ActiveIdContext = React.createContext<string | undefined>(undefined);
+const ActiveItemContext = React.createContext<ActiveItemContextType>({
+  activeId: undefined,
+  lastActiveIndex: '',
+  setLastActiveIndex: () => {},
+});
 const LinkContext = React.createContext<CustomLinkComponent | undefined>(undefined);
 LinkContext.displayName = 'LinkContext';
 
@@ -47,13 +54,39 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     isInResponsiveMode = false,
     onLinkClick,
   }) => {
+    const [lastActiveIndex, setLastActiveIndex] = useState<string>('');
+    const value = React.useMemo(
+      () => ({
+        lastActiveIndex,
+        setLastActiveIndex,
+        activeId,
+      }),
+      [lastActiveIndex, activeId],
+    );
+
+    const updateTocTree = React.useCallback((arr: TableOfContentsItem[], parentId: string): any[] => {
+      return arr.map((item, key) => {
+        let newItem: TableOfContentsItem = {
+          ...item,
+          index: parentId + key + '-',
+        };
+
+        // Process items array if it exists
+        if (isGroup(item) || isNodeGroup(item)) {
+          (newItem as TableOfContentsGroup | TableOfContentsNodeGroup).items = updateTocTree(
+            item.items,
+            parentId + key + '-',
+          );
+        }
+
+        return newItem;
+      });
+    }, []);
+    const updatedTree = updateTocTree(tree, '');
+
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
     const firstRender = useFirstRender();
-
-    // when using the hash router, slugs must be absolute - otherwise the router will keep appending to the existing hash route
-    // this flag makes a slug like `abc/operations/getPet` be rendered as `#/abc/operations/getPet`
-    const makeSlugAbsoluteRoute = useRouterType() == 'hash';
 
     React.useEffect(() => {
       // setTimeout to handle scrollTo after groups expand to display active GroupItem
@@ -80,25 +113,26 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       <Box ref={container} w="full" bg={isInResponsiveMode ? 'canvas' : 'canvas-100'} overflowY="auto">
         <Box ref={child} my={3}>
           <LinkContext.Provider value={Link}>
-            <ActiveIdContext.Provider value={activeId}>
-              {tree.map((item, key) => {
-                if (isDivider(item)) {
-                  return <Divider key={key} item={item} isInResponsiveMode={isInResponsiveMode} />;
-                }
+            <ActiveItemContext.Provider value={value}>
+              <TOCContainer updatedTree={updatedTree}>
+                {updatedTree.map((item, key: number) => {
+                  if (isDivider(item)) {
+                    return <Divider key={key} item={item} isInResponsiveMode={isInResponsiveMode} />;
+                  }
 
-                return (
-                  <GroupItem
-                    key={key}
-                    item={item}
-                    depth={0}
-                    maxDepthOpenByDefault={maxDepthOpenByDefault}
-                    onLinkClick={onLinkClick}
-                    isInResponsiveMode={isInResponsiveMode}
-                    makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
-                  />
-                );
-              })}
-            </ActiveIdContext.Provider>
+                  return (
+                    <GroupItem
+                      key={key}
+                      item={item}
+                      depth={0}
+                      maxDepthOpenByDefault={maxDepthOpenByDefault}
+                      onLinkClick={onLinkClick}
+                      isInResponsiveMode={isInResponsiveMode}
+                    />
+                  );
+                })}
+              </TOCContainer>
+            </ActiveItemContext.Provider>
           </LinkContext.Provider>
         </Box>
       </Box>
@@ -128,14 +162,29 @@ const Divider = React.memo<{
 });
 Divider.displayName = 'Divider';
 
+const TOCContainer = React.memo<{
+  updatedTree: TableOfContentsGroupItem[];
+  children: React.ReactNode;
+}>(({ children, updatedTree }) => {
+  const { setLastActiveIndex } = React.useContext(ActiveItemContext);
+  React.useEffect(() => {
+    const firstNode = findFirstNode(updatedTree);
+    if (firstNode) {
+      setLastActiveIndex(firstNode.index);
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  return <Box>{children}</Box>;
+});
+TOCContainer.displayName = 'TOCContainer';
 const GroupItem = React.memo<{
   depth: number;
   item: TableOfContentsGroupItem;
   isInResponsiveMode?: boolean;
-  makeSlugAbsoluteRoute?: boolean;
   maxDepthOpenByDefault?: number;
   onLinkClick?(): void;
-}>(({ item, depth, maxDepthOpenByDefault, isInResponsiveMode, makeSlugAbsoluteRoute, onLinkClick }) => {
+}>(({ item, depth, maxDepthOpenByDefault, isInResponsiveMode, onLinkClick }) => {
   if (isExternalLink(item)) {
     return (
       <Box as="a" href={item.url} target="_blank" rel="noopener noreferrer" display="block">
@@ -155,7 +204,6 @@ const GroupItem = React.memo<{
         maxDepthOpenByDefault={maxDepthOpenByDefault}
         onLinkClick={onLinkClick}
         isInResponsiveMode={isInResponsiveMode}
-        makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
       />
     );
   } else if (isNode(item)) {
@@ -163,7 +211,6 @@ const GroupItem = React.memo<{
       <Node
         depth={depth}
         isInResponsiveMode={isInResponsiveMode}
-        makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
         item={item}
         onLinkClick={onLinkClick}
         meta={
@@ -203,12 +250,34 @@ const Group = React.memo<{
   item: TableOfContentsGroup | TableOfContentsNodeGroup;
   maxDepthOpenByDefault?: number;
   isInResponsiveMode?: boolean;
-  makeSlugAbsoluteRoute?: boolean;
   onLinkClick?(): void;
-}>(({ depth, item, maxDepthOpenByDefault, isInResponsiveMode, makeSlugAbsoluteRoute, onLinkClick = () => {} }) => {
-  const activeId = React.useContext(ActiveIdContext);
+}>(({ depth, item, maxDepthOpenByDefault, isInResponsiveMode, onLinkClick = () => {} }) => {
+  const { activeId, lastActiveIndex } = React.useContext(ActiveItemContext);
   const [isOpen, setIsOpen] = React.useState(() => isGroupOpenByDefault(depth, item, activeId, maxDepthOpenByDefault));
-  const hasActive = !!activeId && hasActiveItem(item.items, activeId);
+  const isActiveGroup = React.useCallback(
+    (items: TableOfContentsGroupItem[], activeId: string | undefined, contextIndex: string): boolean => {
+      return items.some(element => {
+        const hasSlugOrId = 'slug' in element || 'id' in element;
+        const hasItems = 'items' in element && Array.isArray((element as any).items);
+
+        if (!hasSlugOrId && !hasItems) return false;
+
+        if (
+          activeId &&
+          'index' in element &&
+          ((element as any).slug === activeId || (element as any).id === activeId) &&
+          (element as any).index === contextIndex
+        ) {
+          return true;
+        }
+
+        return hasItems ? isActiveGroup((element as any).items, activeId, contextIndex) : false;
+      });
+    },
+    [],
+  );
+
+  const hasActive = isActiveGroup(item.items, activeId, lastActiveIndex);
 
   // If maxDepthOpenByDefault changes, we want to update all the isOpen states (used in live preview mode)
   React.useEffect(() => {
@@ -261,7 +330,6 @@ const Group = React.memo<{
         onClick={handleClick}
         onLinkClick={onLinkClick}
         isInResponsiveMode={isInResponsiveMode}
-        makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
       />
     );
   } else {
@@ -296,7 +364,6 @@ const Group = React.memo<{
               depth={depth + 1}
               onLinkClick={onLinkClick}
               isInResponsiveMode={isInResponsiveMode}
-              makeSlugAbsoluteRoute={makeSlugAbsoluteRoute}
             />
           );
         })}
@@ -359,56 +426,56 @@ const Node = React.memo<{
   meta?: React.ReactNode;
   showAsActive?: boolean;
   isInResponsiveMode?: boolean;
-  makeSlugAbsoluteRoute?: boolean;
   onClick?: (e: React.MouseEvent, forceOpen?: boolean) => void;
   onLinkClick?(): void;
-}>(
-  ({ item, depth, meta, showAsActive, isInResponsiveMode, makeSlugAbsoluteRoute, onClick, onLinkClick = () => {} }) => {
-    const activeId = React.useContext(ActiveIdContext);
-    const isActive = activeId === item.slug || activeId === item.id;
-    const LinkComponent = React.useContext(LinkContext);
+}>(({ item, depth, meta, showAsActive, isInResponsiveMode, onClick, onLinkClick = () => {} }) => {
+  const { activeId, lastActiveIndex, setLastActiveIndex } = React.useContext(ActiveItemContext);
+  const { index } = item;
+  const isSlugMatched = activeId === item.slug || activeId === item.id;
+  const isActive = lastActiveIndex === index && isSlugMatched;
+  const LinkComponent = React.useContext(LinkContext);
 
-    const handleClick = (e: React.MouseEvent) => {
-      if (isActive) {
-        // Don't trigger link click when we're active
-        e.stopPropagation();
-        e.preventDefault();
-      } else {
-        onLinkClick();
-      }
+  const handleClick = (e: React.MouseEvent) => {
+    if (isActive) {
+      // Don't trigger link click when we're active
+      e.stopPropagation();
+      e.preventDefault();
+    } else {
+      setLastActiveIndex(index);
+      onLinkClick();
+    }
 
-      // Force open when clicking inactive group
-      if (onClick) {
-        onClick(e, isActive ? undefined : true);
-      }
-    };
+    // Force open when clicking inactive group
+    if (onClick) {
+      onClick(e, isActive ? undefined : true);
+    }
+  };
 
-    return (
-      <Box
-        as={LinkComponent}
-        to={makeSlugAbsoluteRoute && !item.slug.startsWith('/') ? `/${item.slug}` : item.slug}
-        display="block"
-        textDecoration="no-underline"
-        className="ElementsTableOfContentsItem"
-      >
-        <Item
-          id={getHtmlIdFromItemId(item.slug || item.id)}
-          isActive={isActive || showAsActive}
-          depth={depth}
-          title={item.title}
-          icon={
-            NODE_TYPE_TITLE_ICON[item.type] && (
-              <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
-            )
-          }
-          meta={meta}
-          isInResponsiveMode={isInResponsiveMode}
-          onClick={handleClick}
-        />
-      </Box>
-    );
-  },
-);
+  return (
+    <Box
+      as={LinkComponent}
+      to={resolveRelativeLink(item.slug)}
+      display="block"
+      textDecoration="no-underline"
+      className="ElementsTableOfContentsItem"
+    >
+      <Item
+        id={getHtmlIdFromItemId(item.slug || item.id)}
+        isActive={isActive || showAsActive}
+        depth={depth}
+        title={item.title}
+        icon={
+          NODE_TYPE_TITLE_ICON[item.type] && (
+            <Box as={Icon} color={NODE_TYPE_ICON_COLOR[item.type]} icon={NODE_TYPE_TITLE_ICON[item.type]} />
+          )
+        }
+        meta={meta}
+        isInResponsiveMode={isInResponsiveMode}
+        onClick={e => handleClick(e)}
+      />
+    </Box>
+  );
+});
 Node.displayName = 'Node';
 
 const Version: React.FC<{ value: string }> = ({ value }) => {

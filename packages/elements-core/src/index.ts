@@ -11,6 +11,7 @@ export {
   MarkdownComponentsProvider,
 } from './components/MarkdownViewer/CustomComponents/Provider';
 export { ReactRouterMarkdownLink } from './components/MarkdownViewer/CustomComponents/ReactRouterLink';
+export { ScrollToHashElement } from './components/MarkdownViewer/CustomComponents/ScrollToHashElement';
 export { NonIdealState } from './components/NonIdealState';
 export { PoweredByLink } from './components/PoweredByLink';
 export { TableOfContents } from './components/TableOfContents';
@@ -40,7 +41,8 @@ export { useRouter } from './hooks/useRouter';
 export { Styled, withStyles } from './styled';
 export { Divider, Group, ITableOfContentsTree, Item, ParsedNode, RoutingProps, TableOfContentItem } from './types';
 export { isHttpOperation, isHttpService, isHttpWebhookOperation } from './utils/guards';
+export { resolveUrl } from './utils/http-spec/IServer';
 export { ReferenceResolver } from './utils/ref-resolving/ReferenceResolver';
 export { createResolvedObject } from './utils/ref-resolving/resolvedObject';
-export { slugify } from './utils/string';
+export { resolveRelativeLink, slugify } from './utils/string';
 export { createElementClass } from './web-components/createElementClass';

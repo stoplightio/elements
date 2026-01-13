@@ -521,7 +521,7 @@ describe('HttpOperation', () => {
       const select = screen.getByLabelText('Request Body Content Type');
       chooseOption(select, 'application/x-www-form-urlencoded');
       const secondRequestSample = await screen.findByLabelText(
-        "curl --request POST \\ --url https://todos.stoplight.io/users \\ --header 'Content-Type: application/x-www-form-urlencoded' \\ --data name= \\ --data completed= \\ --data someEnum=a",
+        "curl --request POST \\ --url https://todos.stoplight.io/users \\ --header 'Content-Type: application/x-www-form-urlencoded' \\ --data-urlencode name= \\ --data-urlencode completed= \\ --data-urlencode someEnum=a",
       );
 
       expect(screen.getByLabelText('someEnum')).toBeInTheDocument();
