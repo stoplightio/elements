@@ -1,2 +1,2 @@
 // auto-updated during build
-export const appVersion = '3.0.14';
+export const appVersion = '3.0.15';
