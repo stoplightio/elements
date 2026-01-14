@@ -8,12 +8,14 @@ import { useOptionsCtx } from '../../../context/Options';
 import { isJSONSchema } from '../../../utils/guards';
 import { getOriginalObject } from '../../../utils/ref-resolving/resolvedObject';
 import { MarkdownViewer } from '../../MarkdownViewer';
+import { RequestBodyExamples } from '../../RequestBodyExamples';
 import { SectionSubtitle } from '../Sections';
 
 export interface BodyProps {
   body: IHttpOperationRequestBody;
   onChange?: (requestBodyIndex: number) => void;
   isHttpWebhookOperation?: boolean;
+  showExamples?: boolean;
 }
 
 export const isBodyEmpty = (body?: BodyProps['body']) => {
@@ -24,7 +26,7 @@ export const isBodyEmpty = (body?: BodyProps['body']) => {
   return contents.length === 0 && !description?.trim();
 };
 
-export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyProps) => {
+export const Body = ({ body, onChange, isHttpWebhookOperation = false, showExamples = false }: BodyProps) => {
   const [refResolver, maxRefDepth] = useSchemaInlineRefResolver();
   const [chosenContent, setChosenContent] = React.useState(0);
   const { nodeHasChanged, renderExtensionAddon } = useOptionsCtx();
@@ -39,6 +41,7 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
 
   const { contents = [], description } = body;
   const schema = contents[chosenContent]?.schema;
+  const mediaTypeContent = contents[chosenContent];
   const descriptionChanged = nodeHasChanged?.({ nodeId: body.id, attr: 'description' });
 
   return (
@@ -73,6 +76,7 @@ export const Body = ({ body, onChange, isHttpWebhookOperation = false }: BodyPro
           renderExtensionAddon={renderExtensionAddon}
         />
       )}
+      {showExamples && mediaTypeContent && <RequestBodyExamples mediaTypeContent={mediaTypeContent} />}
     </VStack>
   );
 };
