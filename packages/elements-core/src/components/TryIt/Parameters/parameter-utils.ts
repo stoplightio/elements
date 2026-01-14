@@ -90,7 +90,10 @@ export function exampleOptions(parameter: ParameterSpec) {
   return parameter.examples?.length && parameter.examples.length > 1
     ? [
         selectExampleOption,
-        ...parameter.examples.map(example => ({ label: example.key, value: exampleValue(example) })),
+        ...parameter.examples.map(example => ({
+          label: example.key,
+          value: encodeSafeSelectorValue(exampleValue(example)),
+        })),
       ]
     : null;
 }
@@ -112,9 +115,13 @@ function stringifyValue(value: unknown) {
   return String(value);
 }
 
+function escapeQuotes(value: string) {
+  return value.replace(/"/g, '\\"');
+}
+
 function exampleValue(example: Omit<INodeExample, 'id'> | Omit<INodeExternalExample, 'id'>) {
   const value = 'value' in example ? example.value : example.externalValue;
-  return stringifyValue(value);
+  return escapeQuotes(stringifyValue(value));
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {
