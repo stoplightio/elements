@@ -12,7 +12,7 @@
   "dependencies": {
     "@stoplight/mosaic": "1.53.4",
     "@jpmorganchase/elemental": "5.0.2",
-    "@jpmorganchase/elemental-dev-portal": "2.14.0",
+    "@jpmorganchase/elemental-dev-portal": "2.15.0",
     "history": "5.3.0",
     "react": "16.14.0",
     "react-dom": "16.14.0",

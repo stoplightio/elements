@@ -1,6 +1,6 @@
 {
   "name": "@jpmorganchase/elemental",
-  "version": "10.0.0",
+  "version": "11.0.0",
   "description": "UI components for composing beautiful developer documentation.",
   "keywords": [],
   "sideEffects": [
@@ -62,7 +62,7 @@
     ]
   },
   "dependencies": {
-    "@jpmorganchase/elemental-core": "^1.21.0",
+    "@jpmorganchase/elemental-core": "^1.22.0",
     "@stoplight/http-spec": "7.1.0",
     "@stoplight/json": "3.21.0",
     "@stoplight/mosaic": "1.53.4",
