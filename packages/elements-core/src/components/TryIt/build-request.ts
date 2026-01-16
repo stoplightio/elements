@@ -1,4 +1,5 @@
 import { Dictionary, HttpParamStyles, IHttpOperation, IMediaTypeContent, IServer } from '@stoplight/types';
+import DOMPurify from 'dompurify';
 import { Request as HarRequest } from 'har-format';
 
 import { getServerUrlWithVariableValues, resolveUrl } from '../../utils/http-spec/IServer';
@@ -144,20 +145,24 @@ export async function buildFetchRequest({
   credentials = 'omit',
   corsProxy,
 }: BuildRequestInput): Promise<Parameters<typeof fetch>> {
+  const sanitizedParameterValues = Object.fromEntries(
+    Object.entries(parameterValues).map(([key, value]) => [key, DOMPurify.sanitize(value)]),
+  );
+
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy, serverVariableValues });
 
   const shouldIncludeBody =
     ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
 
-  const queryParams = getQueryParams({ httpOperation, parameterValues });
+  const queryParams = getQueryParams({ httpOperation, parameterValues: sanitizedParameterValues });
 
   const rawHeaders = filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security)
-    .map(header => ({ name: header.name, value: parameterValues[header.name] ?? '' }))
+    .map(header => ({ name: header.name, value: sanitizedParameterValues[header.name] ?? '' }))
     .filter(({ value }) => value.length > 0);
 
   const [queryParamsWithAuth, headersWithAuth] = runAuthRequestEhancements(auth, queryParams, rawHeaders);
 
-  const expandedPath = uriExpand(httpOperation.path, parameterValues);
+  const expandedPath = uriExpand(httpOperation.path, sanitizedParameterValues);
 
   // urlObject is concatenated this way to avoid /user and /user/ endpoint edge cases
   const urlObject = new URL(serverUrl + expandedPath);
