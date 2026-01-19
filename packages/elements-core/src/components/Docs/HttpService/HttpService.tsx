@@ -23,7 +23,6 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
     const { nodeHasChanged } = useOptionsCtx();
     const data = useResolvedObject(unresolvedData) as IHttpService;
     const { ref: layoutRef } = useIsCompact(layoutOptions);
-    
     const { search, pathname } = location;
     const mocking = React.useContext(MockingContext);
     const query = new URLSearchParams(search);
