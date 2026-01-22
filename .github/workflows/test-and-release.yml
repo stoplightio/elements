@@ -1,0 +1,183 @@
+name: stoplightio/elements/test-and-release
+on:
+  push:
+    branches:
+    - main
+jobs:
+  lint-and-check:
+    runs-on: ubuntu-latest
+    container:
+      image: node:lts
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: yarn --frozen-lockfile
+    - run: yarn type-check
+    - run: yarn lint
+    - run: yarn test.prod
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: test-results
+  build:
+    defaults:
+      run:
+        working-directory: "/mnt/ramdisk/project"
+    runs-on: ubuntu-latest
+    container:
+      image: node:18.20
+    env:
+      CYPRESS_CACHE_FOLDER: "/mnt/ramdisk/.cache/Cypress"
+      YARN_CACHE_FOLDER: "/mnt/ramdisk/.cache/yarn"
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: yarn --frozen-lockfile
+    - run: yarn build
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: |-
+          /mnt/ramdisk//project
+          /mnt/ramdisk//.cache/Cypress
+  build-docs:
+    runs-on: ubuntu-latest
+    container:
+      image: node:lts
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: yarn --frozen-lockfile
+    - run: yarn build.docs
+  e2e-react-cra:
+    defaults:
+      run:
+        working-directory: "/mnt/ramdisk/project"
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/base:16.18.1
+      env:
+        TERM: xterm
+    needs:
+    - build
+    env:
+      CYPRESS_CACHE_FOLDER: "/mnt/ramdisk/.cache/Cypress"
+      YARN_CACHE_FOLDER: "/mnt/ramdisk/.cache/yarn"
+      example-name: react-cra
+    steps:
+    - uses: actions/download-artifact@v4.1.0
+      with:
+        path: "/mnt/ramdisk/"
+    - name: Example - use local builds
+      run: yarn copy:${{ env.example-name }}
+      working-directory: "/mnt/ramdisk/project"
+    - name: Example - Install dependencies
+      run: yarn install
+      working-directory: "/mnt/ramdisk/project/examples-dev/${{ env.example-name }}"
+    - name: Example - Build
+      run: yarn build
+      working-directory: "/mnt/ramdisk/project/examples-dev/${{ env.example-name }}"
+    - name: Run E2E checks
+      run: yarn e2e:run:${{ env.example-name }}
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results/videos
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results/screenshots
+  e2e-angular:
+    defaults:
+      run:
+        working-directory: "/mnt/ramdisk/project"
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/base:16.18.1
+      env:
+        TERM: xterm
+    needs:
+    - build
+    env:
+      CYPRESS_CACHE_FOLDER: "/mnt/ramdisk/.cache/Cypress"
+      YARN_CACHE_FOLDER: "/mnt/ramdisk/.cache/yarn"
+      example-name: angular
+    steps:
+    - uses: actions/download-artifact@v4.1.0
+      with:
+        path: "/mnt/ramdisk/"
+    - name: Example - use local builds
+      run: yarn copy:${{ env.example-name }}
+      working-directory: "/mnt/ramdisk/project"
+    - name: Example - Install dependencies
+      run: yarn install
+      working-directory: "/mnt/ramdisk/project/examples-dev/${{ env.example-name }}"
+    - name: Example - Build
+      run: yarn build
+      working-directory: "/mnt/ramdisk/project/examples-dev/${{ env.example-name }}"
+    - name: Run E2E checks
+      run: yarn e2e:run:${{ env.example-name }}
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results/videos
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results/screenshots
+  e2e-static-html:
+    defaults:
+      run:
+        working-directory: "/mnt/ramdisk/project"
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/base:16.18.1
+      env:
+        TERM: xterm
+    needs:
+    - build
+    env:
+      CYPRESS_CACHE_FOLDER: "/mnt/ramdisk/.cache/Cypress"
+      YARN_CACHE_FOLDER: "/mnt/ramdisk/.cache/yarn"
+      example-name: static-html
+    steps:
+    - uses: actions/download-artifact@v4.1.0
+      with:
+        path: "/mnt/ramdisk/"
+    - name: Example - use local builds
+      run: yarn copy:${{ env.example-name }}
+      working-directory: "/mnt/ramdisk/project"
+    - name: Example - Install dependencies
+      run: yarn install
+      working-directory: "/mnt/ramdisk/project/examples-dev/${{ env.example-name }}"
+    - name: Example - Build
+      run: yarn build
+      working-directory: "/mnt/ramdisk/project/examples-dev/${{ env.example-name }}"
+    - name: Run E2E checks
+      run: yarn e2e:run:${{ env.example-name }}
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results/videos
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        path: cypress/results/screenshots
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    container:
+      image: node:18.20
+    needs:
+    - lint-and-check
+    - build
+    - build-docs
+    - e2e-react-cra
+    - e2e-static-html
+    - e2e-angular
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - name: Install Dependencies
+      run: yarn --frozen-lockfile
+    - name: Set NPM Token
+      run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+    - name: Run Release Script
+      run: yarn release
