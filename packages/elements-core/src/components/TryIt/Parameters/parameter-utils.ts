@@ -13,8 +13,66 @@ const booleanOptions = [
   { label: 'True', value: 'true' },
 ];
 
+/**
+ * Encodes a value to be safe for use in CSS selectors (data-key attributes).
+ * Special characters like quotes, brackets, etc. can break querySelector,
+ * so we encode them using base64.
+ */
+export function encodeSafeSelectorValue(value: string | number): string | number {
+  // Numbers are safe to use as-is
+  if (typeof value === 'number') {
+    return value;
+  }
+  // Check if the value contains characters that would break CSS selectors
+  // This includes quotes, brackets, backslashes, etc.
+  const hasSpecialChars = /["'\[\]\\(){}]/.test(value);
+  if (!hasSpecialChars) {
+    return value;
+  }
+  // Encode to base64 to make it safe for CSS selectors
+  // We prefix with 'b64:' so we can decode it later if needed
+  try {
+    return 'b64:' + btoa(value);
+  } catch (e) {
+    // If btoa fails (e.g., with unicode), fallback to encodeURIComponent
+    return 'enc:' + encodeURIComponent(value);
+  }
+}
+
+/**
+ * Decodes a value that was encoded by encodeSafeSelectorValue
+ */
+export function decodeSafeSelectorValue(value: string | number): string | number {
+  if (typeof value === 'number') {
+    return value;
+  }
+
+  if (value.startsWith('b64:')) {
+    try {
+      return atob(value.substring(4));
+    } catch (e) {
+      return value;
+    }
+  }
+  if (value.startsWith('enc:')) {
+    try {
+      return decodeURIComponent(value.substring(4));
+    } catch (e) {
+      return value;
+    }
+  }
+  return value;
+}
+
 function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
-  const options = map(enumValues, v => ({ value: typeof v === 'number' ? v : String(v) }));
+  const options = map(enumValues, v => {
+    // Handle objects and arrays by stringifying them
+    const stringValue =
+      typeof v === 'object' && v !== null ? safeStringify(v) ?? String(v) : typeof v === 'number' ? v : String(v);
+    // Encode the value to be safe for CSS selectors, but keep the original label
+    const safeValue = encodeSafeSelectorValue(stringValue);
+    return { value: safeValue, label: String(stringValue) };
+  });
   return required ? options : [{ label: 'Not Set', value: '' }, ...options];
 }
 
@@ -32,7 +90,10 @@ export function exampleOptions(parameter: ParameterSpec) {
   return parameter.examples?.length && parameter.examples.length > 1
     ? [
         selectExampleOption,
-        ...parameter.examples.map(example => ({ label: example.key, value: exampleValue(example) })),
+        ...parameter.examples.map(example => ({
+          label: example.key,
+          value: encodeSafeSelectorValue(exampleValue(example)),
+        })),
       ]
     : null;
 }
@@ -48,16 +109,19 @@ export function parameterSupportsFileUpload(parameter?: Pick<ParameterSpec, 'sch
 }
 
 function stringifyValue(value: unknown) {
-  return typeof value === 'object' ? JSON.stringify(value) : escapeQuotes(String(value));
-}
-
-function exampleValue(example: Omit<INodeExample, 'id'> | Omit<INodeExternalExample, 'id'>) {
-  const value = 'value' in example ? example.value : example.externalValue;
-  return stringifyValue(value);
+  if (typeof value === 'object' && value !== null) {
+    return safeStringify(value) ?? String(value);
+  }
+  return String(value);
 }
 
 function escapeQuotes(value: string) {
   return value.replace(/"/g, '\\"');
+}
+
+function exampleValue(example: Omit<INodeExample, 'id'> | Omit<INodeExternalExample, 'id'>) {
+  const value = 'value' in example ? example.value : example.externalValue;
+  return escapeQuotes(stringifyValue(value));
 }
 
 export function getPlaceholderForParameter(parameter: ParameterSpec) {
@@ -89,14 +153,16 @@ const getValueForParameter = (parameter: ParameterSpec) => {
     return { value: stringifyValue(defaultValue), isDefault: true };
   }
 
-  const examples = parameter.examples ?? [];
-  if (examples.length > 0) {
-    return { value: exampleValue(examples[0]) };
-  }
-
+  // If the parameter has enums, prioritize using the first enum value
+  // over examples, as examples might not match the enum values
   const enums = parameter.schema?.enum ?? [];
   if (enums.length > 0) {
     return { value: stringifyValue(enums[0]) };
+  }
+
+  const examples = parameter.examples ?? [];
+  if (examples.length > 0) {
+    return { value: exampleValue(examples[0]) };
   }
 
   return { value: '' };
