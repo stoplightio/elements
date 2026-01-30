@@ -228,6 +228,10 @@ const Response = ({ response, onMediaTypeChange }: ResponseProps) => {
 Response.displayName = 'HttpOperation.Response';
 
 const codeToIntentVal = (code: string): IntentVals => {
+  //Implement check here for invalid codes to avoid issues related to charAt() function
+  if (typeof code !== 'string' || code.trim() === '') {
+    return 'default';
+  }
   const firstChar = code.charAt(0);
 
   switch (firstChar) {

@@ -98,7 +98,10 @@ export interface StoplightProjectProps extends RoutingProps {
 }
 
 const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, collapseTableOfContents = false }) => {
-  const { branchSlug: encodedBranchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
+  const { branchSlug: encodedBranchSlug = '', '*': nodeSlug = '' } = useParams<{
+    branchSlug?: string;
+    '*': string;
+  }>();
   const branchSlug = decodeURIComponent(encodedBranchSlug);
   const navigate = useNavigate();
 
@@ -110,7 +113,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, coll
     isError,
     error: nodeError,
   } = useGetNodeContent({
-    nodeSlug,
+    nodeSlug: nodeSlug ?? '',
     projectId,
     branchSlug,
   });
@@ -171,7 +174,7 @@ const ProjectNode: React.FC<StoplightProjectProps> = ({
   tryItCredentialsPolicy,
   tryItCorsProxy,
 }) => {
-  const { branchSlug: encodedBranchSlug = '', nodeSlug = '' } = useParams<{ branchSlug?: string; nodeSlug: string }>();
+  const { branchSlug: encodedBranchSlug = '', '*': nodeSlug = '' } = useParams<{ branchSlug?: string; '*': string }>();
   const branchSlug = decodeURIComponent(encodedBranchSlug);
   const [isLoadingNode, isTocFetched, isError, nodeError, node] = useOutletContext<any>();
 
@@ -233,11 +236,8 @@ const StoplightProjectRouter = ({
   const InternalRoutes = () => (
     <Routes>
       <Route path="/" element={<StoplightProjectImpl {...props} />}>
-        <Route path="/branches/:branchSlug/:nodeSlug/*" element={<ProjectNode {...props} />} />
-
-        <Route path="/:nodeSlug/*" element={<ProjectNode {...props} />} />
-
-        <Route element={<ProjectNode {...props} />} />
+        <Route path="/branches/:branchSlug/*" element={<ProjectNode {...props} />} />
+        <Route path="/*" element={<ProjectNode {...props} />} />
       </Route>
     </Routes>
   );

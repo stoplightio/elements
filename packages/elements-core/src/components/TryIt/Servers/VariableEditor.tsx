@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { useUniqueId } from '../../../hooks/useUniqueId';
 import { ServerVariable } from '../../../utils/http-spec/IServer';
+import { decodeSafeSelectorValue, encodeSafeSelectorValue } from '../Parameters/parameter-utils';
 
 interface VariableProps {
   variable: ServerVariable;
@@ -13,6 +14,18 @@ interface VariableProps {
 
 export const VariableEditor: React.FC<VariableProps> = ({ variable, value, onChange }) => {
   const inputId = useUniqueId(`id_${variable.name}_`);
+
+  // Find the encoded value that matches the current (decoded) value
+  const encodedOptions = React.useMemo(
+    () => (variable.enum ? variable.enum.map(s => ({ value: encodeSafeSelectorValue(s), label: String(s) })) : []),
+    [variable.enum],
+  );
+
+  const encodedValue = React.useMemo(() => {
+    if (!value || !variable.enum) return value || variable.default;
+    const matchingOption = encodedOptions.find(opt => decodeSafeSelectorValue(String(opt.value)) === value);
+    return matchingOption ? String(matchingOption.value) : value;
+  }, [value, variable.enum, variable.default, encodedOptions]);
 
   return (
     <>
@@ -25,9 +38,9 @@ export const VariableEditor: React.FC<VariableProps> = ({ variable, value, onCha
           <Select
             flex={1}
             aria-label={variable.name}
-            options={variable.enum.map(s => ({ value: s }))}
-            value={value || variable.default}
-            onChange={onChange}
+            options={encodedOptions}
+            value={encodedValue}
+            onChange={val => onChange && onChange(decodeSafeSelectorValue(String(val)))}
           />
         ) : (
           <Flex flex={1}>
