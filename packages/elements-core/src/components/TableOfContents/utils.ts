@@ -68,7 +68,7 @@ export function findFirstNode(items: TableOfContentsItem[]): TableOfContentsNode
 }
 
 export function isDivider(item: TableOfContentsItem): item is TableOfContentsDivider {
-  return Object.keys(item).length === 1 && 'title' in item;
+  return Object.keys(item).length === 2 && 'title' in item && 'index' in item;
 }
 export function isGroup(item: TableOfContentsItem): item is TableOfContentsGroup {
   return Object.keys(item).length >= 2 && 'title' in item && 'items' in item;
@@ -80,5 +80,5 @@ export function isNode(item: TableOfContentsItem): item is TableOfContentsNode {
   return 'title' in item && 'slug' in item && 'id' in item && 'meta' in item && 'type' in item;
 }
 export function isExternalLink(item: TableOfContentsItem): item is TableOfContentsExternalLink {
-  return Object.keys(item).length === 2 && 'title' in item && 'url' in item;
+  return Object.keys(item).length === 3 && 'title' in item && 'url' in item && 'index' in item;
 }

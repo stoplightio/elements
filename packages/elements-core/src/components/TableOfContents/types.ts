@@ -30,6 +30,7 @@ export type TableOfContentsGroup = {
   title: string;
   items: TableOfContentsGroupItem[];
   itemsType?: 'article' | 'http_operation' | 'http_webhook' | 'model';
+  index: string;
 };
 
 export type TableOfContentsExternalLink = {
@@ -46,6 +47,13 @@ export type TableOfContentsNode<
   type: T;
   meta: string;
   version?: string;
+  index: string;
 };
 
 export type TableOfContentsNodeGroup = TableOfContentsNode<'http_service'> & TableOfContentsGroup;
+
+export type ActiveItemContextType = {
+  activeId: string | undefined;
+  lastActiveIndex: string;
+  setLastActiveIndex: React.Dispatch<React.SetStateAction<string>>;
+};
