@@ -3,6 +3,7 @@ import * as React from 'react';
 
 import { useUniqueId } from '../../../hooks/useUniqueId';
 import {
+  decodeSafeSelectorValue,
   exampleOptions,
   getPlaceholderForParameter,
   getPlaceholderForSelectedParameter,
@@ -34,8 +35,24 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
   const inputCheckId = useUniqueId(`id_${parameter.name}_checked`);
   const parameterValueOptions = parameterOptions(parameter);
   const examples = exampleOptions(parameter);
-  const selectedExample = examples?.find(e => e.value === value) ?? selectExampleOption;
+  // Find the encoded example value that matches the current (decoded) value
+  const selectedExample = React.useMemo(() => {
+    if (!examples) return selectExampleOption;
+    const matchingExample = examples.find(e => {
+      return String(decodeSafeSelectorValue(e.value as string | number)) === value;
+    });
+    return matchingExample ?? selectExampleOption;
+  }, [examples, value]);
   const parameterDisplayName = `${parameter.name}${parameter.required ? '*' : ''}`;
+
+  // Find the encoded value that matches the current (decoded) value
+  const encodedValue = React.useMemo(() => {
+    if (!value || !parameterValueOptions) return value || '';
+    const matchingOption = parameterValueOptions.find(opt => {
+      return String(decodeSafeSelectorValue(opt.value as string | number)) === value;
+    });
+    return matchingOption ? String(matchingOption.value) : value;
+  }, [value, parameterValueOptions]);
 
   const requiredButEmpty = validate && parameter.required && !value;
 
@@ -51,8 +68,8 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
             flex={1}
             aria-label={parameter.name}
             options={parameterValueOptions}
-            value={value || ''}
-            onChange={onChange}
+            value={encodedValue}
+            onChange={val => onChange && onChange(String(decodeSafeSelectorValue(val as string | number)))}
             placeholder={getPlaceholderForSelectedParameter(parameter)}
           />
         ) : (
@@ -75,7 +92,7 @@ export const ParameterEditor: React.FC<ParameterProps> = ({
                 flex={1}
                 value={selectedExample.value}
                 options={examples}
-                onChange={onChange}
+                onChange={val => onChange && onChange(String(decodeSafeSelectorValue(val as string | number)))}
               />
             )}
           </Flex>
