@@ -84,6 +84,49 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     }, []);
     const updatedTree = updateTocTree(tree, '');
 
+    const findFirstMatchAndIndexMatch = React.useCallback(
+      (items: TableOfContentsGroupItem[], id: string | undefined): [TableOfContentsGroupItem | undefined, boolean] => {
+        let firstMatch: TableOfContentsGroupItem | undefined;
+        let hasAnyLastIndexMatch = false;
+        if (!id) return [firstMatch, hasAnyLastIndexMatch];
+
+        const walk = (arr: TableOfContentsGroupItem[], stack: TableOfContentsGroupItem[]): boolean => {
+          for (const itm of arr) {
+            const newStack = stack.concat(itm);
+
+            const matches = ('slug' in itm && (itm as any).slug === id) || ('id' in itm && (itm as any).id === id);
+            if (matches) {
+              if (!firstMatch) firstMatch = itm;
+              const hasLastIndexMatch = newStack.some(el => 'index' in el && (el as any).index === lastActiveIndex);
+              if (hasLastIndexMatch) hasAnyLastIndexMatch = true;
+            }
+
+            if ('items' in itm && Array.isArray((itm as any).items)) {
+              if (walk((itm as any).items, newStack)) return true;
+            }
+          }
+
+          return false;
+        };
+
+        walk(items, []);
+        return [firstMatch, hasAnyLastIndexMatch];
+      },
+      [lastActiveIndex],
+    );
+
+    const [firstMatchItem, hasAnyLastIndexMatch] = React.useMemo(
+      () => findFirstMatchAndIndexMatch(updatedTree, activeId),
+      [updatedTree, activeId, findFirstMatchAndIndexMatch],
+    );
+
+    React.useEffect(() => {
+      if (!hasAnyLastIndexMatch && firstMatchItem && 'index' in firstMatchItem && firstMatchItem.index) {
+        setLastActiveIndex(firstMatchItem.index);
+      }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [firstMatchItem, hasAnyLastIndexMatch]);
+
     const container = React.useRef<HTMLDivElement>(null);
     const child = React.useRef<HTMLDivElement>(null);
     const firstRender = useFirstRender();
