@@ -161,9 +161,8 @@ const addTagGroupsToTree = <T extends GroupableNode>(
 ) => {
   // Show ungrouped nodes above tag groups
   ungrouped.forEach(node => {
-    if (hideInternal && isInternal(node)) {
-      return;
-    }
+    if (hideInternal && isInternal(node)) return;
+
     tree.push({
       id: node.uri,
       slug: node.uri,
@@ -184,8 +183,10 @@ const addTagGroupsToTree = <T extends GroupableNode>(
         title: node.name,
         type: node.type,
         meta: isHttpOperation(node.data) || isHttpWebhookOperation(node.data) ? node.data.method : '',
+        index: '0-',
       };
     });
+
     if (items.length > 0) {
       tree.push({
         title: group.title,
