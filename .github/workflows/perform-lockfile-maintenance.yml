@@ -1,0 +1,13 @@
+name: stoplightio/elements/perform-lockfile-maintenance
+on:
+  schedule:
+  - cron: 0 3 * * 1
+#   # 'filters' was not transformed because there is no suitable equivalent in GitHub Actions
+jobs:
+  lockfile-maintenance:
+    runs-on: ubuntu-latest
+    container:
+      image: node:lts
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: weekly_lockfile_maintenance.sh
