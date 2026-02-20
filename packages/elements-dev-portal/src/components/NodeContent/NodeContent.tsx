@@ -142,6 +142,7 @@ const LinkComponent: CustomComponentMapping['a'] = ({ children, href, title }) =
       const baseURL = window.location.host;
       const hrefURL = new URL(href).host;
 
+      //hrefURL
       if (baseURL === hrefURL) {
         // Open URL in same tab if domain match
         return (
