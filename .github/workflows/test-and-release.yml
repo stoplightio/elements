@@ -29,13 +29,13 @@ jobs:
       with:
         name: build-output
         path: |
-          packages/*/dist
-          packages/*/package.json
-          packages/*/styles.min.css
-          packages/*/web-components.min.js
-          packages/*/index.d.ts
-          examples
-          examples-dev
+          packages/elements/dist/
+          packages/elements/package.json
+          packages/elements-core/dist/
+          packages/elements-core/package.json
+          packages/elements-dev-portal/dist/
+          packages/elements-dev-portal/package.json
+          examples/
           use-local-elements.sh
           package.json
           yarn.lock
