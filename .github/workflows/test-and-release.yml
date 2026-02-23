@@ -29,8 +29,17 @@ jobs:
       with:
         name: build-output
         path: |
-          ./
-          ~/.cache/Cypress
+          packages/elements/dist/
+          packages/elements/package.json
+          packages/elements-core/dist/
+          packages/elements-core/package.json
+          packages/elements-dev-portal/dist/
+          packages/elements-dev-portal/package.json
+          examples/
+          use-local-elements.sh
+          package.json
+          yarn.lock
+          lerna.json
   build-docs:
     runs-on: ubuntu-latest
     container:
@@ -54,6 +63,8 @@ jobs:
       with:
         name: build-output
         path: ./
+    - name: Install root dependencies
+      run: yarn --frozen-lockfile
     - name: Example - use local builds
       run: yarn copy:${{ env.example-name }}
     - name: Example - Install dependencies
@@ -88,6 +99,8 @@ jobs:
       with:
         name: build-output
         path: ./
+    - name: Install root dependencies
+      run: yarn --frozen-lockfile
     - name: Example - use local builds
       run: yarn copy:${{ env.example-name }}
     - name: Example - Install dependencies
@@ -122,6 +135,8 @@ jobs:
       with:
         name: build-output
         path: ./
+    - name: Install root dependencies
+      run: yarn --frozen-lockfile
     - name: Example - use local builds
       run: yarn copy:${{ env.example-name }}
     - name: Example - Install dependencies
