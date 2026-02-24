@@ -38,6 +38,9 @@ jobs:
           packages/elements-dev-portal/dist/
           packages/elements-dev-portal/package.json
           examples/
+          examples-dev/
+          cypress/
+          cypress.config.ts
           use-local-elements.sh
           package.json
           yarn.lock
@@ -60,6 +63,7 @@ jobs:
     - build
     env:
       example-name: react-cra
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
     - uses: actions/download-artifact@v4.1.0
       with:
@@ -96,6 +100,7 @@ jobs:
     - build
     env:
       example-name: angular
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
     - uses: actions/download-artifact@v4.1.0
       with:
