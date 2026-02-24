@@ -41,6 +41,8 @@ jobs:
           examples-dev/
           cypress/
           cypress.config.ts
+          tsconfig.json
+          node_modules/@stoplight/scripts/
           use-local-elements.sh
           package.json
           yarn.lock
