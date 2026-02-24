@@ -51,7 +51,7 @@ jobs:
   e2e-react-cra:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.4
+      image: cypress/base:18.20.3
       env:
         TERM: xterm
     needs:
@@ -87,7 +87,7 @@ jobs:
   e2e-angular:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.4
+      image: cypress/base:18.20.3
       env:
         TERM: xterm
     needs:
@@ -123,7 +123,7 @@ jobs:
   e2e-static-html:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.4
+      image: cypress/base:18.20.3
       env:
         TERM: xterm
     needs:
