@@ -1,6 +1,7 @@
 export { Docs, DocsProps, ExtensionAddonRenderer, ExtensionRowProps, ParsedDocs } from './components/Docs';
 export { DeprecatedBadge } from './components/Docs/HttpOperation/Badges';
 export { ExportButton, ExportButtonProps } from './components/Docs/HttpService/ExportButton';
+export { HashRouterSync } from './components/HashRouterSync';
 export { ResponsiveSidebarLayout } from './components/Layout/ResponsiveSidebarLayout';
 export { SidebarLayout } from './components/Layout/SidebarLayout';
 export { LinkHeading } from './components/LinkHeading';
