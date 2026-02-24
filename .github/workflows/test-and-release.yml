@@ -166,6 +166,8 @@ jobs:
     - e2e-angular
     steps:
     - uses: actions/checkout@v4.1.0
+    - name: Configure Git safe directory
+      run: git config --global --add safe.directory /__w/elements/elements
     - name: Install Dependencies
       run: yarn --frozen-lockfile
     - name: Set NPM Token
