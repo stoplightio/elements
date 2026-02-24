@@ -16,6 +16,7 @@ jobs:
     - run: yarn test.prod
     - uses: actions/upload-artifact@v4.1.0
       with:
+        name: test-results
         path: test-results
   build:
     runs-on: ubuntu-latest
@@ -36,6 +37,11 @@ jobs:
           packages/elements-dev-portal/dist/
           packages/elements-dev-portal/package.json
           examples/
+          examples-dev/
+          cypress/
+          cypress.config.ts
+          tsconfig.json
+          node_modules/@stoplight/scripts/
           use-local-elements.sh
           package.json
           yarn.lock
@@ -51,13 +57,14 @@ jobs:
   e2e-react-cra:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.0
+      image: cypress/base:18.20.3
       env:
         TERM: xterm
     needs:
     - build
     env:
       example-name: react-cra
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
     - uses: actions/download-artifact@v4.1.0
       with:
@@ -76,24 +83,21 @@ jobs:
     - name: Run E2E checks
       run: yarn e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
+      if: always()
       with:
+        name: e2e-react-cra-results
         path: cypress/results
-    - uses: actions/upload-artifact@v4.1.0
-      with:
-        path: cypress/results/videos
-    - uses: actions/upload-artifact@v4.1.0
-      with:
-        path: cypress/results/screenshots
   e2e-angular:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.0
+      image: cypress/base:18.20.3
       env:
         TERM: xterm
     needs:
     - build
     env:
       example-name: angular
+      NODE_OPTIONS: --openssl-legacy-provider
     steps:
     - uses: actions/download-artifact@v4.1.0
       with:
@@ -112,18 +116,14 @@ jobs:
     - name: Run E2E checks
       run: yarn e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
+      if: always()
       with:
+        name: e2e-angular-results
         path: cypress/results
-    - uses: actions/upload-artifact@v4.1.0
-      with:
-        path: cypress/results/videos
-    - uses: actions/upload-artifact@v4.1.0
-      with:
-        path: cypress/results/screenshots
   e2e-static-html:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.0
+      image: cypress/base:18.20.3
       env:
         TERM: xterm
     needs:
@@ -148,14 +148,10 @@ jobs:
     - name: Run E2E checks
       run: yarn e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
+      if: always()
       with:
+        name: e2e-static-html-results
         path: cypress/results
-    - uses: actions/upload-artifact@v4.1.0
-      with:
-        path: cypress/results/videos
-    - uses: actions/upload-artifact@v4.1.0
-      with:
-        path: cypress/results/screenshots
   release:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
