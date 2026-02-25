@@ -1,0 +1,176 @@
+name: stoplightio/elements/test-and-release
+on:
+  push:
+    branches:
+    - main
+jobs:
+  lint-and-check:
+    runs-on: ubuntu-latest
+    container:
+      image: node:lts
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: yarn --frozen-lockfile
+    - run: yarn type-check
+    - run: yarn lint
+    - run: yarn test.prod
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        name: test-results
+        path: test-results
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: node:18.20
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: yarn --frozen-lockfile
+    - run: yarn build
+    - uses: actions/upload-artifact@v4.1.0
+      with:
+        name: build-output
+        path: |
+          packages/elements/dist/
+          packages/elements/package.json
+          packages/elements-core/dist/
+          packages/elements-core/package.json
+          packages/elements-dev-portal/dist/
+          packages/elements-dev-portal/package.json
+          examples/
+          examples-dev/
+          cypress/
+          cypress.config.ts
+          tsconfig.json
+          node_modules/@stoplight/scripts/
+          use-local-elements.sh
+          package.json
+          yarn.lock
+          lerna.json
+  build-docs:
+    runs-on: ubuntu-latest
+    container:
+      image: node:lts
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: yarn --frozen-lockfile
+    - run: yarn build.docs
+  e2e-react-cra:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/base:18.20.3
+      env:
+        TERM: xterm
+    needs:
+    - build
+    env:
+      example-name: react-cra
+      NODE_OPTIONS: --openssl-legacy-provider
+    steps:
+    - uses: actions/download-artifact@v4.1.0
+      with:
+        name: build-output
+        path: ./
+    - name: Install root dependencies
+      run: yarn --frozen-lockfile
+    - name: Example - use local builds
+      run: yarn copy:${{ env.example-name }}
+    - name: Example - Install dependencies
+      run: yarn install
+      working-directory: ./examples-dev/${{ env.example-name }}
+    - name: Example - Build
+      run: yarn build
+      working-directory: ./examples-dev/${{ env.example-name }}
+    - name: Run E2E checks
+      run: yarn e2e:run:${{ env.example-name }}
+    - uses: actions/upload-artifact@v4.1.0
+      if: always()
+      with:
+        name: e2e-react-cra-results
+        path: cypress/results
+  e2e-angular:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/base:18.20.3
+      env:
+        TERM: xterm
+    needs:
+    - build
+    env:
+      example-name: angular
+      NODE_OPTIONS: --openssl-legacy-provider
+    steps:
+    - uses: actions/download-artifact@v4.1.0
+      with:
+        name: build-output
+        path: ./
+    - name: Install root dependencies
+      run: yarn --frozen-lockfile
+    - name: Example - use local builds
+      run: yarn copy:${{ env.example-name }}
+    - name: Example - Install dependencies
+      run: yarn install
+      working-directory: ./examples-dev/${{ env.example-name }}
+    - name: Example - Build
+      run: yarn build
+      working-directory: ./examples-dev/${{ env.example-name }}
+    - name: Run E2E checks
+      run: yarn e2e:run:${{ env.example-name }}
+    - uses: actions/upload-artifact@v4.1.0
+      if: always()
+      with:
+        name: e2e-angular-results
+        path: cypress/results
+  e2e-static-html:
+    runs-on: ubuntu-latest
+    container:
+      image: cypress/base:18.20.3
+      env:
+        TERM: xterm
+    needs:
+    - build
+    env:
+      example-name: static-html
+    steps:
+    - uses: actions/download-artifact@v4.1.0
+      with:
+        name: build-output
+        path: ./
+    - name: Install root dependencies
+      run: yarn --frozen-lockfile
+    - name: Example - use local builds
+      run: yarn copy:${{ env.example-name }}
+    - name: Example - Install dependencies
+      run: yarn install
+      working-directory: ./examples-dev/${{ env.example-name }}
+    - name: Example - Build
+      run: yarn build
+      working-directory: ./examples-dev/${{ env.example-name }}
+    - name: Run E2E checks
+      run: yarn e2e:run:${{ env.example-name }}
+    - uses: actions/upload-artifact@v4.1.0
+      if: always()
+      with:
+        name: e2e-static-html-results
+        path: cypress/results
+  release:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    container:
+      image: node:18.20
+    needs:
+    - lint-and-check
+    - build
+    - build-docs
+    - e2e-react-cra
+    - e2e-static-html
+    - e2e-angular
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - name: Configure Git safe directory
+      run: git config --global --add safe.directory /__w/elements/elements
+    - name: Install Dependencies
+      run: yarn --frozen-lockfile
+    - name: Set NPM Token
+      run: echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" >> ~/.npmrc
+    - name: Run Release Script
+      run: yarn release
