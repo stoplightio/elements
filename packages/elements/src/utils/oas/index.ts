@@ -42,6 +42,30 @@ const isOas31 = (parsed: unknown): parsed is OpenAPIObject =>
 
 const OAS_MODEL_REGEXP = /((definitions|components)\/?(schemas)?)\//;
 
+export type OperationsSorter = (a: IHttpOperation, b: IHttpOperation) => number;
+
+interface ServiceNodeTransformOptions {
+  operationsSorter?: OperationsSorter;
+}
+
+export function transformServiceNode(
+  node: ServiceNode | null,
+  options: ServiceNodeTransformOptions,
+): ServiceNode | null {
+  if (!node) return null;
+  const serviceNode = { ...node };
+  if (options.operationsSorter) {
+    serviceNode.children = [...serviceNode.children];
+    serviceNode.children.sort((a, b) => {
+      if (a.type === NodeType.HttpOperation && b.type === NodeType.HttpOperation) {
+        return options.operationsSorter!(a.data, b.data);
+      }
+      return 0;
+    });
+  }
+  return serviceNode;
+}
+
 export function transformOasToServiceNode(apiDescriptionDocument: unknown) {
   if (isOas31(apiDescriptionDocument)) {
     return computeServiceNode(
