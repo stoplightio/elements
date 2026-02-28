@@ -82,24 +82,39 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-exampl
     }
   }
 
-  if (examples.length) {
+  if (examples.length && 'x-stoplight' in schema) {
     return examples;
   }
 
   try {
+    let originalExamples = [];
+    if (Array.isArray(schema?.examples)) {
+      originalExamples = JSON.parse(JSON.stringify(schema.examples));
+      delete schema.examples;
+    }
     const generated = Sampler.sample(schema, {
       maxSampleDepth: 4,
       ticks: 6000,
     });
 
-    return generated !== null
-      ? [
-          {
-            label: 'default',
-            data: safeStringify(generated, undefined, 2) ?? '',
-          },
-        ]
-      : [{ label: 'default', data: '' }];
+    let updatedExamples: Example[] =
+      generated !== null
+        ? [
+            {
+              label: 'default',
+              data: safeStringify(generated, undefined, 2) ?? '',
+            },
+          ]
+        : [{ label: 'default', data: '' }];
+    if (originalExamples.length) {
+      schema.examples = originalExamples;
+      examples.forEach(item => {
+        item.data = updatedExamples[0].data;
+      });
+      return examples;
+    } else {
+      return updatedExamples;
+    }
   } catch (e) {
     return [{ label: '', data: `Example cannot be created for this schema\n${e}` }];
   }
