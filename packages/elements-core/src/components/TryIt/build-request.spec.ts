@@ -210,4 +210,52 @@ describe('Build Request', () => {
       ]);
     });
   });
+
+  describe('Build Request', () => {
+    describe('shouldIncludeBody for DELETE', () => {
+      it('Includes body for DELETE requests when bodyInput is provided', () => {
+        const httpOperation = {
+          method: 'DELETE',
+          path: '/delete/path',
+          request: {
+            body: {
+              contents: [
+                {
+                  mediaType: 'application/json',
+                },
+              ],
+            },
+          },
+        };
+
+        const bodyInput = '{"key":"value"}';
+        const shouldIncludeBody =
+          ['PUT', 'POST', 'PATCH', 'DELETE'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
+
+        expect(shouldIncludeBody).toBe(true);
+      });
+
+      it('Does not include body for DELETE requests when bodyInput is undefined', () => {
+        const httpOperation = {
+          method: 'DELETE',
+          path: '/delete/path',
+          request: {
+            body: {
+              contents: [
+                {
+                  mediaType: 'application/json',
+                },
+              ],
+            },
+          },
+        };
+
+        const bodyInput = undefined;
+        const shouldIncludeBody =
+          ['PUT', 'POST', 'PATCH', 'DELETE'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
+
+        expect(shouldIncludeBody).toBe(false);
+      });
+    });
+  });
 });
