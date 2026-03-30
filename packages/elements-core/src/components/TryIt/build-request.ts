@@ -264,7 +264,7 @@ export async function buildHarRequest({
 
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody =
-    ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
+    ['PUT', 'POST', 'PATCH', 'DELETE'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
 
   const queryParams = getQueryParams({ httpOperation, parameterValues });
 
