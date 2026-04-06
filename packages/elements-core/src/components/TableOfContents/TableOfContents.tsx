@@ -84,11 +84,11 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     }, []);
     const updatedTree = updateTocTree(tree, '');
 
-    function findMatchingItems(
-      updateTree: any[],
+    const findMatchingItems = (
+      updateTree: TableOfContentsGroupItem[],
       activeId: string,
       lastActiveIndex: string,
-    ): [TableOfContentsGroupItem | undefined, boolean] {
+    ): [TableOfContentsGroupItem | undefined, boolean] => {
       let exactMatch: any | undefined; // matches activeId + lastActiveIndex
       let partialMatch: any | undefined; // matches only activeId
 
@@ -116,7 +116,7 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       const bestMatch = exactMatch ?? partialMatch; // prioritize exact match
 
       return [bestMatch, hasExactMatch];
-    }
+    };
 
     const [firstMatchItem, hasAnyLastIndexMatch] = React.useMemo(() => {
       return findMatchingItems(updatedTree, activeId, lastActiveIndex);
