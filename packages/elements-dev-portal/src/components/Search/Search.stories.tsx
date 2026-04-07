@@ -136,9 +136,9 @@ export default {
     isInResponsiveMode: { table: { category: 'Input' } },
   },
   args: {
-    projectIds: ['cHJqOjYwNjYx'],
+    projectIds: ['cHJqOjMwODc1MA'],
     workspaceId: 'd2s6NDE1NTU',
-    platformUrl: 'https://stoplight.io',
+    platformUrl: 'https://persistentteams.stoplight.io',
     isInResponsiveMode: false,
   },
 };

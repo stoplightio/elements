@@ -29,8 +29,8 @@ export default {
     platformUrl: { table: { category: 'Input' } },
   },
   args: {
-    projectId: 'cHJqOjYwNjYx',
-    platformUrl: 'https://stoplight.io',
+    projectId: 'cHJqOjMwODc1MA',
+    platformUrl: 'https://persistentteams.stoplight.io',
   },
 };
 
