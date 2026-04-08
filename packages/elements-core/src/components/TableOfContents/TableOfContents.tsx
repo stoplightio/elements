@@ -89,22 +89,26 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       activeId: string,
       lastActiveIndex: string,
     ): [TableOfContentsGroupItem | undefined, boolean] => {
-      let exactMatch: any | undefined; // matches activeId + lastActiveIndex
-      let partialMatch: any | undefined; // matches only activeId
+      let exactMatch: TableOfContentsGroupItem | undefined; // matches activeId + lastActiveIndex
+      let partialMatch: TableOfContentsGroupItem | undefined; // matches only activeId
 
-      const searchInChildren = (items: any[]) => {
+      const searchInChildren = (items: TableOfContentsGroupItem[]) => {
         for (const item of items) {
-          const isIdMatch = item.slug === activeId || item.id === activeId;
+          const hasSlug = 'slug' in item;
+          const hasId = 'id' in item;
+          const isIdMatch = (hasSlug && item.slug === activeId) || (hasId && item.id === activeId);
 
           if (isIdMatch) {
-            if (item.index === lastActiveIndex) {
+            const hasIndex = 'index' in item;
+            if (hasIndex && item.index === lastActiveIndex) {
               exactMatch = exactMatch ?? item; // first exact match wins
             } else {
               partialMatch = partialMatch ?? item; // first partial match wins
             }
           }
 
-          if (Array.isArray(item.items)) {
+          const hasItems = 'items' in item;
+          if (hasItems && Array.isArray(item.items)) {
             searchInChildren(item.items);
           }
         }
