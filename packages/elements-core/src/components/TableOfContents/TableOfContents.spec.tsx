@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/dom';
+import { fireEvent, screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import * as React from 'react';
 
@@ -310,6 +310,389 @@ describe('utils', () => {
         type: 'http_operation',
         meta: 'get',
         index: '0-',
+      });
+    });
+  });
+  describe('TableOfContents - Dividers, Links, Nodes, Groups, and Nesting', () => {
+    describe('Divider Component', () => {
+      it('should render divider with title', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            tree={[
+              {
+                title: 'Section Title',
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.getByText('Section Title')).toBeInTheDocument();
+        unmount();
+      });
+
+      it('should render divider with responsive mode styling', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            tree={[
+              {
+                title: 'Section Title',
+              },
+            ]}
+            Link={Link}
+            isInResponsiveMode={true}
+          />,
+        );
+
+        expect(screen.getByText('Section Title')).toBeInTheDocument();
+        unmount();
+      });
+    });
+
+    describe('External Links', () => {
+      it('should render external link with title', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            tree={[
+              {
+                title: 'External Link',
+                url: 'https://example.com',
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.getByText('External Link')).toBeInTheDocument();
+        unmount();
+      });
+    });
+
+    describe('Node Component', () => {
+      it('should render node with meta information', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            maxDepthOpenByDefault={1}
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'test-node',
+                    title: 'Test Node',
+                    slug: 'test-node',
+                    type: 'http_operation',
+                    meta: 'get',
+                    index: '0-',
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.queryByText('Test Node')).toBeInTheDocument();
+        expect(screen.queryByText('get')).toBeInTheDocument();
+        unmount();
+      });
+
+      it('should handle node click and set active state', () => {
+        const onLinkClick = jest.fn();
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            maxDepthOpenByDefault={1}
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'test-node',
+                    title: 'Test Node',
+                    slug: 'test-node',
+                    type: 'http_operation',
+                    meta: 'get',
+                    index: '0-',
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+            onLinkClick={onLinkClick}
+          />,
+        );
+
+        const node = screen.queryByText('Test Node');
+        node?.click();
+        expect(onLinkClick).toHaveBeenCalled();
+        unmount();
+      });
+
+      it('should not trigger link click when node is already active', () => {
+        const onLinkClick = jest.fn();
+        const { unmount } = render(
+          <TableOfContents
+            activeId="test-node"
+            maxDepthOpenByDefault={1}
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'test-node',
+                    title: 'Test Node',
+                    slug: 'test-node',
+                    type: 'http_operation',
+                    meta: 'get',
+                    index: '0-',
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+            onLinkClick={onLinkClick}
+          />,
+        );
+
+        const node = screen.queryByText('Test Node');
+        node?.click();
+        expect(onLinkClick).not.toHaveBeenCalled();
+        unmount();
+      });
+    });
+
+    describe('Group Expansion', () => {
+      it('should expand group when clicking chevron icon', () => {
+        const { unmount, container } = render(
+          <TableOfContents
+            activeId=""
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'test-item',
+                    title: 'Test Item',
+                    slug: 'test-item',
+                    type: 'article',
+                    meta: '',
+                    index: '0-',
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.queryByTitle(/Test Item/)).not.toBeInTheDocument();
+
+        const chevronIcon = container.querySelector('[data-icon="chevron-right"]') as HTMLElement;
+        fireEvent.click(chevronIcon);
+
+        expect(screen.queryByTitle(/Test Item/)).toBeInTheDocument();
+        unmount();
+      });
+
+      it('should collapse group when clicking chevron icon on open group', () => {
+        const { unmount, container } = render(
+          <TableOfContents
+            activeId=""
+            maxDepthOpenByDefault={1}
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'test-item',
+                    title: 'Test Item',
+                    slug: 'test-item',
+                    type: 'article',
+                    meta: '',
+                    index: '0-',
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.queryByTitle(/Test Item/)).toBeInTheDocument();
+
+        const chevronIcon = container.querySelector('[data-icon="chevron-down"]') as HTMLElement;
+        fireEvent.click(chevronIcon);
+
+        expect(screen.queryByTitle(/Test Item/)).not.toBeInTheDocument();
+        unmount();
+      });
+    });
+
+    describe('Version Badge', () => {
+      it('should not display version for http_operation type', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            maxDepthOpenByDefault={1}
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'operation',
+                    title: 'Get Operation',
+                    slug: 'operation',
+                    type: 'http_operation',
+                    meta: 'get',
+                    version: '1.0.0',
+                    index: '0-',
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.queryByText(/v1.0.0/)).not.toBeInTheDocument();
+        unmount();
+      });
+
+      it('should display version for non-http_operation types with meta', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            maxDepthOpenByDefault={1}
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'service',
+                    title: 'API Service',
+                    slug: 'service',
+                    type: 'http_service',
+                    meta: '',
+                    version: '2.1.0',
+                    index: '0-',
+                    items: [],
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.queryByText(/v2.1.0/)).toBeInTheDocument();
+        unmount();
+      });
+    });
+
+    describe('Responsive Mode', () => {
+      it('should apply responsive styling when isInResponsiveMode is true', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            maxDepthOpenByDefault={1}
+            tree={[
+              {
+                title: 'Root',
+                items: [
+                  {
+                    id: 'test-item',
+                    title: 'Test Item',
+                    slug: 'test-item',
+                    type: 'article',
+                    meta: '',
+                    index: '0-',
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+            isInResponsiveMode={true}
+          />,
+        );
+
+        expect(screen.queryByTitle(/Test Item/)).toBeInTheDocument();
+        unmount();
+      });
+    });
+
+    describe('Deep Nesting', () => {
+      it('should handle deeply nested groups', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId="deep-item"
+            tree={[
+              {
+                title: 'Level 1',
+                items: [
+                  {
+                    title: 'Level 2',
+                    index: '0-',
+                    items: [
+                      {
+                        title: 'Level 3',
+                        index: '0-0-',
+                        items: [
+                          {
+                            id: 'deep-item',
+                            title: 'Deep Item',
+                            slug: 'deep-item',
+                            type: 'article',
+                            meta: '',
+                            index: '0-0-0-',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.queryByTitle(/Level 1/)).toBeInTheDocument();
+        expect(screen.queryByTitle(/Level 2/)).toBeInTheDocument();
+        expect(screen.queryByTitle(/Level 3/)).toBeInTheDocument();
+        expect(screen.queryByTitle(/Deep Item/)).toBeInTheDocument();
+        unmount();
+      });
+    });
+
+    describe('Error Cases', () => {
+      it('should handle empty tree', () => {
+        const { unmount } = render(<TableOfContents activeId="" tree={[]} Link={Link} />);
+
+        expect(screen.queryByTitle(/Root/)).not.toBeInTheDocument();
+        unmount();
+      });
+
+      it('should handle invalid item types', () => {
+        const { unmount } = render(
+          <TableOfContents
+            activeId=""
+            tree={[
+              {
+                title: 'Invalid Item',
+                // Missing required properties
+              } as any,
+            ]}
+            Link={Link}
+          />,
+        );
+
+        expect(screen.queryByTitle(/Invalid Item/)).not.toBeInTheDocument();
+        unmount();
       });
     });
   });
