@@ -120,6 +120,19 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, coll
 
   const container = React.useRef<HTMLDivElement>(null);
 
+  // Create a custom Link component that preserves the branch path
+  const BranchAwareLink = React.useMemo(() => {
+    return React.forwardRef<HTMLAnchorElement, React.ComponentProps<typeof Link>>((props, ref) => {
+      const { to, ...rest } = props;
+      // If we're on a branch, prefix all relative links with the branch path
+      // Only modify relative paths (not starting with /, #, http://, https://, or .)
+      const shouldPrefixBranch = branchSlug && typeof to === 'string' && to !== '.' && !/^(\/|#|https?:\/\/)/.test(to);
+
+      const adjustedTo = shouldPrefixBranch ? `branches/${encodeURIComponent(branchSlug)}/${to}` : to;
+      return <Link ref={ref} to={adjustedTo} {...rest} />;
+    });
+  }, [branchSlug]);
+
   if (!nodeSlug && isTocFetched && tableOfContents?.items) {
     const firstNode = findFirstNode(tableOfContents.items);
     if (firstNode) {
@@ -152,7 +165,7 @@ const StoplightProjectImpl: React.FC<StoplightProjectProps> = ({ projectId, coll
             <TableOfContents
               activeId={node?.id || nodeSlug?.split('-')[0] || ''}
               tableOfContents={tableOfContents}
-              Link={Link as CustomLinkComponent}
+              Link={BranchAwareLink as CustomLinkComponent}
               collapseTableOfContents={collapseTableOfContents}
               onLinkClick={handleTocClick}
             />
