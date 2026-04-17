@@ -51,9 +51,9 @@ export default {
     isInResponsiveMode: { table: { category: 'Input' } },
   },
   args: {
-    projectId: 'cHJqOjMwODc1MA',
+    projectId: 'cHJqOjYwNjYx',
     branchSlug: '',
-    platformUrl: 'https://persistentteams.stoplight.io',
+    platformUrl: 'https://stoplight.io',
     isInResponsiveMode: false,
   },
 };

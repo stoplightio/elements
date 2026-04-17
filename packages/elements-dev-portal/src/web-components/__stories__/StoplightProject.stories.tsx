@@ -28,6 +28,6 @@ export default {
 export const defaultProject = Template.bind({});
 defaultProject.storyName = "Stoplight's Demo workspace";
 defaultProject.args = {
-  projectId: 'cHJqOjMwODc1MA',
-  platformUrl: 'https://persistentteams.stoplight.io',
+  projectId: 'cHJqOjYwNjYx',
+  platformUrl: 'https://stoplight.io',
 };
