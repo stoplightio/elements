@@ -1,7 +1,7 @@
 import { isPlainObject, safeStringify } from '@stoplight/json';
 import * as Sampler from '@stoplight/json-schema-sampler';
 import { IMediaTypeContent, INodeExample, INodeExternalExample } from '@stoplight/types';
-import { JSONSchema7 } from 'json-schema';
+import { JSONSchema7, JSONSchema7Object, JSONSchema7Type } from 'json-schema';
 import React from 'react';
 
 import { useDocument } from '../../context/InlineRefResolver';
@@ -60,7 +60,7 @@ export const generateExampleFromMediaTypeContent = (
   return '';
 };
 
-export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: unknown }): Example[] => {
+export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: JSONSchema7Type }): Example[] => {
   const examples: Example[] = [];
   const hasResolvedProperties = (schemaToCheck: JSONSchema7): boolean => {
     // Case 1: Direct object with properties
@@ -152,9 +152,9 @@ export const exceedsSize = (example: string, size: number = 500) => {
  * @returns New array of filtered objects matching the schema structure
  */
 export const filterExamplesBySchema = (
-  schema: JSONSchema7 & { 'x-examples'?: unknown },
-  examples: unknown[],
-): unknown[] => {
+  schema: JSONSchema7 & { 'x-examples'?: JSONSchema7Type },
+  examples: JSONSchema7Type[],
+): JSONSchema7Type[] => {
   return examples.map(example => {
     try {
       return filterValueBySchema(example, schema);
@@ -212,7 +212,7 @@ const findPropertySchema = (schema: JSONSchema7, propertyName: string): JSONSche
   return undefined;
 };
 
-const filterValueBySchema = (value: unknown, schema: JSONSchema7): unknown => {
+const filterValueBySchema = (value: JSONSchema7Type, schema: JSONSchema7): JSONSchema7Type => {
   if (value === null || value === undefined) return value;
 
   // Handle arrays
@@ -231,14 +231,14 @@ const filterValueBySchema = (value: unknown, schema: JSONSchema7): unknown => {
     const hasStructure = allowedKeys.size > 0;
     const hasAdditionalProperties = schema.additionalProperties;
 
-    if (!hasStructure && !hasAdditionalProperties) return value;
+    if (!hasStructure && !hasAdditionalProperties) return value as JSONSchema7Object;
 
-    const result: Record<string, unknown> = {};
+    const result: JSONSchema7Object = {};
 
-    for (const [key, val] of Object.entries(value as Record<string, unknown>)) {
+    for (const [key, val] of Object.entries(value as JSONSchema7Object)) {
       if (allowedKeys.has(key)) {
         const propSchema = findPropertySchema(schema, key);
-        result[key] = propSchema ? filterValueBySchema(val, propSchema) : val;
+        result[key] = propSchema ? filterValueBySchema(val as JSONSchema7Type, propSchema) : val;
       } else if (hasAdditionalProperties) {
         result[key] = val;
       }
