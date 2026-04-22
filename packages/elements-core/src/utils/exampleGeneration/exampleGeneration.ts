@@ -62,7 +62,6 @@ export const generateExampleFromMediaTypeContent = (
 
 export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: unknown }): Example[] => {
   const examples: Example[] = [];
-  console.log('from generateExamplesFromJsonSchema', JSON.parse(JSON.stringify(schema)));
   const hasResolvedProperties = (schemaToCheck: JSONSchema7): boolean => {
     // Case 1: Direct object with properties
     if (schemaToCheck.properties && Object.keys(schemaToCheck.properties).length > 0) {
