@@ -62,24 +62,27 @@ export const generateExampleFromMediaTypeContent = (
 
 export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: unknown }): Example[] => {
   const examples: Example[] = [];
-
-  const hasNoResolvedProperties = (schemaToCheck: JSONSchema7): boolean => {
-    // Cond1: object type with no properties
-    if (schemaToCheck.type !== 'object') return false;
-
-    // Cond2: check allOf, oneOf, anyOf — if any sub-schema has 'properties', return false
-    const composedArray = schemaToCheck.allOf || schemaToCheck.oneOf || schemaToCheck.anyOf;
-
-    if (Array.isArray(composedArray)) {
-      const hasProperties = composedArray.some(sub => typeof sub === 'object' && sub !== null && 'properties' in sub);
-      if (!hasProperties) {
-        return true;
-      }
-    } else if (!schemaToCheck.properties) {
+  console.log('from generateExamplesFromJsonSchema', JSON.parse(JSON.stringify(schema)));
+  const hasResolvedProperties = (schemaToCheck: JSONSchema7): boolean => {
+    // Case 1: Direct object with properties
+    if (schemaToCheck.properties && Object.keys(schemaToCheck.properties).length > 0) {
       return true;
     }
 
+    // Case 2: Check inside allOf, oneOf, anyOf recursively
+    const composedArray = schemaToCheck.allOf || schemaToCheck.oneOf || schemaToCheck.anyOf;
+    if (Array.isArray(composedArray)) {
+      return composedArray.some(sub => {
+        if (typeof sub !== 'object' || sub === null) return false;
+        return hasResolvedProperties(sub as JSONSchema7);
+      });
+    }
+
     return false;
+  };
+
+  const hasNoResolvedProperties = (schemaToCheck: JSONSchema7): boolean => {
+    return !hasResolvedProperties(schemaToCheck);
   };
 
   const isHasNoResolvedProperties = hasNoResolvedProperties(schema);
