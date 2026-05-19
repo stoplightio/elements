@@ -11,7 +11,7 @@ Either way, there are lots of sample documents around, such as the canonical `Ti
 ```bash
 mkdir elements-hello-world
 cd elements-hello-world
-wget https://raw.githubusercontent.com/OAI/Documentation/master/examples/tictactoe.yaml
+wget https://raw.githubusercontent.com/OAI/learn.openapis.org/refs/heads/main/examples/v3.1/tictactoe.yaml
 ```
 
 Now a file called `tictactoe.yaml` should be on your computer.
