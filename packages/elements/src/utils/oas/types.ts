@@ -25,6 +25,7 @@ type Node<T, D> = {
   name: string;
   data: D;
   tags: string[];
+  tagsRaw?: { name?: string; description?: string }[];
 };
 
 export type ServiceNode = Node<NodeType.HttpService, IHttpService> & { children: ServiceChildNode[] };
