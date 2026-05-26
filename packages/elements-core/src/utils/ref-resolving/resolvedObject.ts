@@ -113,9 +113,7 @@ export const getResolvedObject = (obj: any, cache = new WeakMap()): any => {
   return result;
 };
 
-/**
- * Unwraps Proxy objects recursively, needed for oneOf/anyOf schemas with nested $refs.
- */
+// Unwraps Proxy objects recursively, needed for oneOf/anyOf schemas with nested $refs.
 const deepUnwrapObject = (obj: any, cache = new WeakMap()): any => {
   if (cache.has(obj)) {
     return cache.get(obj);
@@ -164,10 +162,8 @@ export const getOriginalObject = (resolvedObject: object): object => {
     return array.every(item => item['x-sl-error-message'] !== undefined);
   };
 
-  // Deep unwrap the entire object tree
   const deepUnwrapped = deepUnwrapObject(originalObject);
 
-  // Handle error filtering for anyOf/oneOf
   if (deepUnwrapped.anyOf) {
     if (hasAllSchemaErrors(deepUnwrapped.anyOf)) {
       return { ...deepUnwrapped, anyOf: [deepUnwrapped.anyOf] };
