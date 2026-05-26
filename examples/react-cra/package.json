@@ -26,6 +26,7 @@
     "typescript": "^4.3.5"
   },
   "resolutions": {
+    "xml-parser-xo": "4.1.5",
     "@babel/core": "^7.16.0",
     "@types/react": "17.0.11",
     "loader-utils": "2.0.3",

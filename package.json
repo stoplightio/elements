@@ -68,6 +68,7 @@
   },
   "resolutions": {
     "fast-xml-parser": "4.5.4",
+    "xml-parser-xo": "4.1.5",
     "tar": "6.2.1",
     "micromatch": "4.0.8",
     "@stoplight/react-error-boundary": "3.0.0",
