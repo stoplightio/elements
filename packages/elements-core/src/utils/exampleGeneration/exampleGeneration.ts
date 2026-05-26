@@ -1,7 +1,7 @@
 import { isPlainObject, safeStringify } from '@stoplight/json';
 import * as Sampler from '@stoplight/json-schema-sampler';
 import { IMediaTypeContent, INodeExample, INodeExternalExample } from '@stoplight/types';
-import { JSONSchema7 } from 'json-schema';
+import { JSONSchema7, JSONSchema7Object, JSONSchema7Type } from 'json-schema';
 import React from 'react';
 
 import { useDocument } from '../../context/InlineRefResolver';
@@ -60,16 +60,49 @@ export const generateExampleFromMediaTypeContent = (
   return '';
 };
 
-export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: unknown }): Example[] => {
+export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-examples'?: JSONSchema7Type }): Example[] => {
   const examples: Example[] = [];
+  const hasResolvedProperties = (schemaToCheck: JSONSchema7): boolean => {
+    // Case 1: Direct object with properties
+    if (schemaToCheck.properties && Object.keys(schemaToCheck.properties).length > 0) {
+      return true;
+    }
+
+    // Case 2: Check inside allOf, oneOf, anyOf recursively
+    const composedArray = schemaToCheck.allOf || schemaToCheck.oneOf || schemaToCheck.anyOf;
+    if (Array.isArray(composedArray)) {
+      return composedArray.some(sub => {
+        if (typeof sub !== 'object' || sub === null) return false;
+        return hasResolvedProperties(sub as JSONSchema7);
+      });
+    }
+
+    return false;
+  };
+
+  const hasNoResolvedProperties = (schemaToCheck: JSONSchema7): boolean => {
+    return !hasResolvedProperties(schemaToCheck);
+  };
+
+  const isHasNoResolvedProperties = hasNoResolvedProperties(schema);
 
   if (Array.isArray(schema?.examples)) {
-    schema.examples.forEach((example, index) => {
-      examples.push({
-        data: safeStringify(example, undefined, 2) ?? '',
-        label: index === 0 ? 'default' : `example-${index}`,
+    if (isHasNoResolvedProperties) {
+      schema.examples.forEach((example, index) => {
+        examples.push({
+          data: '{}',
+          label: index === 0 ? 'default' : `example-${index}`,
+        });
       });
-    });
+    } else {
+      let res = filterExamplesBySchema(schema, schema.examples);
+      res.forEach((example, index) => {
+        examples.push({
+          data: safeStringify(example, undefined, 2) ?? '',
+          label: index === 0 ? 'default' : `example-${index}`,
+        });
+      });
+    }
   } else if (isPlainObject(schema?.['x-examples'])) {
     for (const [label, example] of Object.entries(schema['x-examples'])) {
       if (isPlainObject(example)) {
@@ -107,4 +140,114 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-exampl
 
 export const exceedsSize = (example: string, size: number = 500) => {
   return example.split(/\r\n|\r|\n/).length > size;
+};
+
+/**
+ * Filters examples to only include properties that exist in the schema.
+ * Handles nested objects, arrays, allOf, oneOf, anyOf, and additionalProperties.
+ * Only removes a property from the example at the exact path where it was removed from the schema.
+ *
+ * @param schema - The JSON Schema (possibly with masked/hidden properties)
+ * @param examples - Array of raw JSON values (e.g. schema.examples)
+ * @returns New array of filtered objects matching the schema structure
+ */
+export const filterExamplesBySchema = (
+  schema: JSONSchema7 & { 'x-examples'?: JSONSchema7Type },
+  examples: JSONSchema7Type[],
+): JSONSchema7Type[] => {
+  return examples.map(example => {
+    try {
+      return filterValueBySchema(example, schema);
+    } catch {
+      return example;
+    }
+  });
+};
+
+const collectSchemaPropertyNames = (schema: JSONSchema7): Set<string> => {
+  const keys = new Set<string>();
+
+  if (schema.properties) {
+    for (const key of Object.keys(schema.properties)) {
+      keys.add(key);
+    }
+  }
+
+  const composedSchemas = [
+    ...(Array.isArray(schema.allOf) ? schema.allOf : []),
+    ...(Array.isArray(schema.oneOf) ? schema.oneOf : []),
+    ...(Array.isArray(schema.anyOf) ? schema.anyOf : []),
+  ];
+
+  for (const sub of composedSchemas) {
+    if (typeof sub === 'object' && sub !== null) {
+      for (const key of collectSchemaPropertyNames(sub as JSONSchema7)) {
+        keys.add(key);
+      }
+    }
+  }
+
+  return keys;
+};
+
+const findPropertySchema = (schema: JSONSchema7, propertyName: string): JSONSchema7 | undefined => {
+  if (schema.properties?.[propertyName]) {
+    const prop = schema.properties[propertyName];
+    return typeof prop === 'boolean' ? undefined : prop;
+  }
+
+  const composedSchemas = [
+    ...(Array.isArray(schema.allOf) ? schema.allOf : []),
+    ...(Array.isArray(schema.oneOf) ? schema.oneOf : []),
+    ...(Array.isArray(schema.anyOf) ? schema.anyOf : []),
+  ];
+
+  for (const sub of composedSchemas) {
+    if (typeof sub === 'object' && sub !== null) {
+      const found = findPropertySchema(sub as JSONSchema7, propertyName);
+      if (found) return found;
+    }
+  }
+
+  return undefined;
+};
+
+const filterValueBySchema = (value: JSONSchema7Type, schema: JSONSchema7): JSONSchema7Type => {
+  if (value === null || value === undefined) return value;
+
+  // Handle arrays
+  if (Array.isArray(value)) {
+    const itemSchema =
+      schema.items && typeof schema.items !== 'boolean' && !Array.isArray(schema.items)
+        ? (schema.items as JSONSchema7)
+        : undefined;
+
+    return itemSchema ? value.map(item => filterValueBySchema(item, itemSchema)) : value;
+  }
+
+  // Handle objects
+  if (isPlainObject(value)) {
+    const allowedKeys = collectSchemaPropertyNames(schema);
+    const hasStructure = allowedKeys.size > 0;
+    const hasAdditionalProperties = schema.additionalProperties;
+
+    if (!hasStructure && !hasAdditionalProperties) return value as JSONSchema7Object;
+
+    const result: JSONSchema7Object = {};
+
+    for (const [key, val] of Object.entries(value as JSONSchema7Object)) {
+      if (allowedKeys.has(key)) {
+        const propSchema = findPropertySchema(schema, key);
+        result[key] = propSchema ? filterValueBySchema(val as JSONSchema7Type, propSchema) : val;
+      } else if (hasAdditionalProperties) {
+        result[key] = val;
+      }
+      // else: property was masked/removed from schema — omit it
+    }
+
+    return result;
+  }
+
+  // Primitives
+  return value;
 };
