@@ -77,6 +77,83 @@ export const isResolvedObjectProxy = (someObject: object): boolean => {
   return !!(someObject as Record<symbol, unknown>)[originalObjectSymbol];
 };
 
+// Resolves $refs by accessing properties through Proxy wrappers, ensuring nested references are resolved.
+export const getResolvedObject = (obj: any, cache = new WeakMap()): any => {
+  if (cache.has(obj)) {
+    return cache.get(obj);
+  }
+
+  if (!isPlainObject(obj) && !isArray(obj)) {
+    return obj;
+  }
+
+  if (isArray(obj)) {
+    const result = obj.map(item => getResolvedObject(item, cache));
+    cache.set(obj, result);
+    return result;
+  }
+
+  const result: any = {};
+  cache.set(obj, result);
+
+  for (const key in obj) {
+    if (!obj.hasOwnProperty(key)) continue;
+
+    const value = obj[key];
+
+    if (isArray(value)) {
+      result[key] = getResolvedObject(value, cache);
+    } else if (isPlainObject(value)) {
+      result[key] = getResolvedObject(value, cache);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+};
+
+/**
+ * Unwraps Proxy objects recursively, needed for oneOf/anyOf schemas with nested $refs.
+ */
+const deepUnwrapObject = (obj: any, cache = new WeakMap()): any => {
+  if (cache.has(obj)) {
+    return cache.get(obj);
+  }
+
+  const unwrapped = (obj as Record<symbol, object>)?.[originalObjectSymbol] || obj;
+
+  if (!isPlainObject(unwrapped)) {
+    return unwrapped;
+  }
+
+  const hasComposition =
+    unwrapped.hasOwnProperty('oneOf') || unwrapped.hasOwnProperty('anyOf') || unwrapped.hasOwnProperty('allOf');
+
+  if (!hasComposition && unwrapped === obj) {
+    return unwrapped;
+  }
+
+  const result: any = {};
+  cache.set(obj, result);
+
+  for (const key in unwrapped) {
+    if (!unwrapped.hasOwnProperty(key)) continue;
+
+    const value = (unwrapped as any)[key];
+
+    if (isArray(value)) {
+      result[key] = value.map(item => (isPlainObject(item) || isArray(item) ? deepUnwrapObject(item, cache) : item));
+    } else if (isPlainObject(value)) {
+      result[key] = deepUnwrapObject(value, cache);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+};
+
 export const getOriginalObject = (resolvedObject: object): object => {
   const originalObject: any = (resolvedObject as Record<symbol, object>)[originalObjectSymbol] || resolvedObject;
   if (!originalObject) {
@@ -87,21 +164,25 @@ export const getOriginalObject = (resolvedObject: object): object => {
     return array.every(item => item['x-sl-error-message'] !== undefined);
   };
 
-  if (originalObject.anyOf) {
-    if (hasAllSchemaErrors(originalObject.anyOf)) {
-      return { ...originalObject, anyOf: [originalObject.anyOf] };
+  // Deep unwrap the entire object tree
+  const deepUnwrapped = deepUnwrapObject(originalObject);
+
+  // Handle error filtering for anyOf/oneOf
+  if (deepUnwrapped.anyOf) {
+    if (hasAllSchemaErrors(deepUnwrapped.anyOf)) {
+      return { ...deepUnwrapped, anyOf: [deepUnwrapped.anyOf] };
     }
-    const filteredArray = originalObject.anyOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
-    return { ...originalObject, anyOf: filteredArray };
-  } else if (originalObject.oneOf) {
-    if (hasAllSchemaErrors(originalObject.oneOf)) {
-      return { ...originalObject, oneOf: [originalObject.oneOf] };
+    const filteredArray = deepUnwrapped.anyOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
+    return { ...deepUnwrapped, anyOf: filteredArray };
+  } else if (deepUnwrapped.oneOf) {
+    if (hasAllSchemaErrors(deepUnwrapped.oneOf)) {
+      return { ...deepUnwrapped, oneOf: [deepUnwrapped.oneOf] };
     }
-    const filteredArray = originalObject.oneOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
-    return { ...originalObject, oneOf: filteredArray };
+    const filteredArray = deepUnwrapped.oneOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
+    return { ...deepUnwrapped, oneOf: filteredArray };
   }
 
-  return originalObject;
+  return deepUnwrapped;
 };
 
 export const isReference = hasRef;
