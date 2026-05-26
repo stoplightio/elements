@@ -79,17 +79,20 @@ export const isResolvedObjectProxy = (someObject: object): boolean => {
 
 // Resolves $refs by accessing properties through Proxy wrappers, ensuring nested references are resolved.
 export const getResolvedObject = (obj: any, cache = new WeakMap()): any => {
-  if (cache.has(obj)) {
-    return cache.get(obj);
-  }
-
   if (!isPlainObject(obj) && !isArray(obj)) {
     return obj;
   }
 
+  if (cache.has(obj)) {
+    return cache.get(obj);
+  }
+
   if (isArray(obj)) {
-    const result = obj.map(item => getResolvedObject(item, cache));
+    const result: any[] = [];
     cache.set(obj, result);
+    for (let i = 0; i < obj.length; i++) {
+      result[i] = getResolvedObject(obj[i], cache);
+    }
     return result;
   }
 
@@ -97,7 +100,7 @@ export const getResolvedObject = (obj: any, cache = new WeakMap()): any => {
   cache.set(obj, result);
 
   for (const key in obj) {
-    if (!obj.hasOwnProperty(key)) continue;
+    if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
 
     const value = obj[key];
 
@@ -115,18 +118,20 @@ export const getResolvedObject = (obj: any, cache = new WeakMap()): any => {
 
 // Unwraps Proxy objects recursively, needed for oneOf/anyOf schemas with nested $refs.
 const deepUnwrapObject = (obj: any, cache = new WeakMap()): any => {
-  if (cache.has(obj)) {
-    return cache.get(obj);
-  }
-
   const unwrapped = (obj as Record<symbol, object>)?.[originalObjectSymbol] || obj;
 
   if (!isPlainObject(unwrapped)) {
     return unwrapped;
   }
 
+  if (cache.has(obj)) {
+    return cache.get(obj);
+  }
+
   const hasComposition =
-    unwrapped.hasOwnProperty('oneOf') || unwrapped.hasOwnProperty('anyOf') || unwrapped.hasOwnProperty('allOf');
+    Object.prototype.hasOwnProperty.call(unwrapped, 'oneOf') ||
+    Object.prototype.hasOwnProperty.call(unwrapped, 'anyOf') ||
+    Object.prototype.hasOwnProperty.call(unwrapped, 'allOf');
 
   if (!hasComposition && unwrapped === obj) {
     return unwrapped;
@@ -136,7 +141,7 @@ const deepUnwrapObject = (obj: any, cache = new WeakMap()): any => {
   cache.set(obj, result);
 
   for (const key in unwrapped) {
-    if (!unwrapped.hasOwnProperty(key)) continue;
+    if (!Object.prototype.hasOwnProperty.call(unwrapped, key)) continue;
 
     const value = (unwrapped as any)[key];
 

@@ -90,11 +90,10 @@ export const generateExampleFromMediaTypeContent = (
       );
     } else if (textRequestBodySchema) {
       let unwrappedSchema = getResolvedObject(textRequestBodySchema) as any;
-      const unwrappedDocument = document ? getResolvedObject(document) : document;
 
       unwrappedSchema = mergeOneOfAnyOf(unwrappedSchema);
 
-      const generated = Sampler.sample(unwrappedSchema, options, unwrappedDocument);
+      const generated = Sampler.sample(unwrappedSchema, options, document);
 
       return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';
     }

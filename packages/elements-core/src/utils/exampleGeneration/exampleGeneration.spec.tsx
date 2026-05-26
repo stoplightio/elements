@@ -8,7 +8,7 @@ const modelWithNoExamples: JSONSchema7 = require('../../__fixtures__/models/mode
 describe('generateExamplesFromJsonSchema', () => {
   it('returns error message when example generation fails ', () => {
     const errorMessage = 'This is a mocked Error message';
-    jest.spyOn(Sampler, 'sample').mockImplementation(() => {
+    jest.spyOn(Sampler, 'sample').mockImplementationOnce(() => {
       throw Error(errorMessage);
     });
 
@@ -38,8 +38,11 @@ describe('generateExamplesFromJsonSchema', () => {
 
     const examples = generateExamplesFromJsonSchema(schemaWithOneOf);
     expect(examples.length).toBeGreaterThan(0);
-    expect(examples[0].data).not.toBe('{}');
-    expect(examples[0].data).not.toBe('');
+    expect(examples[0].data).not.toContain('Example cannot be created');
+
+    const parsed = JSON.parse(examples[0].data);
+    expect(parsed).toHaveProperty('name');
+    expect(parsed).toHaveProperty('age');
   });
 
   it('generates examples for schemas with anyOf', () => {
@@ -63,8 +66,11 @@ describe('generateExamplesFromJsonSchema', () => {
 
     const examples = generateExamplesFromJsonSchema(schemaWithAnyOf);
     expect(examples.length).toBeGreaterThan(0);
-    expect(examples[0].data).not.toBe('{}');
-    expect(examples[0].data).not.toBe('');
+    expect(examples[0].data).not.toContain('Example cannot be created');
+
+    const parsed = JSON.parse(examples[0].data);
+    expect(parsed).toHaveProperty('username');
+    expect(parsed).toHaveProperty('password');
   });
 });
 
@@ -93,8 +99,10 @@ describe('generateExampleFromMediaTypeContent', () => {
     };
 
     const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
-    expect(example).not.toBe('{}');
-    expect(example).not.toBe('');
-    expect(example.length).toBeGreaterThan(2);
+    expect(example).not.toContain('Example cannot be created');
+
+    const parsed = JSON.parse(example);
+    expect(parsed).toHaveProperty('id');
+    expect(parsed).toHaveProperty('name');
   });
 });
