@@ -3,6 +3,9 @@ on:
   push:
     branches:
     - main
+  pull_request:
+    branches:
+      - main
 jobs:
   lint-and-check:
     runs-on: ubuntu-latest
@@ -152,25 +155,25 @@ jobs:
       with:
         name: e2e-static-html-results
         path: cypress/results
-  release:
-    if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
-    container:
-      image: node:18.20
-    needs:
-    - lint-and-check
-    - build
-    - build-docs
-    - e2e-react-cra
-    - e2e-static-html
-    - e2e-angular
-    steps:
-    - uses: actions/checkout@v4.1.0
-    - name: Configure Git safe directory
-      run: git config --global --add safe.directory /__w/elements/elements
-    - name: Install Dependencies
-      run: yarn --frozen-lockfile
-    - name: Set NPM Token
-      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-    - name: Run Release Script
-      run: yarn release
+#  release:
+#    if: github.ref == 'refs/heads/main'
+#    runs-on: ubuntu-latest
+#    container:
+#      image: node:18.20
+#    needs:
+#    - lint-and-check
+#    - build
+#    - build-docs
+#    - e2e-react-cra
+#    - e2e-static-html
+#    - e2e-angular
+#    steps:
+#    - uses: actions/checkout@v4.1.0
+#    - name: Configure Git safe directory
+#      run: git config --global --add safe.directory /__w/elements/elements
+#    - name: Install Dependencies
+#      run: yarn --frozen-lockfile
+#    - name: Set NPM Token
+#      run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+#    - name: Run Release Script
+#      run: yarn release
