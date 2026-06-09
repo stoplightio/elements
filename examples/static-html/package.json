@@ -12,5 +12,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1"
+  },
+  "resolutions": {
+    "xml-parser-xo": "4.1.5"
   }
 }

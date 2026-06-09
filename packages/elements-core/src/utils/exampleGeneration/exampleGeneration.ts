@@ -5,10 +5,49 @@ import { JSONSchema7 } from 'json-schema';
 import React from 'react';
 
 import { useDocument } from '../../context/InlineRefResolver';
+import { getResolvedObject } from '../ref-resolving/resolvedObject';
 
 type Example = {
   label: string;
   data: string;
+};
+
+// Merges oneOf/anyOf with their first option because @stoplight/json-schema-sampler cannot handle them.
+const mergeOneOfAnyOf = (schema: any): any => {
+  if (!isPlainObject(schema)) {
+    return schema;
+  }
+
+  let result: any = { ...schema };
+
+  if (result.oneOf && result.oneOf.length > 0) {
+    const firstOption = result.oneOf[0];
+    const { oneOf, ...rest } = result;
+    result = { ...rest, ...firstOption };
+  } else if (result.anyOf && result.anyOf.length > 0) {
+    const firstOption = result.anyOf[0];
+    const { anyOf, ...rest } = result;
+    result = { ...rest, ...firstOption };
+  }
+
+  if (result.properties) {
+    result.properties = Object.fromEntries(
+      Object.entries(result.properties).map(([key, value]) => [key, mergeOneOfAnyOf(value)]),
+    );
+  }
+
+  if (result.items) {
+    result.items = mergeOneOfAnyOf(result.items);
+  }
+
+  if (result.allOf) {
+    result.allOf = result.allOf.map((item: any) => mergeOneOfAnyOf(item));
+  }
+
+  delete result.oneOf;
+  delete result.anyOf;
+
+  return result;
 };
 
 export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
@@ -50,7 +89,12 @@ export const generateExampleFromMediaTypeContent = (
         ) ?? ''
       );
     } else if (textRequestBodySchema) {
-      const generated = Sampler.sample(textRequestBodySchema, options, document);
+      let unwrappedSchema = getResolvedObject(textRequestBodySchema) as any;
+
+      unwrappedSchema = mergeOneOfAnyOf(unwrappedSchema);
+
+      const generated = Sampler.sample(unwrappedSchema, options, document);
+
       return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';
     }
   } catch (e) {
@@ -87,7 +131,10 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-exampl
   }
 
   try {
-    const generated = Sampler.sample(schema, {
+    let resolvedSchema = getResolvedObject(schema);
+    resolvedSchema = mergeOneOfAnyOf(resolvedSchema);
+
+    const generated = Sampler.sample(resolvedSchema, {
       maxSampleDepth: 4,
       ticks: 6000,
     });
