@@ -77,7 +77,8 @@
     "brace-expansion": "2.0.2",
     "tmp": "0.2.7",
     "js-cookie": "3.0.7",
-    "ip-address": "10.1.1"
+    "ip-address": "10.1.1",
+    "webpack": "5.104.1"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",

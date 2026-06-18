@@ -3,6 +3,10 @@ on:
   push:
     branches:
     - main
+  pull_request:
+    branches:
+    - main
+
 jobs:
   lint-and-check:
     runs-on: ubuntu-latest
@@ -21,7 +25,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: node:18.20
+      image: node:lts
     steps:
     - uses: actions/checkout@v4.1.0
     - run: yarn --frozen-lockfile
@@ -57,7 +61,7 @@ jobs:
   e2e-react-cra:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.3
+      image: cypress/base:22.21.0
       env:
         TERM: xterm
     needs:
@@ -90,7 +94,7 @@ jobs:
   e2e-angular:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.3
+      image: cypress/base:22.21.0
       env:
         TERM: xterm
     needs:
@@ -123,7 +127,7 @@ jobs:
   e2e-static-html:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.3
+      image: cypress/base:22.21.0
       env:
         TERM: xterm
     needs:
@@ -153,10 +157,11 @@ jobs:
         name: e2e-static-html-results
         path: cypress/results
   release:
-    if: github.ref == 'refs/heads/main'
+    # TEMPORARY: PR condition + dry-run for node-22 pipeline test. REVERT before merge.
+    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     container:
-      image: node:18.20
+      image: node:lts
     needs:
     - lint-and-check
     - build
@@ -172,5 +177,5 @@ jobs:
       run: yarn --frozen-lockfile
     - name: Set NPM Token
       run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-    - name: Run Release Script
-      run: yarn release
+    - name: Run Release Script (dry run)
+      run: yarn lerna exec -- npm publish --dry-run --registry https://registry.npmjs.org
