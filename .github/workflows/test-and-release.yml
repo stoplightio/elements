@@ -3,9 +3,6 @@ on:
   push:
     branches:
     - main
-  pull_request:
-    branches:
-    - main
 
 jobs:
   lint-and-check:
@@ -157,8 +154,7 @@ jobs:
         name: e2e-static-html-results
         path: cypress/results
   release:
-    # TEMPORARY: PR condition + dry-run for node-22 pipeline test. REVERT before merge.
-    if: github.ref == 'refs/heads/main' || github.event_name == 'pull_request'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     container:
       image: node:lts
@@ -177,5 +173,5 @@ jobs:
       run: yarn --frozen-lockfile
     - name: Set NPM Token
       run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
-    - name: Run Release Script (dry run)
-      run: yarn lerna exec -- npm publish --dry-run --registry https://registry.npmjs.org
+    - name: Run Release Script
+      run: yarn release
