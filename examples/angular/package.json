@@ -42,6 +42,8 @@
   },
   "resolutions": {
     "minimatch": "9.0.5",
-    "xml-parser-xo": "4.1.5"
+    "xml-parser-xo": "4.1.5",
+    "webpack": "5.76.0",
+    "loader-utils": "2.0.3"
   }
 }
