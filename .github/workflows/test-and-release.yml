@@ -3,6 +3,7 @@ on:
   push:
     branches:
     - main
+
 jobs:
   lint-and-check:
     runs-on: ubuntu-latest
@@ -21,7 +22,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: node:18.20
+      image: node:lts
     steps:
     - uses: actions/checkout@v4.1.0
     - run: yarn --frozen-lockfile
@@ -57,7 +58,7 @@ jobs:
   e2e-react-cra:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.3
+      image: cypress/base:22.21.0
       env:
         TERM: xterm
     needs:
@@ -90,7 +91,7 @@ jobs:
   e2e-angular:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.3
+      image: cypress/base:22.21.0
       env:
         TERM: xterm
     needs:
@@ -123,7 +124,7 @@ jobs:
   e2e-static-html:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:18.20.3
+      image: cypress/base:22.21.0
       env:
         TERM: xterm
     needs:
@@ -156,7 +157,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     container:
-      image: node:18.20
+      image: node:lts
     needs:
     - lint-and-check
     - build
