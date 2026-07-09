@@ -39,3 +39,5 @@ installs your npm packages, e.g., `SCARF_ANALYTICS=false npm install`.
 Licensed under the Apache 2.0 License, Copyright © 2020-present Stoplight.
 
 See [LICENSE](LICENSE) for more information.
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=b694b779-b187-40da-90ff-362f918454f5&page=README.md" />
