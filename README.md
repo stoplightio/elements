@@ -18,7 +18,8 @@ Available as React Components, or Web Components, you can use Elements all toget
     - [React Component](#react-component)
     - [Web Component](#web-component)
   - [🚧 Roadmap](#-roadmap)
-  - [⚙️ Integrations](#️-integrations)
+  - [⚙️ Integrations](#-integrations)
+  - [📊 Anonymized analytics](#-anonymized-analytics)
   - [🏁 Help Others Utilize Elements](#-help-others-utilize-elements)
   - [👏 Contributing](#-contributing)
   - [🎉 Thanks](#-thanks)
@@ -113,6 +114,28 @@ Submit your ideas for new functionality on the [Stoplight Roadmap](https://roadm
 - [Stoplight Studio](https://stoplight.io/studio/?utm_source=github.com&utm_medium=referral&utm_campaign=github_repo_elements) - Free visual OpenAPI designer that uses Elements to preview your API descriptions on the fly.
 - [Stoplight Platform](https://stoplight.io/?utm_source=github.com&utm_medium=referral&utm_campaign=github_repo_elements) - Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
 - [LaravelPHP Elements](https://packagist.org/packages/juststeveking/laravel-stoplight-elements) - A simple API documentation package for Laravel using OpenAPI and Stoplight Elements.
+
+## 📊 Anonymized analytics
+
+Elements uses [Scarf](https://scarf.sh/) to
+collect [anonymized installation analytics](https://github.com/scarf-sh/scarf-js?tab=readme-ov-file#as-a-user-of-a-package-using-scarf-js-what-information-does-scarf-js-send-about-me).
+These analytics help support the maintainers of this library and ONLY run during installation.
+To [opt out](https://github.com/scarf-sh/scarf-js?tab=readme-ov-file#as-a-user-of-a-package-using-scarf-js-how-can-i-opt-out-of-analytics),
+you can set the `scarfSettings.enabled` field to `false` in your project's `package.json`:
+
+```
+// package.json
+{
+  // ...
+  "scarfSettings": {
+    "enabled": false
+  }
+  // ...
+}
+```
+
+Alternatively, you can set the environment variable `SCARF_ANALYTICS` to `false` as part of the environment that
+installs your npm packages, e.g., `SCARF_ANALYTICS=false npm install`.
 
 ## 🏁 Help Others Utilize Elements
 
