@@ -42,3 +42,5 @@ Licensed under the Apache 2.0 License, Copyright © 2020-present Stoplight.
 See [LICENSE](LICENSE) for more information.
 
 [stoplight]: https://stoplight.io/?utm_source=github&utm_medium=elements-dev-portal&utm_campaign=readme
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=29891943-74f9-4ab6-9cb8-b10eb93abded&page=README.md" />
