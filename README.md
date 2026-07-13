@@ -18,7 +18,8 @@ Available as React Components, or Web Components, you can use Elements all toget
     - [React Component](#react-component)
     - [Web Component](#web-component)
   - [🚧 Roadmap](#-roadmap)
-  - [⚙️ Integrations](#️-integrations)
+  - [⚙️ Integrations](#-integrations)
+  - [📊 Anonymized analytics](#-anonymized-analytics)
   - [🏁 Help Others Utilize Elements](#-help-others-utilize-elements)
   - [👏 Contributing](#-contributing)
   - [🎉 Thanks](#-thanks)
@@ -114,6 +115,28 @@ Submit your ideas for new functionality on the [Stoplight Roadmap](https://roadm
 - [Stoplight Platform](https://stoplight.io/?utm_source=github.com&utm_medium=referral&utm_campaign=github_repo_elements) - Collaborative API Design Platform for designing, developing and documenting APIs with hosted documentation powered by Elements.
 - [LaravelPHP Elements](https://packagist.org/packages/juststeveking/laravel-stoplight-elements) - A simple API documentation package for Laravel using OpenAPI and Stoplight Elements.
 
+## 📊 Anonymized analytics
+
+Elements uses [Scarf](https://scarf.sh/) to
+collect [anonymized installation analytics](https://github.com/scarf-sh/scarf-js?tab=readme-ov-file#as-a-user-of-a-package-using-scarf-js-what-information-does-scarf-js-send-about-me).
+These analytics help support the maintainers of this library and ONLY run during installation.
+To [opt out](https://github.com/scarf-sh/scarf-js?tab=readme-ov-file#as-a-user-of-a-package-using-scarf-js-how-can-i-opt-out-of-analytics),
+you can set the `scarfSettings.enabled` field to `false` in your project's `package.json`:
+
+```
+// package.json
+{
+  // ...
+  "scarfSettings": {
+    "enabled": false
+  }
+  // ...
+}
+```
+
+Alternatively, you can set the environment variable `SCARF_ANALYTICS` to `false` as part of the environment that
+installs your npm packages, e.g., `SCARF_ANALYTICS=false npm install`.
+
 ## 🏁 Help Others Utilize Elements
 
 If you're using Elements for an interesting use case, [contact us](mailto:growth@stoplight.io) for a case study. We'll add it to a list here. Spread the goodness 🎉
@@ -146,3 +169,5 @@ If you would like to thank us for creating Elements, we ask that you [**buy the 
 [npm]: https://www.npmjs.com/package/@stoplight/elements
 [npm_image]: https://img.shields.io/npm/dw/@stoplight/elements?color=blue
 [stoplight_forest]: https://ecologi.com/stoplightinc
+
+<img referrerpolicy="no-referrer-when-downgrade" src="https://static.scarf.sh/a.png?x-pxid=e0230c47-5810-4815-807b-15379323ff1b&page=README.md" />
