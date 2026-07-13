@@ -34,7 +34,7 @@
     "concurrently": "8.2.2",
     "css-loader": "6.7.1",
     "cssnano": "5.0.6",
-    "cypress": "^13.6.6",
+    "cypress": "^13.17.0",
     "eslint": "7.31.0",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jest": "24.4.0",
