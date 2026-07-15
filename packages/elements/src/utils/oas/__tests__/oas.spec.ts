@@ -1,4 +1,7 @@
-import { transformOasToServiceNode } from '../';
+import { NodeType } from '@stoplight/types';
+
+import { operationsSorter } from '../../../__fixtures__/api-descriptions/operationsSorter';
+import { transformOasToServiceNode, transformServiceNode } from '../';
 
 const oas3Document = {
   'x-stoplight': { id: 'abc' },
@@ -407,5 +410,37 @@ describe('computeOasNodes', () => {
     });
 
     expect(serviceNode?.data.security).toHaveLength(1);
+  });
+});
+
+describe('transformServiceNode', () => {
+  it('should return null for invalid document', () => {
+    expect(transformServiceNode(null, {})).toBeNull();
+  });
+
+  it('should sort the operations with operationsSorter', () => {
+    const isNumber = (a: any): a is number => !isNaN(Number(a));
+    const serviceNode = transformOasToServiceNode(operationsSorter);
+    const transformedServiceNode = transformServiceNode(serviceNode, {
+      operationsSorter: (a, b) => {
+        if (!isNumber(a.extensions?.['x-weight']) || !isNumber(b.extensions?.['x-weight'])) {
+          return 0;
+        }
+        return a.extensions!['x-weight'] - b.extensions!['x-weight'];
+      },
+    });
+    expect(
+      transformedServiceNode?.children.filter(n => n.type === NodeType.HttpOperation).map(n => n.uri),
+    ).toStrictEqual([
+      '/paths/a-first/get',
+      '/paths/products/get',
+      '/paths/users/get',
+      '/paths/m-middle/get',
+      '/paths/users-id/get',
+      '/paths/products-id/delete',
+      '/paths/a-first/post',
+      '/paths/products/post',
+      '/paths/users/post',
+    ]);
   });
 });
