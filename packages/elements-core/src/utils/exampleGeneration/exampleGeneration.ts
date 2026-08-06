@@ -50,6 +50,72 @@ const mergeOneOfAnyOf = (schema: any): any => {
   return result;
 };
 
+// Stoplight translation can infer numeric bounds from formats (e.g. int32/float).
+// When those bounds were not explicitly authored, omit them for example generation
+// so generated values stay consistent with raw component schemas.
+// Range bounds injected by convertToJsonSchema for OAS numeric formats.
+const OAS_FORMAT_RANGES: Record<string, { minimum: number; maximum: number }> = {
+  int32: { minimum: 0 - 2 ** 31, maximum: 2 ** 31 - 1 },
+  int64: { minimum: Number.MIN_SAFE_INTEGER, maximum: Number.MAX_SAFE_INTEGER },
+  float: { minimum: 0 - 2 ** 128, maximum: 2 ** 128 - 1 },
+  double: { minimum: 0 - Number.MAX_VALUE, maximum: Number.MAX_VALUE },
+};
+
+const stripInferredNumericBounds = (schema: any): any => {
+  if (!isPlainObject(schema)) {
+    return schema;
+  }
+
+  const result: any = { ...schema };
+  const explicitProperties = Array.isArray(result?.['x-stoplight']?.explicitProperties)
+    ? result['x-stoplight'].explicitProperties
+    : [];
+  const isNumericType = result.type === 'integer' || result.type === 'number';
+  const formatRange = OAS_FORMAT_RANGES[result.format];
+
+  // Strip if not explicit OR if the value exactly matches the format-injected range default.
+  // The second condition handles schemas that were processed twice, causing the range value
+  // to appear in explicitProperties even though it was not authored.
+  const hasExplicitMinimum =
+    explicitProperties.includes('minimum') && result.minimum !== formatRange?.minimum;
+  const hasExplicitMaximum =
+    explicitProperties.includes('maximum') && result.maximum !== formatRange?.maximum;
+
+  if (isNumericType && !hasExplicitMinimum) {
+    delete result.minimum;
+  }
+
+  if (isNumericType && !hasExplicitMaximum) {
+    delete result.maximum;
+  }
+
+  if (result.properties && isPlainObject(result.properties)) {
+    result.properties = Object.fromEntries(
+      Object.entries(result.properties).map(([key, value]) => [key, stripInferredNumericBounds(value)]),
+    );
+  }
+
+  if (Array.isArray(result.items)) {
+    result.items = result.items.map((item: any) => stripInferredNumericBounds(item));
+  } else if (result.items) {
+    result.items = stripInferredNumericBounds(result.items);
+  }
+
+  if (Array.isArray(result.allOf)) {
+    result.allOf = result.allOf.map((item: any) => stripInferredNumericBounds(item));
+  }
+
+  if (Array.isArray(result.oneOf)) {
+    result.oneOf = result.oneOf.map((item: any) => stripInferredNumericBounds(item));
+  }
+
+  if (Array.isArray(result.anyOf)) {
+    result.anyOf = result.anyOf.map((item: any) => stripInferredNumericBounds(item));
+  }
+
+  return result;
+};
+
 export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
 
 export const useGenerateExampleFromMediaTypeContent = (
@@ -132,6 +198,7 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-exampl
 
   try {
     let resolvedSchema = getResolvedObject(schema);
+    resolvedSchema = stripInferredNumericBounds(resolvedSchema);
     resolvedSchema = mergeOneOfAnyOf(resolvedSchema);
 
     const generated = Sampler.sample(resolvedSchema, {
