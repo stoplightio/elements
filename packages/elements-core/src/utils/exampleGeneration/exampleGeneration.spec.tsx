@@ -105,6 +105,176 @@ describe('generateExampleFromMediaTypeContent', () => {
     expect(parsed).toHaveProperty('id');
     expect(parsed).toHaveProperty('name');
   });
+
+  it('does not use format-injected int32 minimum as generated value (double-processed internal model)', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'integer',
+        format: 'int32',
+        minimum: 0 - 2 ** 31,
+        maximum: 2 ** 31 - 1,
+        'x-stoplight': { explicitProperties: ['type', 'format', 'minimum', 'maximum'] },
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).not.toBe(0 - 2 ** 31);
+  });
+
+  it('does not use format-injected int64 minimum as generated value', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'integer',
+        format: 'int64',
+        minimum: Number.MIN_SAFE_INTEGER,
+        maximum: Number.MAX_SAFE_INTEGER,
+        'x-stoplight': { explicitProperties: ['type', 'format', 'minimum', 'maximum'] },
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).not.toBe(Number.MIN_SAFE_INTEGER);
+  });
+
+  it('preserves user-set minimum in request body schema that differs from format default', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'integer',
+        format: 'int32',
+        minimum: 0, // user-authored, different from int32 default (-2147483648)
+        'x-stoplight': { explicitProperties: ['type', 'format', 'minimum'] },
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).toBeGreaterThanOrEqual(0);
+  });
+
+  it('strips format-injected bounds from nested object properties in request body', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'object',
+        properties: {
+          count: {
+            type: 'integer',
+            format: 'int32',
+            minimum: 0 - 2 ** 31,
+            maximum: 2 ** 31 - 1,
+            'x-stoplight': { explicitProperties: ['type', 'format', 'minimum', 'maximum'] },
+          },
+        },
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed.count).not.toBe(0 - 2 ** 31);
+  });
+
+  it('does not use format-injected float minimum as generated value', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'number',
+        format: 'float',
+        minimum: 0 - 2 ** 128,
+        maximum: 2 ** 128 - 1,
+        'x-stoplight': { explicitProperties: ['type', 'format', 'minimum', 'maximum'] },
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).not.toBe(0 - 2 ** 128);
+    expect(typeof parsed).toBe('number');
+  });
+
+  it('does not use format-injected double minimum as generated value', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'number',
+        format: 'double',
+        minimum: 0 - Number.MAX_VALUE,
+        maximum: Number.MAX_VALUE,
+        'x-stoplight': { explicitProperties: ['type', 'format', 'minimum', 'maximum'] },
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).not.toBe(0 - Number.MAX_VALUE);
+    expect(typeof parsed).toBe('number');
+  });
+
+  it('strips format-injected bounds from component model schema (no x-stoplight metadata)', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'integer',
+        format: 'int32',
+        // no x-stoplight — raw OpenAPI component model, minimum injected by convertToJsonSchema
+        minimum: 0 - 2 ** 31,
+        maximum: 2 ** 31 - 1,
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).not.toBe(0 - 2 ** 31);
+    expect(typeof parsed).toBe('number');
+  });
+
+  it('strips format-injected bounds from allOf members in request body', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        allOf: [
+          {
+            type: 'integer',
+            format: 'int32',
+            minimum: 0 - 2 ** 31,
+            maximum: 2 ** 31 - 1,
+            'x-stoplight': { explicitProperties: ['type', 'format', 'minimum', 'maximum'] },
+          },
+        ],
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).not.toBe(0 - 2 ** 31);
+    expect(typeof parsed).toBe('number');
+  });
+
+  it('strips format-injected bounds from oneOf members in request body', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        oneOf: [
+          {
+            type: 'integer',
+            format: 'int32',
+            minimum: 0 - 2 ** 31,
+            maximum: 2 ** 31 - 1,
+            'x-stoplight': { explicitProperties: ['type', 'format', 'minimum', 'maximum'] },
+          },
+        ],
+      },
+    };
+
+    const example = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    const parsed = JSON.parse(example);
+    expect(parsed).not.toBe(0 - 2 ** 31);
+    expect(typeof parsed).toBe('number');
+  });
 });
 
 describe('stripInferredNumericBounds - Format-injected min/max handling', () => {

@@ -157,6 +157,7 @@ export const generateExampleFromMediaTypeContent = (
     } else if (textRequestBodySchema) {
       let unwrappedSchema = getResolvedObject(textRequestBodySchema) as any;
 
+      unwrappedSchema = stripInferredNumericBounds(unwrappedSchema);
       unwrappedSchema = mergeOneOfAnyOf(unwrappedSchema);
 
       const generated = Sampler.sample(unwrappedSchema, options, document);
