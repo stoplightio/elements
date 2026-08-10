@@ -275,6 +275,50 @@ describe('generateExampleFromMediaTypeContent', () => {
     expect(parsed).not.toBe(0 - 2 ** 31);
     expect(typeof parsed).toBe('number');
   });
+
+  it('renders float field with no default as "0.0" not "0"', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: { type: 'number', format: 'float' },
+    };
+
+    expect(generateExampleFromMediaTypeContent(mediaTypeContent as any, {}).trim()).toBe('0.0');
+  });
+
+  it('renders double field with no default as "0.0" not "0"', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: { type: 'number', format: 'double' },
+    };
+
+    expect(generateExampleFromMediaTypeContent(mediaTypeContent as any, {}).trim()).toBe('0.0');
+  });
+
+  it('renders float property inside object as 0.0 in the output string', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: {
+        type: 'object',
+        properties: {
+          price: { type: 'number', format: 'float' },
+          qty: { type: 'integer' },
+        },
+      },
+    };
+
+    const raw = generateExampleFromMediaTypeContent(mediaTypeContent as any, {});
+    expect(raw).toContain('"price": 0.0');
+    expect(raw).toContain('"qty": 0');
+  });
+
+  it('does not render plain number (no format) as 0.0', () => {
+    const mediaTypeContent = {
+      mediaType: 'application/json',
+      schema: { type: 'number' },
+    };
+
+    expect(generateExampleFromMediaTypeContent(mediaTypeContent as any, {}).trim()).toBe('0');
+  });
 });
 
 describe('stripInferredNumericBounds - Format-injected min/max handling', () => {
@@ -484,5 +528,29 @@ describe('stripInferredNumericBounds - Format-injected min/max handling', () => 
     const examples = generateExamplesFromJsonSchema(doubleProcessedSchema);
     expect(examples.length).toBeGreaterThan(0);
     expect(examples[0].data).not.toContain('Example cannot be created');
+  });
+
+  it('renders float field in Example section as "0.0" not "0"', () => {
+    const schema: JSONSchema7 = { type: 'number', format: 'float' };
+    expect(generateExamplesFromJsonSchema(schema)[0].data.trim()).toBe('0.0');
+  });
+
+  it('renders double field in Example section as "0.0" not "0"', () => {
+    const schema: JSONSchema7 = { type: 'number', format: 'double' };
+    expect(generateExamplesFromJsonSchema(schema)[0].data.trim()).toBe('0.0');
+  });
+
+  it('renders float property inside object as 0.0 in Example section', () => {
+    const schema: JSONSchema7 = {
+      type: 'object',
+      properties: {
+        rate: { type: 'number', format: 'float' } as any,
+        code: { type: 'integer' },
+      },
+    };
+
+    const data = generateExamplesFromJsonSchema(schema)[0].data;
+    expect(data).toContain('"rate": 0.0');
+    expect(data).toContain('"code": 0');
   });
 });

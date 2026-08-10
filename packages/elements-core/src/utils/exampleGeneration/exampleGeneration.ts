@@ -50,9 +50,6 @@ const mergeOneOfAnyOf = (schema: any): any => {
   return result;
 };
 
-// Stoplight translation can infer numeric bounds from formats (e.g. int32/float).
-// When those bounds were not explicitly authored, omit them for example generation
-// so generated values stay consistent with raw component schemas.
 // Range bounds injected by convertToJsonSchema for OAS numeric formats.
 const OAS_FORMAT_RANGES: Record<string, { minimum: number; maximum: number }> = {
   int32: { minimum: 0 - 2 ** 31, maximum: 2 ** 31 - 1 },
@@ -61,6 +58,9 @@ const OAS_FORMAT_RANGES: Record<string, { minimum: number; maximum: number }> = 
   double: { minimum: 0 - Number.MAX_VALUE, maximum: Number.MAX_VALUE },
 };
 
+// Stoplight translation can infer numeric bounds from formats (e.g. int32/float).
+// When those bounds were not explicitly authored, omit them so the sampler generates
+// representative values instead of format-boundary extremes.
 const stripInferredNumericBounds = (schema: any): any => {
   if (!isPlainObject(schema)) {
     return schema;
@@ -116,6 +116,37 @@ const stripInferredNumericBounds = (schema: any): any => {
   return result;
 };
 
+// Sentinel replaced with literal 0.0 after JSON stringify to produce a decimal representation.
+const FLOAT_ZERO_MARKER = '__FLOAT_ZERO__';
+
+// Walks sampled value + schema in parallel; replaces 0 with FLOAT_ZERO_MARKER for float/double fields.
+const markFloatZeros = (value: any, schema: any): any => {
+  if (!isPlainObject(schema)) return value;
+
+  if (schema.type === 'number' && (schema.format === 'float' || schema.format === 'double') && value === 0) {
+    return FLOAT_ZERO_MARKER;
+  }
+
+  if (isPlainObject(value) && isPlainObject(schema.properties)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([k, v]) => [k, markFloatZeros(v, (schema.properties as any)[k] ?? {})]),
+    );
+  }
+
+  if (Array.isArray(value) && schema.items && !Array.isArray(schema.items)) {
+    return value.map((item: any) => markFloatZeros(item, schema.items));
+  }
+
+  return value;
+};
+
+const stringifyWithFloatZeros = (value: any): string => {
+  // safeStringify returns a bare string (no JSON quotes) for scalar string values,
+  // so handle the top-level float marker before stringifying.
+  if (value === FLOAT_ZERO_MARKER) return '0.0';
+  return (safeStringify(value, undefined, 2) ?? '').replace(/"__FLOAT_ZERO__"/g, '0.0');
+};
+
 export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
 
 export const useGenerateExampleFromMediaTypeContent = (
@@ -162,7 +193,8 @@ export const generateExampleFromMediaTypeContent = (
 
       const generated = Sampler.sample(unwrappedSchema, options, document);
 
-      return generated !== null ? safeStringify(generated, undefined, 2) ?? '' : '';
+      if (generated === null) return '';
+      return stringifyWithFloatZeros(markFloatZeros(generated, unwrappedSchema));
     }
   } catch (e) {
     console.warn(e);
@@ -211,7 +243,7 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-exampl
       ? [
           {
             label: 'default',
-            data: safeStringify(generated, undefined, 2) ?? '',
+            data: stringifyWithFloatZeros(markFloatZeros(generated, resolvedSchema)),
           },
         ]
       : [{ label: 'default', data: '' }];
