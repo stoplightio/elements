@@ -133,6 +133,66 @@ describe('TryIt', () => {
     expect(container).toHaveTextContent('awesome response, but hardly a json one');
   });
 
+  it('normalizes inferred numeric bounds in mocked JSON responses', async () => {
+    const operationWithNumericResponse: IHttpOperation = {
+      ...basicOperation,
+      responses: [
+        {
+          id: 'response-200',
+          code: '200',
+          contents: [
+            {
+              id: 'response-application-json',
+              mediaType: 'application/json',
+              schema: {
+                type: 'object',
+                properties: {
+                  age: {
+                    type: 'integer',
+                    format: 'int32',
+                    minimum: 0 - 2 ** 31,
+                    maximum: 2 ** 31 - 1,
+                    'x-stoplight': { explicitProperties: ['type', 'format'] },
+                  },
+                  price: {
+                    type: 'number',
+                    format: 'float',
+                    minimum: 0 - 2 ** 128,
+                    maximum: 2 ** 128 - 1,
+                    'x-stoplight': { explicitProperties: ['type', 'format'] },
+                  },
+                },
+              } as any,
+            },
+          ],
+        },
+      ],
+    };
+
+    fetchMock.mockResolvedValue(
+      new Response('{"age":-2147483648,"price":-3.402823669209385e+38}', {
+        status: 200,
+        statusText: 'OK',
+        headers: { 'Content-Type': 'application/json' },
+      }),
+    );
+
+    const { container } = render(
+      <TryItWithPersistence httpOperation={operationWithNumericResponse} mockUrl="https://mock-todos.stoplight.io" />,
+    );
+
+    userEvent.click(screen.getByRole('button', { name: /server/i }));
+    userEvent.click(screen.getByRole('menuitemradio', { name: /mock server/i }));
+    clickSend();
+
+    await screen.findByText('Response');
+
+    expect(container).toHaveTextContent('"age": 0');
+    expect(container).toHaveTextContent('"price": 0.0');
+    expect(container).not.toHaveTextContent('-2147483648');
+    expect(container).not.toHaveTextContent('-3.402823669209385e+38');
+  });
+
   it('Handles error', async () => {
     fetchMock.mockReject(new Error('sample error'));
 

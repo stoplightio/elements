@@ -1,7 +1,11 @@
 import * as Sampler from '@stoplight/json-schema-sampler';
 import { JSONSchema7 } from 'json-schema';
 
-import { generateExampleFromMediaTypeContent, generateExamplesFromJsonSchema } from './exampleGeneration';
+import {
+  generateExampleFromMediaTypeContent,
+  generateExamplesFromJsonSchema,
+  stringifyExampleWithResolvedSchema,
+} from './exampleGeneration';
 
 const modelWithNoExamples: JSONSchema7 = require('../../__fixtures__/models/model-with-no-examples.json');
 
@@ -552,5 +556,109 @@ describe('stripInferredNumericBounds - Format-injected min/max handling', () => 
     const data = generateExamplesFromJsonSchema(schema)[0].data;
     expect(data).toContain('"rate": 0.0');
     expect(data).toContain('"code": 0');
+  });
+});
+
+describe('stringifyExampleWithResolvedSchema', () => {
+  it('normalizes inferred numeric bounds inside array items', () => {
+    const schema: JSONSchema7 = {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          age: {
+            type: 'integer',
+            format: 'int32',
+            minimum: 0 - 2 ** 31,
+            maximum: 2 ** 31 - 1,
+            ['x-stoplight']: { explicitProperties: ['type', 'format'] },
+          },
+          price: {
+            type: 'number',
+            format: 'float',
+            minimum: 0 - 2 ** 128,
+            maximum: 2 ** 128 - 1,
+            ['x-stoplight']: { explicitProperties: ['type', 'format'] },
+          },
+        },
+      },
+    } as any;
+
+    const data = stringifyExampleWithResolvedSchema([{ age: 0 - 2 ** 31, price: 0 - 2 ** 128 }], schema);
+    expect(data).toContain('"age": 0');
+    expect(data).toContain('"price": 0.0');
+  });
+
+  it('normalizes inferred numeric bounds inside allOf response schemas', () => {
+    const schema: JSONSchema7 = {
+      allOf: [
+        {
+          type: 'object',
+          properties: {
+            age: {
+              type: 'integer',
+              format: 'int32',
+              minimum: 0 - 2 ** 31,
+              maximum: 2 ** 31 - 1,
+              ['x-stoplight']: { explicitProperties: ['type', 'format'] },
+            },
+          },
+        },
+        {
+          type: 'object',
+          properties: {
+            price: {
+              type: 'number',
+              format: 'float',
+              minimum: 0 - 2 ** 128,
+              maximum: 2 ** 128 - 1,
+              ['x-stoplight']: { explicitProperties: ['type', 'format'] },
+            },
+          },
+        },
+      ],
+    } as any;
+
+    const data = stringifyExampleWithResolvedSchema({ age: 0 - 2 ** 31, price: 0 - 2 ** 128 }, schema);
+    expect(data).toContain('"age": 0');
+    expect(data).toContain('"price": 0.0');
+  });
+
+  it('normalizes inferred numeric bounds inside oneOf and anyOf response schemas', () => {
+    const oneOfSchema: JSONSchema7 = {
+      oneOf: [
+        {
+          type: 'object',
+          properties: {
+            age: {
+              type: 'integer',
+              format: 'int32',
+              minimum: 0 - 2 ** 31,
+              maximum: 2 ** 31 - 1,
+              ['x-stoplight']: { explicitProperties: ['type', 'format'] },
+            },
+          },
+        },
+      ],
+    } as any;
+    const anyOfSchema: JSONSchema7 = {
+      anyOf: [
+        {
+          type: 'object',
+          properties: {
+            price: {
+              type: 'number',
+              format: 'float',
+              minimum: 0 - 2 ** 128,
+              maximum: 2 ** 128 - 1,
+              ['x-stoplight']: { explicitProperties: ['type', 'format'] },
+            },
+          },
+        },
+      ],
+    } as any;
+
+    expect(stringifyExampleWithResolvedSchema({ age: 0 - 2 ** 31 }, oneOfSchema)).toContain('"age": 0');
+    expect(stringifyExampleWithResolvedSchema({ price: 0 - 2 ** 128 }, anyOfSchema)).toContain('"price": 0.0');
   });
 });

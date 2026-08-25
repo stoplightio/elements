@@ -123,6 +123,18 @@ const FLOAT_ZERO_MARKER = '__FLOAT_ZERO__';
 const markFloatZeros = (value: any, schema: any): any => {
   if (!isPlainObject(schema)) return value;
 
+  if (Array.isArray(schema.allOf)) {
+    return schema.allOf.reduce((currentValue: any, item: any) => markFloatZeros(currentValue, item), value);
+  }
+
+  if (Array.isArray(schema.oneOf) && schema.oneOf.length > 0) {
+    return markFloatZeros(value, schema.oneOf[0]);
+  }
+
+  if (Array.isArray(schema.anyOf) && schema.anyOf.length > 0) {
+    return markFloatZeros(value, schema.anyOf[0]);
+  }
+
   if (schema.type === 'number' && (schema.format === 'float' || schema.format === 'double') && value === 0) {
     return FLOAT_ZERO_MARKER;
   }
@@ -145,6 +157,69 @@ const stringifyWithFloatZeros = (value: any): string => {
   // so handle the top-level float marker before stringifying.
   if (value === FLOAT_ZERO_MARKER) return '0.0';
   return (safeStringify(value, undefined, 2) ?? '').replace(/"__FLOAT_ZERO__"/g, '0.0');
+};
+
+const normalizeInferredNumericBounds = (value: any, schema: any): any => {
+  if (!isPlainObject(schema)) return value;
+
+  const schemaObject: any = schema;
+
+  if (Array.isArray(schemaObject.allOf)) {
+    return schemaObject.allOf.reduce(
+      (currentValue: any, item: any) => normalizeInferredNumericBounds(currentValue, item),
+      value,
+    );
+  }
+
+  if (Array.isArray(schemaObject.oneOf) && schemaObject.oneOf.length > 0) {
+    return normalizeInferredNumericBounds(value, schemaObject.oneOf[0]);
+  }
+
+  if (Array.isArray(schemaObject.anyOf) && schemaObject.anyOf.length > 0) {
+    return normalizeInferredNumericBounds(value, schemaObject.anyOf[0]);
+  }
+
+  const explicitProperties = Array.isArray(schemaObject?.['x-stoplight']?.explicitProperties)
+    ? schemaObject['x-stoplight'].explicitProperties
+    : [];
+  const isNumericType = schemaObject.type === 'integer' || schemaObject.type === 'number';
+  const formatRange = OAS_FORMAT_RANGES[schemaObject.format];
+  const hasExplicitMinimum = explicitProperties.includes('minimum') && schemaObject.minimum !== formatRange?.minimum;
+  const hasExplicitMaximum = explicitProperties.includes('maximum') && schemaObject.maximum !== formatRange?.maximum;
+
+  if (
+    isNumericType &&
+    formatRange &&
+    ((!hasExplicitMinimum && value === formatRange.minimum) || (!hasExplicitMaximum && value === formatRange.maximum))
+  ) {
+    return schemaObject.type === 'number' && (schemaObject.format === 'float' || schemaObject.format === 'double')
+      ? FLOAT_ZERO_MARKER
+      : 0;
+  }
+
+  if (isPlainObject(value) && isPlainObject(schemaObject.properties)) {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nestedValue]) => [
+        key,
+        normalizeInferredNumericBounds(nestedValue, (schemaObject.properties as any)[key] ?? {}),
+      ]),
+    );
+  }
+
+  if (Array.isArray(value) && schemaObject.items && !Array.isArray(schemaObject.items)) {
+    return value.map((item: any) => normalizeInferredNumericBounds(item, schemaObject.items));
+  }
+
+  if (Array.isArray(value) && Array.isArray(schemaObject.items)) {
+    return value.map((item: any, index: number) => normalizeInferredNumericBounds(item, schemaObject.items[index]));
+  }
+
+  return value;
+};
+
+export const stringifyExampleWithResolvedSchema = (value: any, schema: any): string => {
+  const normalizedValue = normalizeInferredNumericBounds(value, schema);
+  return stringifyWithFloatZeros(markFloatZeros(normalizedValue, schema));
 };
 
 export type GenerateExampleFromMediaTypeContentOptions = Sampler.Options;
@@ -194,7 +269,7 @@ export const generateExampleFromMediaTypeContent = (
       const generated = Sampler.sample(unwrappedSchema, options, document);
 
       if (generated === null) return '';
-      return stringifyWithFloatZeros(markFloatZeros(generated, unwrappedSchema));
+      return stringifyExampleWithResolvedSchema(generated, unwrappedSchema);
     }
   } catch (e) {
     console.warn(e);
@@ -243,7 +318,7 @@ export const generateExamplesFromJsonSchema = (schema: JSONSchema7 & { 'x-exampl
       ? [
           {
             label: 'default',
-            data: stringifyWithFloatZeros(markFloatZeros(generated, resolvedSchema)),
+            data: stringifyExampleWithResolvedSchema(generated, resolvedSchema),
           },
         ]
       : [{ label: 'default', data: '' }];

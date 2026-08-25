@@ -5,6 +5,7 @@ import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
+import { stringifyExampleWithResolvedSchema } from '../../utils/exampleGeneration/exampleGeneration';
 import { isHttpOperation, isHttpWebhookOperation } from '../../utils/guards';
 import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
 import { extractCodeSamples, RequestSamples } from '../RequestSamples';
@@ -232,8 +233,26 @@ export const TryIt: React.FC<TryItProps> = ({
         const contentType = response.headers.get('Content-Type');
         const type = contentType ? getResponseType(contentType) : undefined;
 
-        const bodyText = type !== 'image' ? await response.text() : undefined;
+        let bodyText = type !== 'image' ? await response.text() : undefined;
         const blob = type === 'image' ? await response.blob() : undefined;
+
+        let skipBodyParsing = false;
+
+        if (mockData && type === 'json' && bodyText) {
+          const responseMediaType = contentType?.split(';')[0];
+          const responseSchema = httpOperation.responses
+            .find(({ code }) => code === String(response?.status))
+            ?.contents?.find(({ mediaType }) => mediaType === responseMediaType)?.schema;
+
+          if (responseSchema) {
+            try {
+              bodyText = stringifyExampleWithResolvedSchema(JSON.parse(bodyText), responseSchema);
+              skipBodyParsing = true;
+            } catch {
+              // Preserve the original mock response if it is not valid JSON.
+            }
+          }
+        }
 
         setResponse(undefined); // setting undefined to handle rendering large responses
         setResponse({
@@ -241,6 +260,7 @@ export const TryIt: React.FC<TryItProps> = ({
           bodyText,
           blob,
           contentType,
+          skipBodyParsing,
         });
       }
     } catch (e: any) {
