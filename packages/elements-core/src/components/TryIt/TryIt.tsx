@@ -1,5 +1,5 @@
 import { Box, Button, HStack, Icon, ITextColorProps, Panel, useThemeIsDark } from '@stoplight/mosaic';
-import type { HttpMethod, IHttpEndpointOperation, IServer } from '@stoplight/types';
+import type { HttpMethod, IHttpEndpointOperation, IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
 import * as React from 'react';
@@ -78,6 +78,17 @@ export interface TryItProps {
  */
 
 const defaultServers: IServer[] = [];
+
+const findResponseForStatus = (httpOperation: IHttpOperation, status: number) => {
+  const statusCode = String(status);
+  const statusRange = `${Math.floor(status / 100)}XX`;
+
+  return (
+    httpOperation.responses.find(({ code }) => code === statusCode) ??
+    httpOperation.responses.find(({ code }) => code.toUpperCase() === statusRange) ??
+    httpOperation.responses.find(({ code }) => code === 'default')
+  );
+};
 
 export const TryIt: React.FC<TryItProps> = ({
   httpOperation,
@@ -240,9 +251,9 @@ export const TryIt: React.FC<TryItProps> = ({
 
         if (mockData && type === 'json' && bodyText) {
           const responseMediaType = contentType?.split(';')[0];
-          const responseSchema = httpOperation.responses
-            .find(({ code }) => code === String(response?.status))
-            ?.contents?.find(({ mediaType }) => mediaType === responseMediaType)?.schema;
+          const responseSchema = findResponseForStatus(httpOperation, response.status)?.contents?.find(
+            ({ mediaType }) => mediaType === responseMediaType,
+          )?.schema;
 
           if (responseSchema) {
             try {
