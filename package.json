@@ -88,7 +88,6 @@
     "rollup": "^4.59.0",
     "piscina": "^4.9.3",
     "@remix-run/router": "1.23.2",
-    "glob": "^10.5.0",
     "webpack-dev-middleware": "^6.1.2"
   },
   "scripts": {
