@@ -93,7 +93,7 @@
     "react-test-renderer": "^16.8.0",
     "replace": "^1.2.2",
     "resolve-url-loader": "^5.0.0",
-    "storybook": "next",
+    "storybook": "7.6.21",
     "style-loader": "^3.3.3",
     "ts-loader": "^9.2.8"
   },
