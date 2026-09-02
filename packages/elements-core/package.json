@@ -113,7 +113,7 @@
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
     "resolve-url-loader": "^5.0.0",
-    "storybook": "next",
+    "storybook": "7.6.21",
     "style-loader": "^3.3.3"
   },
   "publishConfig": {
