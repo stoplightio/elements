@@ -76,10 +76,8 @@ const stripInferredNumericBounds = (schema: any): any => {
   // Strip if not explicit OR if the value exactly matches the format-injected range default.
   // The second condition handles schemas that were processed twice, causing the range value
   // to appear in explicitProperties even though it was not authored.
-  const hasExplicitMinimum =
-    explicitProperties.includes('minimum') && result.minimum !== formatRange?.minimum;
-  const hasExplicitMaximum =
-    explicitProperties.includes('maximum') && result.maximum !== formatRange?.maximum;
+  const hasExplicitMinimum = explicitProperties.includes('minimum') && result.minimum !== formatRange?.minimum;
+  const hasExplicitMaximum = explicitProperties.includes('maximum') && result.maximum !== formatRange?.maximum;
 
   if (isNumericType && !hasExplicitMinimum) {
     delete result.minimum;
