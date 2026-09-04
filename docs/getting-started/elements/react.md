@@ -15,6 +15,21 @@ npx create-react-app@4.0.3 my-dir --template @stoplight/elements
 
 Then, run `cd my-dir` and `yarn start` to see a basic Elements website in the browser.
 
+## Vite Template
+
+Use the [Vite template](https://github.com/stoplightio/elements/tree/main/examples/vite-react) to create a new Elements Dev Portal website in React without additional setup.
+
+
+```bash
+npx degit stoplightio/elements/examples/vite-react my-dir
+git init
+```
+
+Then, run `cd my-dir`,`yarn install` and `yarn run dev` to see a basic Elements Dev Portal website in the browser.
+
+When the server has started, navigate to `http://localhost:3000` to see Elements Dev Portal rendering an [example Git project](https://github.com/stoplightio/studio-demo). Follow the instructions below to change your `projectId` and load up one of your projects.
+
+
 ## Manual Setup
 
 To install Elements Dev Portal in an existing React app, follow these instructions.
