@@ -1,0 +1,1010 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Petro Cloud API",
+    "description": "Generated on: 2024-03-07T07:07:44.212Z\n\n# Introduction\n\n Petro Cloud API allows you to retrieve transaction logs from Verifone cloud. Petro Cloud API is the collection of transaction logs produced by Verifone Commander at c-store. Before using the Petro Cloud API make sure Commander is connected to the cloud.",
+    "termsOfService": "https://www.verifone.com/en/us/legal",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.1"
+  },
+  "servers": [
+    {
+      "url": "https://us.gsc-petro.verifone.cloud/oidc/petro-transactions",
+      "description": "The production transset API server"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/transset": {
+      "get": {
+        "tags": [
+          "Transset"
+        ],
+        "summary": "Get list of transaction logs for a site",
+        "description": "Get transset for a site",
+        "operationId": "Get-Transset",
+        "parameters": [
+          {
+            "name": "serviceId",
+            "in": "query",
+            "description": "Service Id",
+            "required": true,
+            "schema": {
+              "maxLength": 21,
+              "minLength": 7,
+              "type": "string",
+              "example": "1212122"
+            }
+          },
+          {
+            "name": "beginDateTime",
+            "in": "query",
+            "description": "begin date and time",
+            "required": true,
+            "schema": {
+              "maxLength": 24,
+              "minLength": 10,
+              "type": "string",
+              "example": "[2024-02-20T00:00:00.000Z, 2024-02-20T00:00:00, 2024-02-20]"
+            }
+          },
+          {
+            "name": "endDateTime",
+            "in": "query",
+            "description": "end date and time",
+            "required": false,
+            "schema": {
+              "maxLength": 24,
+              "minLength": 10,
+              "type": "string",
+              "example": "[2024-02-20T23:59:59.999Z, 2024-02-20T23:59:59, 2024-02-20]"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Transaction log type",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "example": "[financial, journal, other]"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction logs for the requested period.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transset"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request. Unable to interpret the request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError400"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized. Unable to authenticate client to allow request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError401"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden. This Feature is not enabled. This feature has not been authorised for the client.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError403"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found. The requested resource does not exist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError404"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Too many requests. Too many requests from the client hit the API.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError429"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal error. There was an error processing the request; try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError500"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable. Unable to process requests at this time, please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError503"
+                }
+              }
+            }
+          },
+          "504": {
+            "description": "Service Unavailable. Unable to process requests at this time, please try again later.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/genericError504"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Transset": {
+        "title": "TranssetAPI",
+        "type": "object",
+        "properties": {
+          "transsetHeader": {
+            "type": "object",
+            "properties": {
+              "serviceId": {
+                "type": "array",
+                "description": "Requested Service Id"
+              },
+              "beginDateTime": {
+                "maxLength": 24,
+                "minLength": 10,
+                "type": "string",
+                "description": "Requested begin date and time",
+                "example": "[2024-02-20T00:00:00.000Z, 2024-02-20T00:00:00, 2024-02-20]"
+              },
+              "endDateTime": {
+                "maxLength": 24,
+                "minLength": 10,
+                "type": "string",
+                "description": "Requested end date and time",
+                "example": "[2024-02-20T23:59:59.999Z, 2024-02-20T23:59:59, 2024-02-20]"
+              },
+              "type": {
+                "type": "string",
+                "description": "Requested transaction logs type",
+                "example": "[financial, journal, other]"
+              },
+              "timestamp": {
+                "type": "string",
+                "description": "Response Timestamp",
+                "example": "[2024-02-20T10:34:38.025Z]"
+              }
+            },
+            "description": "Transset header details"
+          },
+          "transset": {
+            "title": "Transset",
+            "type": "array",
+            "description": "An array of transaction logs",
+            "items": {
+              "type": "object",
+              "properties": {
+                "trans": {
+                  "type": "object",
+                  "properties": {
+                    "trHeader": {
+                      "type": "object",
+                      "properties": {
+                        "date": {
+                          "type": "string",
+                          "description": "transaction date and time"
+                        },
+                        "duration": {
+                          "type": "integer",
+                          "description": "time the transaction was active"
+                        },
+                        "clockDate": {
+                          "type": "string",
+                          "description": "Date and time that cashier clocked in or out."
+                        },
+                        "termMsgSN": {
+                          "type": "object",
+                          "properties": {
+                            "type": {
+                              "type": "string"
+                            },
+                            "term": {
+                              "type": "integer"
+                            },
+                            "value": {
+                              "type": "integer"
+                            }
+                          },
+                          "description": "Terminal message serial number."
+                        },
+                        "period": {
+                          "type": "array",
+                          "properties": {
+                            "level": {
+                              "type": "string",
+                              "description": "0, 1, 2"
+                            },
+                            "seq": {
+                              "type": "integer",
+                              "description": "Changes seq from positiveInteger to nonNegativeInteger to support HOUR 0; \nall other sequence numbers should still be positive integers."
+                            },
+                            "name": {
+                              "type": "string",
+                              "description": "DAILY, HOUR, SHIFT, Shift, Day"
+                            }
+                          },
+                          "description": "period (hour, shift, day)"
+                        },
+                        "storeNumber": {
+                          "type": "string",
+                          "description": "store identifier"
+                        },
+                        "cashier": {
+                          "type": "object",
+                          "properties": {
+                            "posNum": {
+                              "type": "integer"
+                            },
+                            "period": {
+                              "type": "integer"
+                            },
+                            "empNum": {
+                              "type": "string"
+                            },
+                            "sysid": {
+                              "type": "integer"
+                            },
+                            "value": {
+                              "type": "string"
+                            }
+                          },
+                          "description": "cashier details of the current transaction"
+                        },
+                        "jobCode": {
+                          "type": "string",
+                          "description": "The job code that the employee is working under"
+                        },
+                        "clockCashier": {
+                          "type": "object",
+                          "properties": {
+                            "automatic": {
+                              "type": "integer",
+                              "description": "0, 1"
+                            },
+                            "value": {
+                              "type": "integer"
+                            }
+                          },
+                          "description": "ID number of cashier who clock in or out"
+                        },
+                        "trTickNum": {
+                          "type": "object",
+                          "properties": {
+                            "posNum": {
+                              "type": "integer",
+                              "description": "point of sale number"
+                            },
+                            "trSeq": {
+                              "type": "integer",
+                              "description": "sequence number"
+                            }
+                          },
+                          "description": "ticket number"
+                        },
+                        "uniqueID": {
+                          "type": "string",
+                          "description": "Unique sequence number in format installationTimestamp-serialNumber-uniqueCount"
+                        }
+                      },
+                      "description": "header section of the transaction"
+                    },
+                    "type": {
+                      "type": "string",
+                      "description": "transaction type"
+                    }
+                  },
+                  "description": "'financial' or 'journal or 'other' type transaction log"
+                }
+              }
+            }
+          },
+          "totalCount": {
+            "type": "integer",
+            "description": "Total count of the trans objects in transset"
+          }
+        }
+      },
+      "genericError400": {
+        "title": "HTTP 400 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "400",
+            "default": "400",
+            "enum": [
+              "400"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Bad Request",
+            "default": "Bad Request",
+            "enum": [
+              "Bad Request"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "The request could not be understood by the server due to malformed syntax."
+      },
+      "genericError401": {
+        "title": "HTTP 401 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "401",
+            "default": "401",
+            "enum": [
+              "401"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Unauthorised",
+            "default": "Unauthorised",
+            "enum": [
+              "Unauthorised"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The request requires client authentication."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "The request must be authenticated to access the resource."
+      },
+      "genericError403": {
+        "title": "HTTP 403 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "403",
+            "default": "403",
+            "enum": [
+              "403"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Forbidden",
+            "default": "Forbidden",
+            "enum": [
+              "Forbidden"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The request requires client authorisation to access resource."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "The request must be authorised to access the resource."
+      },
+      "genericError404": {
+        "title": "HTTP 404 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "404",
+            "default": "404",
+            "enum": [
+              "404"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Not Found",
+            "default": "Not Found",
+            "enum": [
+              "Not Found"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The server cannot find the requested resource."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "The server cannot find the requested resource."
+      },
+      "genericError429": {
+        "title": "HTTP 429 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "429",
+            "default": "429",
+            "enum": [
+              "429"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Too Many Requests",
+            "default": "Too Many Requests",
+            "enum": [
+              "Too Many Requests"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The number of requests from this client is restricted to a specified quota."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "The resource exists the number of requests has exceeded the specified quota."
+      },
+      "genericError500": {
+        "title": "HTTP 500 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "500",
+            "default": "500",
+            "enum": [
+              "500"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Internal Server Error",
+            "default": "Internal Server Error",
+            "enum": [
+              "Internal Server Error"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The server encountered an unexpected condition which prevented it from fulfilling the request."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "Unexpected Server Error"
+      },
+      "genericError503": {
+        "title": "HTTP 503 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "503",
+            "default": "503",
+            "enum": [
+              "503"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Service Unavailable",
+            "default": "Service Unavailable",
+            "enum": [
+              "Service Unavailable"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The server is not ready to handle the request. If specified please check the <strong>Retry-After</strong> for the time period specified for recovery/re-attempt of request."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "Service Unavailable Error"
+      },
+      "genericError504": {
+        "title": "HTTP 504 Error",
+        "required": [
+          "message",
+          "operation",
+          "status",
+          "statusMessage"
+        ],
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "string",
+            "description": "The time that the error occurred. All dates in the JSON payloads are represented in ISO 8601 date-time format.",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string",
+            "example": "504",
+            "default": "504",
+            "enum": [
+              "504"
+            ]
+          },
+          "statusMessage": {
+            "type": "string",
+            "example": "Gateway Timeout",
+            "default": "Gateway Timeout",
+            "enum": [
+              "Gateway Timeout"
+            ]
+          },
+          "message": {
+            "type": "string",
+            "example": "The server, while acting as a gateway or proxy, did not get a response in time from the upstream server that it needed in order to complete the request."
+          },
+          "code": {
+            "type": "string",
+            "example": "1",
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13"
+            ]
+          },
+          "operation": {
+            "type": "string",
+            "example": "Get-Transset",
+            "default": "Get-Transset",
+            "enum": [
+              "Get-Transset"
+            ]
+          },
+          "uid": {
+            "type": "string",
+            "description": "The internal tracking UID."
+          }
+        },
+        "description": "Gateway Timeout Error"
+      }
+    },
+    "responses": {
+      "400": {
+        "description": "Bad Request. Unable to interpret the request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError400"
+            }
+          }
+        }
+      },
+      "401": {
+        "description": "Unauthorized. Unable to authenticate client to allow request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError401"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Forbidden. This Feature is not enabled. This feature has not been authorised for the client.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError403"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Not found. The requested resource does not exist.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError404"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Too many requests. Too many requests from the client hit the API.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError429"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal error. There was an error processing the request; try again later.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError500"
+            }
+          }
+        }
+      },
+      "503": {
+        "description": "Service Unavailable. Unable to process requests at this time, please try again later.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError503"
+            }
+          }
+        }
+      },
+      "504": {
+        "description": "Service Unavailable. Unable to process requests at this time, please try again later.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/genericError504"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "description": "Bearer Authentication scheme.\n\nTo use this authentication method indicate <code>Authorization: Bearer &lt;JWT&gt;</code> in the header.\n\nPlease replace the value of &lt;JWT&gt; with the JWT generated for that user.\n\n<strong>Example</strong>\n\n<code>Authorization: Bearer eyJ0eX...</code>\n(please note that for security reasons the JWT in this example is limited to 6 characters)",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      },
+      "ApiKeyAuth": {
+        "type": "http",
+        "description": "API Key Authentication scheme.\n\nTo use this authentication method indicate <code>Authorization: Basic &lt;UserUUID:APIKEY></code> in the header.\n\nPlease replace the value of &lt;UserUUID&gt; with the internal Verifone user ID for that user and &lt;APIKEY&gt; with the apikey issued for that user and encode the whole string in base64.\n\n<strong>Example</strong>\n\n<code>f8811dd2-3667-4a1e-be8b-b42b63743254:ABCheDEFBXUGHIDmVPPPFOLtLoEnWYJVHdZF</code>\nresults in a base64 string of <code>Zjg4MTFkZDItMzY2Ny00YTFlLWJlOGItYjQyYjYzNzQzMjU0OkFCQ2hlREVGQlhVR0hJRG1WUFBQRk9MdExvRW5XWUpWSGRaRg==</code>\n\nThis results in the following string to be used in the header:\n<code>Authorization: Basic Zjg4MTFkZDItMzY2Ny00YTFlLWJlOGItYjQyYjYzNzQzMjU0OkFCQ2hlREVGQlhVR0hJRG1WUFBQRk9MdExvRW5XWUpWSGRaRg==</code>,",
+        "scheme": "basic"
+      }
+    }
+  },
+  "x-tagGroups": [
+    {
+      "name": "Transaction set",
+      "tags": [
+        "Transset"
+      ]
+    }
+  ]
+}
