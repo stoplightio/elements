@@ -77,6 +77,86 @@ export const isResolvedObjectProxy = (someObject: object): boolean => {
   return !!(someObject as Record<symbol, unknown>)[originalObjectSymbol];
 };
 
+// Resolves $refs by accessing properties through Proxy wrappers, ensuring nested references are resolved.
+export const getResolvedObject = (obj: any, cache = new WeakMap()): any => {
+  if (!isPlainObject(obj) && !isArray(obj)) {
+    return obj;
+  }
+
+  if (cache.has(obj)) {
+    return cache.get(obj);
+  }
+
+  if (isArray(obj)) {
+    const result: any[] = [];
+    cache.set(obj, result);
+    for (let i = 0; i < obj.length; i++) {
+      result[i] = getResolvedObject(obj[i], cache);
+    }
+    return result;
+  }
+
+  const result: any = {};
+  cache.set(obj, result);
+
+  for (const key in obj) {
+    if (!Object.prototype.hasOwnProperty.call(obj, key)) continue;
+
+    const value = obj[key];
+
+    if (isArray(value)) {
+      result[key] = getResolvedObject(value, cache);
+    } else if (isPlainObject(value)) {
+      result[key] = getResolvedObject(value, cache);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+};
+
+// Unwraps Proxy objects recursively, needed for oneOf/anyOf schemas with nested $refs.
+const deepUnwrapObject = (obj: any, cache = new WeakMap()): any => {
+  const unwrapped = (obj as Record<symbol, object>)?.[originalObjectSymbol] || obj;
+
+  if (!isPlainObject(unwrapped)) {
+    return unwrapped;
+  }
+
+  if (cache.has(obj)) {
+    return cache.get(obj);
+  }
+
+  const hasComposition =
+    Object.prototype.hasOwnProperty.call(unwrapped, 'oneOf') ||
+    Object.prototype.hasOwnProperty.call(unwrapped, 'anyOf') ||
+    Object.prototype.hasOwnProperty.call(unwrapped, 'allOf');
+
+  if (!hasComposition && unwrapped === obj) {
+    return unwrapped;
+  }
+
+  const result: any = {};
+  cache.set(obj, result);
+
+  for (const key in unwrapped) {
+    if (!Object.prototype.hasOwnProperty.call(unwrapped, key)) continue;
+
+    const value = (unwrapped as any)[key];
+
+    if (isArray(value)) {
+      result[key] = value.map(item => (isPlainObject(item) || isArray(item) ? deepUnwrapObject(item, cache) : item));
+    } else if (isPlainObject(value)) {
+      result[key] = deepUnwrapObject(value, cache);
+    } else {
+      result[key] = value;
+    }
+  }
+
+  return result;
+};
+
 export const getOriginalObject = (resolvedObject: object): object => {
   const originalObject: any = (resolvedObject as Record<symbol, object>)[originalObjectSymbol] || resolvedObject;
   if (!originalObject) {
@@ -87,21 +167,23 @@ export const getOriginalObject = (resolvedObject: object): object => {
     return array.every(item => item['x-sl-error-message'] !== undefined);
   };
 
-  if (originalObject.anyOf) {
-    if (hasAllSchemaErrors(originalObject.anyOf)) {
-      return { ...originalObject, anyOf: [originalObject.anyOf] };
+  const deepUnwrapped = deepUnwrapObject(originalObject);
+
+  if (deepUnwrapped.anyOf) {
+    if (hasAllSchemaErrors(deepUnwrapped.anyOf)) {
+      return { ...deepUnwrapped, anyOf: [deepUnwrapped.anyOf] };
     }
-    const filteredArray = originalObject.anyOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
-    return { ...originalObject, anyOf: filteredArray };
-  } else if (originalObject.oneOf) {
-    if (hasAllSchemaErrors(originalObject.oneOf)) {
-      return { ...originalObject, oneOf: [originalObject.oneOf] };
+    const filteredArray = deepUnwrapped.anyOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
+    return { ...deepUnwrapped, anyOf: filteredArray };
+  } else if (deepUnwrapped.oneOf) {
+    if (hasAllSchemaErrors(deepUnwrapped.oneOf)) {
+      return { ...deepUnwrapped, oneOf: [deepUnwrapped.oneOf] };
     }
-    const filteredArray = originalObject.oneOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
-    return { ...originalObject, oneOf: filteredArray };
+    const filteredArray = deepUnwrapped.oneOf.filter((item: { [x: string]: any }) => !item['x-sl-error-message']);
+    return { ...deepUnwrapped, oneOf: filteredArray };
   }
 
-  return originalObject;
+  return deepUnwrapped;
 };
 
 export const isReference = hasRef;

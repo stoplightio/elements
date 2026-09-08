@@ -1,6 +1,6 @@
 {
   "name": "@stoplight/elements-core",
-  "version": "9.0.16",
+  "version": "9.0.26",
   "sideEffects": [
     "web-components.min.js",
     "src/web-components/**",
@@ -57,6 +57,7 @@
     ]
   },
   "dependencies": {
+    "@scarf/scarf": "^1.4.0",
     "@stoplight/http-spec": "^7.1.0",
     "@stoplight/json": "^3.21.0",
     "@stoplight/json-schema-ref-parser": "^9.2.7",
@@ -112,7 +113,7 @@
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",
     "resolve-url-loader": "^5.0.0",
-    "storybook": "next",
+    "storybook": "7.6.21",
     "style-loader": "^3.3.3"
   },
   "publishConfig": {

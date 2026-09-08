@@ -1,10 +1,11 @@
 import { Box, Button, HStack, Icon, ITextColorProps, Panel, useThemeIsDark } from '@stoplight/mosaic';
-import type { HttpMethod, IHttpEndpointOperation, IServer } from '@stoplight/types';
+import type { HttpMethod, IHttpEndpointOperation, IHttpOperation, IServer } from '@stoplight/types';
 import { Request as HarRequest } from 'har-format';
 import { useAtom } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../constants';
+import { stringifyExampleWithResolvedSchema } from '../../utils/exampleGeneration/exampleGeneration';
 import { isHttpOperation, isHttpWebhookOperation } from '../../utils/guards';
 import { getServersToDisplay, getServerVariables } from '../../utils/http-spec/IServer';
 import { extractCodeSamples, RequestSamples } from '../RequestSamples';
@@ -77,6 +78,17 @@ export interface TryItProps {
  */
 
 const defaultServers: IServer[] = [];
+
+const findResponseForStatus = (httpOperation: IHttpOperation, status: number) => {
+  const statusCode = String(status);
+  const statusRange = `${Math.floor(status / 100)}XX`;
+
+  return (
+    httpOperation.responses.find(({ code }) => code === statusCode) ??
+    httpOperation.responses.find(({ code }) => code.toUpperCase() === statusRange) ??
+    httpOperation.responses.find(({ code }) => code === 'default')
+  );
+};
 
 export const TryIt: React.FC<TryItProps> = ({
   httpOperation,
@@ -232,8 +244,26 @@ export const TryIt: React.FC<TryItProps> = ({
         const contentType = response.headers.get('Content-Type');
         const type = contentType ? getResponseType(contentType) : undefined;
 
-        const bodyText = type !== 'image' ? await response.text() : undefined;
+        let bodyText = type !== 'image' ? await response.text() : undefined;
         const blob = type === 'image' ? await response.blob() : undefined;
+
+        let skipBodyParsing = false;
+
+        if (mockData && type === 'json' && bodyText) {
+          const responseMediaType = contentType?.split(';')[0];
+          const responseSchema = findResponseForStatus(httpOperation, response.status)?.contents?.find(
+            ({ mediaType }) => mediaType === responseMediaType,
+          )?.schema;
+
+          if (responseSchema) {
+            try {
+              bodyText = stringifyExampleWithResolvedSchema(JSON.parse(bodyText), responseSchema);
+              skipBodyParsing = true;
+            } catch {
+              // Preserve the original mock response if it is not valid JSON.
+            }
+          }
+        }
 
         setResponse(undefined); // setting undefined to handle rendering large responses
         setResponse({
@@ -241,6 +271,7 @@ export const TryIt: React.FC<TryItProps> = ({
           bodyText,
           blob,
           contentType,
+          skipBodyParsing,
         });
       }
     } catch (e: any) {

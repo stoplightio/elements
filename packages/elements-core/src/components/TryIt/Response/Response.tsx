@@ -13,6 +13,7 @@ export interface ResponseState {
   bodyText?: string;
   contentType: string | null;
   blob?: Blob;
+  skipBodyParsing?: boolean;
 }
 
 export interface ErrorState {
@@ -86,7 +87,7 @@ export const TryItResponse: React.FC<{ response: ResponseState }> = ({ response 
             <ResponseCodeViewer
               language="json"
               value={
-                responseType && bodyFormat === 'preview'
+                responseType && bodyFormat === 'preview' && !response.skipBodyParsing
                   ? parseBody(response.bodyText, responseType)
                   : response.bodyText
               }

@@ -84,41 +84,47 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
     }, []);
     const updatedTree = updateTocTree(tree, '');
 
-    const findFirstMatchAndIndexMatch = React.useCallback(
-      (items: TableOfContentsGroupItem[], id: string | undefined): [TableOfContentsGroupItem | undefined, boolean] => {
-        let firstMatch: TableOfContentsGroupItem | undefined;
-        let hasAnyLastIndexMatch = false;
-        if (!id) return [firstMatch, hasAnyLastIndexMatch];
+    const findMatchingItems = (
+      updateTree: TableOfContentsGroupItem[],
+      activeId: string,
+      lastActiveIndex: string,
+    ): [TableOfContentsGroupItem | undefined, boolean] => {
+      let exactMatch: TableOfContentsGroupItem | undefined; // matches activeId + lastActiveIndex
+      let partialMatch: TableOfContentsGroupItem | undefined; // matches only activeId
 
-        const walk = (arr: TableOfContentsGroupItem[], stack: TableOfContentsGroupItem[]): boolean => {
-          for (const itm of arr) {
-            const newStack = stack.concat(itm);
+      const searchInChildren = (items: TableOfContentsGroupItem[]) => {
+        for (const item of items) {
+          const hasSlug = 'slug' in item;
+          const hasId = 'id' in item;
+          const isIdMatch = (hasSlug && item.slug === activeId) || (hasId && item.id === activeId);
 
-            const matches = ('slug' in itm && (itm as any).slug === id) || ('id' in itm && (itm as any).id === id);
-            if (matches) {
-              if (!firstMatch) firstMatch = itm;
-              const hasLastIndexMatch = newStack.some(el => 'index' in el && (el as any).index === lastActiveIndex);
-              if (hasLastIndexMatch) hasAnyLastIndexMatch = true;
-            }
-
-            if ('items' in itm && Array.isArray((itm as any).items)) {
-              if (walk((itm as any).items, newStack)) return true;
+          if (isIdMatch) {
+            const hasIndex = 'index' in item;
+            if (hasIndex && item.index === lastActiveIndex) {
+              exactMatch = exactMatch ?? item; // first exact match wins
+            } else {
+              partialMatch = partialMatch ?? item; // first partial match wins
             }
           }
 
-          return false;
-        };
+          const hasItems = 'items' in item;
+          if (hasItems && Array.isArray(item.items)) {
+            searchInChildren(item.items);
+          }
+        }
+      };
 
-        walk(items, []);
-        return [firstMatch, hasAnyLastIndexMatch];
-      },
-      [lastActiveIndex],
-    );
+      searchInChildren(updateTree);
 
-    const [firstMatchItem, hasAnyLastIndexMatch] = React.useMemo(
-      () => findFirstMatchAndIndexMatch(updatedTree, activeId),
-      [updatedTree, activeId, findFirstMatchAndIndexMatch],
-    );
+      const hasExactMatch = exactMatch !== undefined;
+      const bestMatch = exactMatch ?? partialMatch; // prioritize exact match
+
+      return [bestMatch, hasExactMatch];
+    };
+
+    const [firstMatchItem, hasAnyLastIndexMatch] = React.useMemo(() => {
+      return findMatchingItems(updatedTree, activeId, lastActiveIndex);
+    }, [updatedTree, activeId, lastActiveIndex]);
 
     React.useEffect(() => {
       if (!hasAnyLastIndexMatch && firstMatchItem && 'index' in firstMatchItem && firstMatchItem.index) {

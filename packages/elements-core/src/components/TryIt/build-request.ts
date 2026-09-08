@@ -152,7 +152,7 @@ export async function buildFetchRequest({
   const serverUrl = getServerUrl({ httpOperation, mockData, chosenServer, corsProxy, serverVariableValues });
 
   const shouldIncludeBody =
-    ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
+    ['PUT', 'POST', 'PATCH', 'DELETE'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
 
   const queryParams = getQueryParams({ httpOperation, parameterValues: sanitizedParameterValues });
   const rawHeaders = filterOutAuthorizationParams(httpOperation.request?.headers ?? [], httpOperation.security)
@@ -268,7 +268,7 @@ export async function buildHarRequest({
 
   const mimeType = mediaTypeContent?.mediaType ?? 'application/json';
   const shouldIncludeBody =
-    ['PUT', 'POST', 'PATCH'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
+    ['PUT', 'POST', 'PATCH', 'DELETE'].includes(httpOperation.method.toUpperCase()) && bodyInput !== undefined;
 
   const queryParams = getQueryParams({ httpOperation, parameterValues });
 
