@@ -88,7 +88,9 @@
     "rollup": "^4.59.0",
     "piscina": "^4.9.3",
     "@remix-run/router": "1.23.2",
-    "webpack-dev-middleware": "^6.1.2"
+    "webpack-dev-middleware": "^6.1.2",
+    "serialize-javascript": "^7.0.3",
+    "pacote": "^21.5.1"
   },
   "scripts": {
     "demo": "yarn workspace @stoplight/elements-demo",
