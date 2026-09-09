@@ -31,9 +31,9 @@ export function computeTagGroups<T extends GroupableNode>(serviceNode: ServiceNo
         groupsByTagId[tagId].items.push(node);
       } else {
         const serviceTagIndex = lowerCaseServiceTags.findIndex(tn => tn === tagId);
-        const serviceTagName = serviceNode.tags[serviceTagIndex];
+        const serviceTag = serviceNode.tagsRaw?.[serviceTagIndex];
         groupsByTagId[tagId] = {
-          title: serviceTagName || tagName,
+          title: serviceTag?.description || serviceTag?.name || tagName,
           items: [node],
         };
       }
