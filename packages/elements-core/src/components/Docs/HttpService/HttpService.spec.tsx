@@ -10,6 +10,7 @@ import httpService from '../../../__fixtures__/services/petstore';
 import { httpServiceWithUnnamedServers } from '../../../__fixtures__/services/with-unnamed-servers';
 import { httpServiceWithUrlVariables } from '../../../__fixtures__/services/with-url-variables';
 import { httpServiceWithoutOrigin } from '../../../__fixtures__/services/without-origin';
+import { ElementsOptionsProvider } from '../../../context/Options';
 import { AdditionalInfo } from './AdditionalInfo';
 import { HttpService } from './index';
 import { SecuritySchemes } from './SecuritySchemes';
@@ -425,5 +426,19 @@ describe('useSplitUrl hook', () => {
       { kind: 'variable', value: '{username}' },
       { kind: 'static', value: '.stoplight.io{test' },
     ]);
+  });
+
+  it('HttpService renders NodeVendorExtensions', () => {
+    const wrapper = render(
+      <Router>
+        <MosaicProvider>
+          <ElementsOptionsProvider renderExtensionAddon={() => <div>Vendor Extensions</div>}>
+            <HttpService data={{ ...httpService, extensions: { ['x-test-extension']: 'test' } }} />
+          </ElementsOptionsProvider>
+        </MosaicProvider>
+      </Router>,
+    );
+
+    expect(wrapper.getByText('Vendor Extensions')).toBeInTheDocument();
   });
 });
