@@ -73,6 +73,7 @@ function computeServiceNode(
     name: serviceDocument.name,
     data: serviceDocument,
     tags: serviceDocument.tags?.map(tag => tag.name) || [],
+    tagsRaw: serviceDocument.tags,
     children: computeChildNodes(document, document, map, transformOperation),
   };
 
