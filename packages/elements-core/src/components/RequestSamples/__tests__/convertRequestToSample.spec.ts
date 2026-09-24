@@ -116,3 +116,26 @@ describe('curly bracket encoding', () => {
     expect(result).toContain('%7B%22categories%22'); // Query parameter curly brackets should be encoded
   });
 });
+
+describe('application/octet-stream body', () => {
+  const harWithFile = {
+    method: 'POST',
+    url: 'https://todos.stoplight.io/todos',
+    httpVersion: 'HTTP/1.1',
+    cookies: [],
+    headers: [{ name: 'Content-Type', value: 'application/octet-stream' }],
+    queryString: [],
+    postData: {
+      mimeType: 'application/octet-stream',
+      text: '@some-file.bin',
+    },
+    headersSize: -1,
+    bodySize: -1,
+  };
+
+  it('should send the file unmodified with --data-binary in curl', async () => {
+    const result = await convertRequestToSample('shell', 'curl', harWithFile);
+
+    expect(result).toContain('--data-binary @some-file.bin');
+  });
+});
