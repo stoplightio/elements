@@ -1,7 +1,7 @@
 import type { LinkProps } from '@stoplight/mosaic';
 import React from 'react';
 
-const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
+const externalRegex = new RegExp('^(?:[a-z][a-z0-9+.-]*:|//)', 'i');
 
 export const ReactRouterMarkdownLink = ({
   title,
