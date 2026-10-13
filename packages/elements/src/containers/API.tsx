@@ -13,6 +13,7 @@ import {
 } from '@stoplight/elements-core';
 import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
+import type { IHttpOperation } from '@stoplight/types';
 import { flow } from 'lodash';
 import * as React from 'react';
 import { useQuery } from 'react-query';
@@ -22,7 +23,7 @@ import { APIWithResponsiveSidebarLayout } from '../components/API/APIWithRespons
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';
 import { APIWithStackedLayout } from '../components/API/APIWithStackedLayout';
 import { useExportDocumentProps } from '../hooks/useExportDocumentProps';
-import { transformOasToServiceNode } from '../utils/oas';
+import { transformOasToServiceNode, transformServiceNode } from '../utils/oas';
 
 export type APIProps = APIPropsWithDocument | APIPropsWithUrl;
 
@@ -43,6 +44,8 @@ export type APIPropsWithDocument = {
   apiDescriptionDocument: string | object;
   apiDescriptionUrl?: string;
 } & CommonAPIProps;
+
+export type OperationsSorter = (a: IHttpOperation, b: IHttpOperation) => number;
 
 export interface CommonAPIProps extends RoutingProps {
   /**
@@ -123,6 +126,13 @@ export interface CommonAPIProps extends RoutingProps {
    */
   renderExtensionAddon?: ExtensionAddonRenderer;
 
+  /**
+   * Allows sorting operations by providing a custom sort function. When not provided, the order of operations
+   * is kept the same as they are defined in the OpenAPI document.
+   * @default undefined
+   */
+  operationsSorter?: OperationsSorter;
+
   outerRouter?: boolean;
 }
 
@@ -147,6 +157,7 @@ export const APIImpl: React.FC<APIProps> = props => {
     tryItCorsProxy,
     maxRefDepth,
     renderExtensionAddon,
+    operationsSorter,
     basePath,
     outerRouter = false,
   } = props;
@@ -171,7 +182,10 @@ export const APIImpl: React.FC<APIProps> = props => {
   const document = apiDescriptionDocument || fetchedDocument || '';
   const parsedDocument = useParsedValue(document);
   const bundledDocument = useBundleRefsIntoDocument(parsedDocument, { baseUrl: apiDescriptionUrl });
-  const serviceNode = React.useMemo(() => transformOasToServiceNode(bundledDocument), [bundledDocument]);
+  const serviceNode = React.useMemo(
+    () => transformServiceNode(transformOasToServiceNode(bundledDocument), { operationsSorter }),
+    [bundledDocument, operationsSorter],
+  );
   const exportProps = useExportDocumentProps({ originalDocument: document, bundledDocument });
 
   if (error) {
