@@ -90,7 +90,7 @@ jobs:
     steps:
       - checkout
       - run:
-          command: weekly_lockfile_maintenance.sh
+          command: weekly-lockfile-maintenance.sh
   release:
     docker:
       - image: cimg/node:18.20
