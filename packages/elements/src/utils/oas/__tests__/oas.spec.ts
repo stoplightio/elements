@@ -94,6 +94,16 @@ describe('computeOasNodes', () => {
         infoExtensions: {},
       },
       tags: ['operation-tag', 'model-tag'],
+      tagsRaw: [
+        {
+          id: '68c460dd9e97a',
+          name: 'operation-tag',
+        },
+        {
+          id: 'feec8b579ae6b',
+          name: 'model-tag',
+        },
+      ],
       children: [
         {
           type: 'http_operation',
@@ -171,6 +181,16 @@ describe('computeOasNodes', () => {
         version: '1.0.0',
       },
       tags: ['operation-tag', 'model-tag'],
+      tagsRaw: [
+        {
+          id: '68c460dd9e97a',
+          name: 'operation-tag',
+        },
+        {
+          id: 'feec8b579ae6b',
+          name: 'model-tag',
+        },
+      ],
       children: [
         {
           type: 'http_operation',
