@@ -11,7 +11,7 @@ import {
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import { HttpMethod, IHttpEndpointOperation, IHttpOperation } from '@stoplight/types';
 import cn from 'classnames';
-import { useAtomValue } from 'jotai/utils';
+import { useAtomValue } from 'jotai';
 import * as React from 'react';
 
 import { HttpMethodColors } from '../../../constants';

@@ -2,11 +2,11 @@ import { Box, Button, CopyButton, Menu, MenuItems, Panel } from '@stoplight/mosa
 import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { Dictionary } from '@stoplight/types';
 import { Request } from 'har-format';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { cloneDeep, find, findKey } from 'lodash';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 
-import { persistAtom } from '../../utils/jotai/persistAtom';
+import { atomWithPersistedValue } from '../../utils/jotai/atomWithPersistedValue';
 import { convertRequestToSample } from './convertRequestToSample';
 import { CodeSample } from './extractCodeSamples';
 import {
@@ -44,8 +44,8 @@ type LanguageConfigWithCode = LanguageConfig &
     libraries: Dictionary<LibraryConfigWithCode, SupportedLibrary>;
   };
 
-const selectedLanguageAtom = persistAtom<string>('RequestSamples_selectedLanguage', atom('shell'));
-const selectedLibraryAtom = persistAtom<string>('RequestSamples_selectedLibrary', atom('curl'));
+const selectedLanguageAtom = atomWithPersistedValue('RequestSamples_selectedLanguage', 'shell');
+const selectedLibraryAtom = atomWithPersistedValue('RequestSamples_selectedLibrary', 'curl');
 
 const fallbackText = 'Unable to generate code example';
 

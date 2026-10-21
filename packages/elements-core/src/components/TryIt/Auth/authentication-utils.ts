@@ -8,11 +8,11 @@ import {
   IHttpQueryParam,
   IOauth2SecurityScheme,
 } from '@stoplight/types';
-import { atom, useAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { flatten, isObject, isPlainObject } from 'lodash';
 import React from 'react';
 
-import { persistAtom } from '../../../utils/jotai/persistAtom';
+import { atomWithPersistedValue } from '../../../utils/jotai/atomWithPersistedValue';
 import { caseInsensitivelyEquals } from '../../../utils/string';
 
 export type HttpSecuritySchemeWithValues = {
@@ -72,7 +72,7 @@ const isSecuritySchemeValues = (
   maybeSecuritySchemeValues: unknown,
 ): maybeSecuritySchemeValues is SecuritySchemeValues => isPlainObject(maybeSecuritySchemeValues);
 
-const securitySchemeValuesAtom = persistAtom('TryIt_securitySchemeValues', atom<SecuritySchemeValues>({}));
+const securitySchemeValuesAtom = atomWithPersistedValue<SecuritySchemeValues>('TryIt_securitySchemeValues', {});
 export const usePersistedSecuritySchemeWithValues = (): [
   HttpSecuritySchemeWithValues[] | undefined,
   React.Dispatch<HttpSecuritySchemeWithValues | undefined>,
