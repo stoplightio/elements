@@ -58,7 +58,7 @@ jobs:
   e2e-react-vite:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:22.21.0
+      image: cypress/base:24.22.0
       env:
         TERM: xterm
     needs:
@@ -90,7 +90,7 @@ jobs:
   e2e-angular:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:22.21.0
+      image: cypress/base:24.22.0
       env:
         TERM: xterm
     needs:
@@ -122,7 +122,7 @@ jobs:
   e2e-static-html:
     runs-on: ubuntu-latest
     container:
-      image: cypress/base:22.21.0
+      image: cypress/base:24.22.0
       env:
         TERM: xterm
     needs:
