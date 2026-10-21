@@ -15,7 +15,7 @@ const config: StorybookConfig = {
   webpackFinal: config => {
     config.resolve = config.resolve || {};
     config.resolve.plugins = config.resolve.plugins || [];
-    config.resolve.plugins.push(new TsconfigPathsPlugin());
+    config.resolve.plugins.push(new TsconfigPathsPlugin({ configFile: join(import.meta.dirname, '../tsconfig.json') }));
 
     config.resolve.fallback = {
       stream: false,

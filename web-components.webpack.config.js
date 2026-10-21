@@ -7,7 +7,7 @@ module.exports = {
   entry: './src/web-components/index.ts',
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
-    plugins: [new TsconfigPathsPlugin()],
+    plugins: [new TsconfigPathsPlugin({ configFile: path.resolve(__dirname, 'tsconfig.json') })],
     fallback: {
       stream: false,
       path: false,

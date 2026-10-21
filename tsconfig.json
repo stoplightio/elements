@@ -2,19 +2,20 @@
   "extends": "@stoplight/scripts/tsconfig.json",
   "compilerOptions": {
     "esModuleInterop": true,
-    "baseUrl": "./packages",
+    "noUncheckedSideEffectImports": false,
+    "rootDir": ".",
     "lib": ["es2021", "dom"],
     "moduleResolution": "bundler",
     "customConditions": ["require"],
     "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"],
     "paths": {
-      "@test-utils/*": ["../test-utils/*"],
-      "@stoplight/elements": ["./elements/src"],
-      "@stoplight/elements/*": ["./elements/src/*"],
-      "@stoplight/elements-dev-portal": ["./elements-dev-portal/src"],
-      "@stoplight/elements-dev-portal/*": ["./elements-dev-portal/src/*"],
-      "@stoplight/elements-core": ["./elements-core/src"],
-      "@stoplight/elements-core/*": ["./elements-core/src/*"]
+      "@test-utils/*": ["./test-utils/*"],
+      "@stoplight/elements": ["./packages/elements/src"],
+      "@stoplight/elements/*": ["./packages/elements/src/*"],
+      "@stoplight/elements-dev-portal": ["./packages/elements-dev-portal/src"],
+      "@stoplight/elements-dev-portal/*": ["./packages/elements-dev-portal/src/*"],
+      "@stoplight/elements-core": ["./packages/elements-core/src"],
+      "@stoplight/elements-core/*": ["./packages/elements-core/src/*"]
     }
   }
 }

@@ -11,8 +11,8 @@
     "**/*.test.tsx"
   ],
   "compilerOptions": {
-    "baseUrl": "./",
     "outDir": "dist",
+    "rootDir": "./src",
     "moduleResolution": "bundler",
     "customConditions": ["require"],
     "paths": {
