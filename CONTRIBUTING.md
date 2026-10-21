@@ -14,6 +14,7 @@
     - [Run the tests manually](#run-the-tests-manually)
     - [Edit the tests](#edit-the-tests)
     - [Inspect test results](#inspect-test-results)
+- [Build](#build)
 - [Yalc into platform-internal](#yalc-into-platform-internal)
 - [Release Elements](#release-elements)
 - [Versioning Guidelines](#versioning-guidelines)
@@ -194,6 +195,18 @@ Test results can be found under the `e2e-results` directory.
 *Playwright* keeps a trace, screenshot and video for every failing test (under `e2e-results/artifacts`; open a trace with `npx playwright show-trace <path>/trace.zip`). In addition, a machine-readable `output.xml` is generated that contains a summary of the results.
 
 In CI, each e2e job uploads `e2e-results` (including traces, screenshots and videos of failing tests) as a build artifact named `e2e-<example>-results`.
+
+## Build
+
+`npm run build` builds the three packages in dependency order. Each package is built in steps (see its `build` scripts), all with [Vite](https://vite.dev/):
+
+1. `build.react` bundles `src/index.ts` into CommonJS (`dist/index.js`) and ESM (`dist/index.mjs`), configured in the package's `vite.build.config.mts` from the shared [vite.lib.mts](vite.lib.mts). Dependencies and peer dependencies stay external, except for those listed under `rollup.bundleDeps` in the package's `package.json`. `tsc` then emits the type declarations into `dist`, and [scripts/prepare-dist.mjs](scripts/prepare-dist.mjs) writes the `package.json`, README and LICENSE that get published (each package publishes its `dist` folder).
+2. `build.webcomponents` (`elements` and `elements-dev-portal`) bundles the web components, with React and all dependencies included, into `dist/web-components.min.js`. It is configured in the package's `vite.web-components.config.mts` from the shared [vite.web-components.mts](vite.web-components.mts), and has to run after `build.react`, which owns `dist`.
+3. `build.styles` (the `postbuild` step) compiles the stylesheets with PostCSS.
+
+Storybook (`.storybook`) and the demo app (`demo`) also run on Vite. Some of our dependencies expect Node.js globals such as `process` in the browser, which [process-shim.js](process-shim.js) provides for both of them (the web component bundles inject it at build time instead).
+
+The `dist` folders are rebuilt from scratch every time, and the `dev-portal` build also rewrites `packages/elements-dev-portal/src/version.ts` with the current package version. Don't commit that change unless you are releasing.
 
 ## Yalc into platform-internal
 

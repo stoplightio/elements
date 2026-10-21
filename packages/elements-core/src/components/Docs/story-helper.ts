@@ -1,5 +1,5 @@
 import type { ErrorBoundaryProps } from '@stoplight/react-error-boundary';
-import type { Meta, StoryFn } from '@storybook/react-webpack5';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import * as React from 'react';
 
 import { ExtensionAddonRenderer } from './Docs';

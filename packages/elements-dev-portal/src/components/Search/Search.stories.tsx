@@ -1,6 +1,6 @@
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Box, Icon, Input, useModalState } from '@stoplight/mosaic';
-import { StoryFn } from '@storybook/react-webpack5';
+import { StoryFn } from '@storybook/react-vite';
 import * as React from 'react';
 
 import { useGetNodes } from '../../hooks/useGetNodes';

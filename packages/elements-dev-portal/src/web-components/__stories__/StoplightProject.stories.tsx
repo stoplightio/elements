@@ -1,6 +1,6 @@
 import '../index';
 
-import { StoryFn } from '@storybook/react-webpack5';
+import { StoryFn } from '@storybook/react-vite';
 import React from 'react';
 
 declare global {

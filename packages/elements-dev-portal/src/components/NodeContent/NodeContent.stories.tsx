@@ -1,4 +1,4 @@
-import { StoryFn } from '@storybook/react-webpack5';
+import { StoryFn } from '@storybook/react-vite';
 import * as React from 'react';
 
 import { useGetNodeContent } from '../../hooks/useGetNodeContent';

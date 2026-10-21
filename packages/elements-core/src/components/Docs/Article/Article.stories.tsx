@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react-webpack5';
+import type { Meta } from '@storybook/react-vite';
 
 // @ts-ignore
 import basic from '../../../__fixtures__/articles/basic.md';

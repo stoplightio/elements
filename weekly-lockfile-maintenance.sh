@@ -7,7 +7,7 @@
 set -e 
 set -o pipefail
 
-# https://circleci.com/docs/2.0/using-shell-scripts/#set-error-flags
+# Fail on unset variables and on any command error
 set -o nounset
 set -o errexit
 

@@ -1,8 +1,8 @@
 [![Elements - OpenAPI Powered API Documentation](docs/images/readme-header.svg)][elements_landing_page]
 
 [![Storybook](https://cdn.jsdelivr.net/gh/storybookjs/brand@master/badge/badge-storybook.svg)](https://stoplight-elements.netlify.app)
-[![CircleCI][circle_ci_image]][circle_ci]
-[![NPM Downloads][circle_ci_image]][npm]
+[![CI][github_actions_image]][github_actions]
+[![NPM Downloads][npm_image]][npm]
 [![Stoplight Forest](https://img.shields.io/ecologi/trees/stoplightinc)][stoplight_forest]
 
 Beautiful API documentation powered by OpenAPI and Markdown. Use these UI components to create API reference documentation, or more complete documentation with Markdown articles covering tutorials, how-to guides, etc.
@@ -165,8 +165,8 @@ If you would like to thank us for creating Elements, we ask that you [**buy the 
 [contributing]: CONTRIBUTING.md
 [download-release]: https://github.com/stoplightio/elements/releases/latest
 [elements_landing_page]: https://elements-demo.stoplight.io?utm_source=github&utm_medium=elements&utm_campaign=readme
-[circle_ci]: https://circleci.com/gh/stoplightio/elements
-[circle_ci_image]: https://img.shields.io/circleci/build/github/stoplightio/elements/main
+[github_actions]: https://github.com/stoplightio/elements/actions/workflows/test-and-release.yml
+[github_actions_image]: https://github.com/stoplightio/elements/actions/workflows/test-and-release.yml/badge.svg?branch=main
 [npm]: https://www.npmjs.com/package/@stoplight/elements
 [npm_image]: https://img.shields.io/npm/dw/@stoplight/elements?color=blue
 [stoplight_forest]: https://ecologi.com/stoplightinc

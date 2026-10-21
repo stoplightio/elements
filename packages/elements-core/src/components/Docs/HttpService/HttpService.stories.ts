@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react-webpack5';
+import type { Meta } from '@storybook/react-vite';
 
 import { httpService } from '../../../__fixtures__/services/petstore';
 import { createStoriesForDocsComponent, docsArgTypes } from '../story-helper';

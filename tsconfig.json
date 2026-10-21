@@ -1,13 +1,31 @@
 {
-  "extends": "@stoplight/scripts/tsconfig.json",
   "compilerOptions": {
-    "esModuleInterop": true,
-    "noUncheckedSideEffectImports": false,
-    "rootDir": ".",
+    "target": "es2020",
+    "module": "esnext",
     "lib": ["es2021", "dom"],
     "moduleResolution": "bundler",
     "customConditions": ["require"],
     "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"],
+    "jsx": "react",
+
+    "strict": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUnreachableCode": false,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "noUncheckedSideEffectImports": false,
+    "isolatedModules": true,
+
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+
+    "declaration": true,
+    "removeComments": true,
+    "outDir": "dist",
+    "rootDir": ".",
+
     "paths": {
       "@test-utils/*": ["./test-utils/*"],
       "@stoplight/elements": ["./packages/elements/src"],

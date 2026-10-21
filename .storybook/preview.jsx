@@ -1,3 +1,5 @@
+import '../process-shim';
+
 import * as React from 'react';
 import { Title, Subtitle, Description, Primary, Controls, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';

@@ -37,14 +37,11 @@
   "scripts": {
     "build": "npm run build.react && npm run build.webcomponents",
     "postbuild": "npm run build.styles",
-    "build.react": "sl-scripts bundle",
+    "build.react": "vite build -c vite.build.config.mts && tsc -p tsconfig.build.json --emitDeclarationOnly --declaration --declarationDir dist && node ../../scripts/prepare-dist.mjs",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css",
-    "build.webcomponents": "node --max-old-space-size=4096 ./../../node_modules/webpack/bin/webpack.js -c ./web-components.config.js",
+    "build.webcomponents": "vite build -c vite.web-components.config.mts",
     "build.docs": "storybook build -c .storybook -o dist-storybook",
     "commit": "git-cz",
-    "release": "sl-scripts release",
-    "release.docs": "sl-scripts release:docs",
-    "release.dryRun": "sl-scripts release --dry-run --debug",
     "storybook": "storybook dev -p 9001",
     "test": "vitest run",
     "test.prod": "vitest run --coverage --maxWorkers=2",
@@ -78,7 +75,6 @@
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
-    "@stoplight/scripts": "10.0.0",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
@@ -90,15 +86,9 @@
     "@types/react-dom": "19.3.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",
-    "resolve-url-loader": "^5.0.0",
-    "storybook": "10.6.3",
-    "style-loader": "^3.3.3",
-    "ts-loader": "^9.2.8"
+    "storybook": "10.6.3"
   },
   "publishConfig": {
     "directory": "dist"
-  },
-  "release": {
-    "extends": "@stoplight/scripts/release"
   }
 }

@@ -1,53 +1,39 @@
-import { createRequire } from 'node:module';
 import { join } from 'node:path';
 
-import type { StorybookConfig } from '@storybook/react-webpack5';
-import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
-import webpack from 'webpack';
-
-const require = createRequire(import.meta.url);
+import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
   stories: [join(import.meta.dirname, '../packages/**/*.stories.{js,jsx,ts,tsx}')],
 
-  addons: ['@storybook/addon-webpack5-compiler-swc', '@storybook/addon-docs', '@storybook/addon-styling-webpack'],
-
-  webpackFinal: config => {
-    config.resolve = config.resolve || {};
-    config.resolve.plugins = config.resolve.plugins || [];
-    config.resolve.plugins.push(new TsconfigPathsPlugin({ configFile: join(import.meta.dirname, '../tsconfig.json') }));
-
-    config.resolve.fallback = {
-      stream: false,
-      path: false,
-      process: false,
-      url: require.resolve('url/'),
-    };
-
-    config.resolve.conditionNames = ['require', 'default'];
-
-    config.module = config.module || { rules: [] };
-    config.module.rules = config.module.rules || [];
-    config.module.rules.push({
-      test: /\.m?js/,
-      resolve: {
-        fullySpecified: false,
-      },
-    });
-
-    config.plugins = config.plugins || [];
-    config.plugins.push(
-      new webpack.ProvidePlugin({
-        process: require.resolve('process/browser'),
-      }),
-    );
-
-    return config;
-  },
+  addons: ['@storybook/addon-docs'],
 
   framework: {
-    name: '@storybook/react-webpack5',
+    name: '@storybook/react-vite',
     options: {},
+  },
+
+  viteFinal: async config => {
+    const { mergeConfig } = await import('vite');
+
+    return mergeConfig(config, {
+      plugins: [
+        {
+          // stories import markdown fixtures as strings
+          name: 'markdown-as-string',
+          enforce: 'pre',
+          transform: (code: string, id: string) =>
+            id.endsWith('.md') ? `export default ${JSON.stringify(code)};` : undefined,
+        },
+      ],
+      resolve: {
+        // `@stoplight/elements-core` and friends resolve to their sources, see `paths` in the root tsconfig.json
+        tsconfigPaths: true,
+      },
+      define: {
+        // some dependencies expect the Node.js globals that webpack used to provide, see ../process-shim.js
+        global: 'globalThis',
+      },
+    });
   },
 };
 

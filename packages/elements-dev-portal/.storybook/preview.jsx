@@ -1,3 +1,6 @@
+// must run before anything that reads `process`, see ../../../process-shim.js
+import '../../../process-shim';
+
 import * as React from 'react';
 import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
 

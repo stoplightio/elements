@@ -1,5 +1,5 @@
 import { Box } from '@stoplight/mosaic';
-import { StoryFn } from '@storybook/react-webpack5';
+import { StoryFn } from '@storybook/react-vite';
 import * as React from 'react';
 
 import { useGetBranches } from '../../hooks/useGetBranches';

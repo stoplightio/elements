@@ -3,6 +3,9 @@ on:
   push:
     branches:
     - main
+  pull_request:
+    branches:
+    - main
 
 jobs:
   lint-and-check:
@@ -43,7 +46,6 @@ jobs:
           e2e/
           playwright.config.ts
           tsconfig.json
-          node_modules/@stoplight/scripts/
           use-local-elements.sh
           package.json
           package-lock.json
@@ -159,7 +161,7 @@ jobs:
         name: e2e-static-html-results
         path: e2e-results
   release:
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     container:
       image: node:lts

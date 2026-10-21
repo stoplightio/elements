@@ -1,4 +1,4 @@
-import type { Meta } from '@storybook/react-webpack5';
+import type { Meta } from '@storybook/react-vite';
 import { JSONSchema7 } from 'json-schema';
 
 import model from '../../../__fixtures__/schemas/contact.json';
