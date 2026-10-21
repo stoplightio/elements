@@ -1,4 +1,4 @@
-# Stoplight Elements - Create React App Example
+# Stoplight Elements - React (Vite) Example
 
 ## Table Of Contents
 
@@ -14,7 +14,7 @@
 
 ## Overview
 
-*Stoplight Elements* can be embedded natively in React app. This example demonstrates usage of the Stoplight Project and Stoplight API components in a Create React App application and presents how to embed Elements in your own application.
+*Stoplight Elements* can be embedded natively in React app. This example demonstrates usage of the Stoplight Project and Stoplight API components in a [Vite](https://vite.dev) React application and presents how to embed Elements in your own application.
 
 ### Stoplight Project
 
