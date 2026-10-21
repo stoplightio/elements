@@ -1,9 +1,8 @@
 import '@stoplight/elements/styles.min.css';
 
 import { API } from '@stoplight/elements';
-import React from 'react';
 
-export const StoplightAPI: React.FC = () => {
+export const StoplightAPI = () => {
   return (
     <API
       router="history"

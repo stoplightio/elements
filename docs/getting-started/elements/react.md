@@ -7,7 +7,7 @@ Learn how to get started with Elements in a React project.
 Use the [React App template](https://github.com/stoplightio/cra-template-elements) to create a new Elements website in React without any additional setup.
 
 > Note: [The Create React App template only works with version 4 of create-react-app because of Webpack 5 polyfill issues.](https://github.com/facebook/create-react-app/issues/11756)
-> To run it with new create-react-app and Webpack 5 check [Polyfills](#Polyfills) section
+> To run it with new create-react-app and Webpack 5 check [Polyfills](#polyfills-create-react-app) section
 
 ```bash
 npx create-react-app@4.0.3 my-dir --template @stoplight/elements
@@ -110,7 +110,22 @@ const apiDescriptionDocument = {
 />
 ```
 
-## Polyfills
+## Vite
+
+Elements dependencies expect some Node.js globals and built-ins (`global`, `process`, `url`, `buffer`), which Vite doesn't provide. Add [vite-plugin-node-polyfills](https://github.com/davidmyersdev/vite-plugin-node-polyfills) to your Vite config. See the [react-vite example](https://github.com/stoplightio/elements/tree/main/examples/react-vite) for a complete setup.
+
+```js
+// vite.config.ts
+import react from '@vitejs/plugin-react';
+import { defineConfig } from 'vite';
+import { nodePolyfills } from 'vite-plugin-node-polyfills';
+
+export default defineConfig({
+  plugins: [react(), nodePolyfills()],
+});
+```
+
+## Polyfills (Create React App)
 Create React App is now using Webpack 5 that doesn't come with node polyfills anymore. Since elements dependencies use `url` and `buffer` packages they need to be added separately. The easiest way to do that is to include [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) in webpack configuration file:
 ```js
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');

@@ -2,16 +2,16 @@
   "name": "@stoplight/elements-starter-static-html",
   "version": "1.0.0",
   "private": true,
-  "description": "",
-  "main": "stoplight-project/index.html",
+  "description": "Static HTML pages with embedded Stoplight Elements web components",
   "scripts": {
     "serve": "node serve-files.js",
     "build": "exit 0"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Stoplight <support@stoplight.io>",
+  "license": "Unlicense",
   "dependencies": {
-    "express": "^4.17.1"
+    "@stoplight/elements": "^9.0.0",
+    "@stoplight/elements-dev-portal": "^3.0.0"
   },
   "resolutions": {
     "xml-parser-xo": "4.1.5"
