@@ -1,5 +1,5 @@
 import { NodeType } from '@stoplight/types';
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import model from '../../__fixtures__/schemas/contact.json';
@@ -22,7 +22,7 @@ export default {
   },
 } as Meta<DocsProps>;
 
-export const DocsStory: Story<DocsProps> = args => {
+export const DocsStory: StoryFn<DocsProps> = args => {
   return <Docs {...args} />;
 };
 DocsStory.args = {

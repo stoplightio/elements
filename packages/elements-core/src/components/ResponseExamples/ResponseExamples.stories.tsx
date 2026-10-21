@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/operation-with-examples';
@@ -9,7 +9,7 @@ export default {
   component: ResponseExamples,
 } as Meta<ResponseExamplesProps>;
 
-const Template: Story<ResponseExamplesProps> = args => <ResponseExamples {...args} />;
+const Template: StoryFn<ResponseExamplesProps> = args => <ResponseExamples {...args} />;
 
 export const HoistedStory = Template.bind({});
 

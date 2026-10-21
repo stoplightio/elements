@@ -1,14 +1,17 @@
 import * as React from 'react';
-import { Title, Subtitle, Description, Primary, ArgsTable, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
+import { Title, Subtitle, Description, Primary, Controls, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
 import customTheme from './theme';
 
 import './google-fonts.css';
+
+export const tags = ['autodocs'];
+
+export const initialGlobals = { theme: 'light' };
 
 export const globalTypes = {
   theme: {
     name: 'Theme',
     description: 'Global theme for components',
-    defaultValue: 'light',
     toolbar: {
       icon: 'circlehollow',
       items: ['light', 'dark'],
@@ -24,7 +27,7 @@ export const parameters = {
         <Subtitle />
         <Description />
         <Primary />
-        <ArgsTable story={PRIMARY_STORY} />
+        <Controls of={PRIMARY_STORY} />
       </>
     ),
     theme: customTheme,

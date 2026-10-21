@@ -1,13 +1,22 @@
+import type { Meta } from '@storybook/react-webpack5';
+
 // @ts-ignore
 import basic from '../../../__fixtures__/articles/basic.md';
 // @ts-ignore
 import kitchenSink from '../../../__fixtures__/articles/kitchen-sink.md';
 // @ts-ignore
 import multipleTryIts from '../../../__fixtures__/articles/multiple-try-its.md';
-import { createStoriesForDocsComponent } from '../story-helper';
+import { createStoriesForDocsComponent, docsArgTypes } from '../story-helper';
 import { Article } from './index';
 
-const { meta, createStory } = createStoriesForDocsComponent(Article);
+const { createStory } = createStoriesForDocsComponent(Article);
+
+const meta: Meta<typeof Article> = {
+  title: 'Internal/Docs/Article',
+  component: Article,
+  argTypes: docsArgTypes,
+};
+
 export default meta;
 
 export const Basic = createStory('Basic', { data: basic });

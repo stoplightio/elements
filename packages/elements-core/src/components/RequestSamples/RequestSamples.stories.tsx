@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { RequestSamples, RequestSamplesProps } from './RequestSamples';
@@ -8,7 +8,7 @@ export default {
   component: RequestSamples,
 } as Meta<RequestSamplesProps>;
 
-const Template: Story<RequestSamplesProps> = args => <RequestSamples {...args} />;
+const Template: StoryFn<RequestSamplesProps> = args => <RequestSamples {...args} />;
 
 export const HoistedStory = Template.bind({});
 

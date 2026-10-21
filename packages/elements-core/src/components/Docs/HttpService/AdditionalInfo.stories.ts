@@ -1,9 +1,9 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react-webpack5';
 
 import { AdditionalInfo } from './AdditionalInfo';
 
 const meta: Meta<typeof AdditionalInfo> = {
-  title: `Internal/Docs/AdditionalInfo`,
+  title: 'Internal/Docs/AdditionalInfo',
   component: AdditionalInfo,
 };
 

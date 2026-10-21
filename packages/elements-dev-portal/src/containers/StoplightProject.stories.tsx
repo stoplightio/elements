@@ -1,4 +1,4 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { StoplightProject, StoplightProjectProps } from './StoplightProject';
@@ -20,7 +20,7 @@ export default {
   },
 };
 
-export const Playground: Story<StoplightProjectProps> = args => <StoplightProject {...args} />;
+export const Playground: StoryFn<StoplightProjectProps> = args => <StoplightProject {...args} />;
 Playground.storyName = 'Studio Demo';
 Playground.args = {
   projectId: 'cHJqOjYwNjYx',

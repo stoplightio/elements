@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
@@ -17,7 +17,7 @@ export default {
   component: TryIt,
 } as Meta<TryItProps>;
 
-const Template: Story<TryItProps> = args => <TryIt {...args} />;
+const Template: StoryFn<TryItProps> = args => <TryIt {...args} />;
 
 export const SimpleGET = Template.bind({});
 SimpleGET.args = {

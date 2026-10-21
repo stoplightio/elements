@@ -1,6 +1,6 @@
 import '../index';
 
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react-webpack5';
 import React from 'react';
 
 declare global {
@@ -11,7 +11,7 @@ declare global {
   }
 }
 
-const Template: Story = (props: any) => <elements-stoplight-project {...props} />;
+const Template: StoryFn = (props: any) => <elements-stoplight-project {...props} />;
 
 export default {
   title: 'web-components/StoplightProject',

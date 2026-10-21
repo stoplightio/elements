@@ -1,4 +1,4 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { useGetNodeContent } from '../../hooks/useGetNodeContent';
@@ -53,7 +53,7 @@ export default {
   },
 };
 
-export const Playground: Story<{ nodeSlug: string; projectId: string; branchSlug?: string }> = args => (
+export const Playground: StoryFn<{ nodeSlug: string; projectId: string; branchSlug?: string }> = args => (
   <NodeContentWrapper {...args} />
 );
 

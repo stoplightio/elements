@@ -1,5 +1,5 @@
 import { parse } from '@stoplight/yaml';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
@@ -28,7 +28,7 @@ export default {
   },
 };
 
-const Template: Story<APIProps> = args => <API {...args} />;
+const Template: StoryFn<APIProps> = args => <API {...args} />;
 
 export const APIWithYamlProvidedDirectly = Template.bind({});
 APIWithYamlProvidedDirectly.args = {

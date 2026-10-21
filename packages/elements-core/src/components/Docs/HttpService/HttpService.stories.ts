@@ -1,9 +1,17 @@
+import type { Meta } from '@storybook/react-webpack5';
+
 import { httpService } from '../../../__fixtures__/services/petstore';
-import { createStoriesForDocsComponent } from '../story-helper';
+import { createStoriesForDocsComponent, docsArgTypes } from '../story-helper';
 import { renderExtensionRenderer } from '../story-renderer-helper';
 import { HttpService } from './HttpService';
 
-const { meta, createHoistedStory } = createStoriesForDocsComponent(HttpService, 'HttpService');
+const { createHoistedStory } = createStoriesForDocsComponent(HttpService, 'HttpService');
+
+const meta: Meta<typeof HttpService> = {
+  title: 'Internal/Docs/HttpService',
+  component: HttpService,
+  argTypes: docsArgTypes,
+};
 
 export default meta;
 

@@ -1,5 +1,5 @@
 import { Flex } from '@stoplight/mosaic';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { TableOfContents } from './TableOfContents';
@@ -13,7 +13,7 @@ export default {
   },
 };
 
-export const Playground: Story<TableOfContentsProps> = args => (
+export const Playground: StoryFn<TableOfContentsProps> = args => (
   <Flex justifyContent="center" style={{ width: '300px' }}>
     <TableOfContents {...args} />
   </Flex>

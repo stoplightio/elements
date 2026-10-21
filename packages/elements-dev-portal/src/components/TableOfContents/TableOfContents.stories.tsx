@@ -1,4 +1,4 @@
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { useGetTableOfContents } from '../../hooks/useGetTableOfContents';
@@ -58,7 +58,7 @@ export default {
   },
 };
 
-export const Playground: Story<{
+export const Playground: StoryFn<{
   nodeSlug: string;
   projectId: string;
   branchSlug?: string;

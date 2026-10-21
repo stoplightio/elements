@@ -1,1 +1,1 @@
-require('../../../.storybook/manager');
+import '../../../.storybook/manager';

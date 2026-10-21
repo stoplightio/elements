@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { httpOperation as putTodosOperation } from '../../__fixtures__/operations/put-todos';
@@ -10,7 +10,7 @@ export default {
   component: TryItWithRequestSamples,
 } as Meta<TryItWithRequestSamplesProps>;
 
-const Template: Story<TryItWithRequestSamplesProps> = args => <TryItWithRequestSamples {...args} />;
+const Template: StoryFn<TryItWithRequestSamplesProps> = args => <TryItWithRequestSamples {...args} />;
 
 export const WithParameters = Template.bind({});
 WithParameters.args = {

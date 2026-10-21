@@ -1,6 +1,6 @@
 import { faSearch, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { Box, Icon, Input, useModalState } from '@stoplight/mosaic';
-import { Story } from '@storybook/react';
+import { StoryFn } from '@storybook/react-webpack5';
 import * as React from 'react';
 
 import { useGetNodes } from '../../hooks/useGetNodes';
@@ -143,8 +143,8 @@ export default {
   },
 };
 
-export const Playground: Story<SearchWrapperProps> = args => <SearchWrapper {...args} />;
-export const EmbeddedSearch: Story<SearchWrapperProps> = args => <EmbeddedSearchWrapper {...args} />;
+export const Playground: StoryFn<SearchWrapperProps> = args => <SearchWrapper {...args} />;
+export const EmbeddedSearch: StoryFn<SearchWrapperProps> = args => <EmbeddedSearchWrapper {...args} />;
 
 Playground.storyName = 'Studio Demo';
 
