@@ -20,7 +20,6 @@
     "react-router": "^8.5.0"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.22",
     "@types/node": "^14.18.14",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
@@ -32,7 +31,6 @@
     "eslint-plugin-react": "^7.23.1",
     "express": "^4.17.3",
     "html-webpack-plugin": "^5.3.2",
-    "jest": "^26.6.3",
     "mini-css-extract-plugin": "^2.9.0",
     "prettier": "^2.2.1",
     "process": "0.11.10",

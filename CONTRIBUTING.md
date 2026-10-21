@@ -21,7 +21,7 @@
         
 ## Intro
 
-Elements is an open-source project, and Stoplight loves contributions. If you're familiar with TypeScript and Jest then dive right in, see how far you can get, and post in [Discussions](https://github.com/stoplightio/elements/discussions) or start a draft PR if you get stuck.
+Elements is an open-source project, and Stoplight loves contributions. If you're familiar with TypeScript and Vitest then dive right in, see how far you can get, and post in [Discussions](https://github.com/stoplightio/elements/discussions) or start a draft PR if you get stuck.
 
 ## Install Elements
 
@@ -65,7 +65,7 @@ Well-written tests also **save time** when authoring or reviewing PRs as you don
 
 To achieve high-quality tests, **follow these principles**:
 - Always test the **behavior** of a component, not the implementation.
-    - Tests that use *Jest snapshots* almost always violate this. (Except maybe when you are testing an AST parser, a linter, or similar.) 
+    - Tests that use *Vitest snapshots* almost always violate this. (Except maybe when you are testing an AST parser, a linter, or similar.) 
     
     **Instead,** extract the real business requirement from what would be the snapshot and assert against that.
     
@@ -78,7 +78,7 @@ To achieve high-quality tests, **follow these principles**:
 - The goal for your test suite is **to cover** as much of the **business requirements** (for example, in the issue description) as practical.
 - An ideal test suite only requires a change **if business requirements change**.
 - While not expected, **it's OK to add additional tests** for helper functions, hooks, and sub-components where it would not be practical to test them alongside their host components. In this case, try to follow the principles above as much as practical.
-- Use **Jest/JSDOM testing wherever suitable**. Cypress-based tests should be reserved for high-level integration tests, such as:
+- Use **Vitest/JSDOM testing wherever suitable**. Playwright-based tests should be reserved for high-level integration tests, such as:
     - Basic checks to make sure that *Elements* builds and loads correctly in a certain environment.
     - Make sure the routers/navigation of the external framework works well with Stoplight's internal router.
 
@@ -91,32 +91,30 @@ Take a sensible approach to testing and don't worship the coverage indicator but
 When you add a new component, implement a changing functional requirement, or fix a bug, **you are expected to also deliver one or more tests** that cover the feature being added/modified.
 
 Unit testing stack:
-- [Jest](https://jestjs.io/)
+- [Vitest](https://vitest.dev/)
 - [JSDOM](https://github.com/jsdom/jsdom)
 - [React Testing Library](https://github.com/testing-library/react-testing-library/)
 - [Jest-DOM](https://github.com/testing-library/jest-dom)
-- \* You can find some legacy code utilizing a different stack (Enzyme). When changing those tests, use your judgment 
-  to decide between amending the old unit test or rewriting it using the new stack. Mixing testing libraries in a single test file is fine.
   
 Unit tests are currently located in a directory `__tests__` close to the component being tested, but in the future, tests will be located right next to the components under test, with a `.spec.ts` extension.
   
 #### Run Unit Tests
 
-Assuming you work on the `elements` package, you can run `jest` on it using the shorthand
+Assuming you work on the `elements` package, you can run `vitest` on it using the shorthand
 ```shell
 yarn elements test
 ```
 
 There is **no need to build *Elements* beforehand**, the test runs on the currently saved TypeScript code. Make sure to install dependencies, however. (`yarn`)
 
-Any arguments you append after the command are forwarded to jest. Some useful combinations:
+Any arguments you append after the command are forwarded to Vitest. Some useful combinations:
 ```shell
 # Show the result of each individual test case
-yarn elements test --verbose
+yarn elements test --reporter=verbose
 # Only run tests related to files changed since the last commit.
-yarn elements test -o
-# Keep running the tests whenever you change a source or test file. Implies `-o` by default.
-yarn elements test --watch
+yarn elements test --changed
+# Keep running the tests whenever you change a source or test file.
+yarn elements test.watch
 # Run the test(s) whose name matches the argument regex
 yarn elements test -t Test\ Name
 ```
@@ -124,7 +122,7 @@ yarn elements test -t Test\ Name
 ### Framework Integration
 
 Framework integration tests are set up **to make sure *Elements* builds and loads correctly using any of the supported frameworks**.
-Even though these tests aren't fully end-to-end, they're referred to as end-to-end (e2e) tests. This is mainly because *Cypress*, a traditionally end-to-end test runner, is used to run them.
+Even though these tests aren't fully end-to-end, they're referred to as end-to-end (e2e) tests. This is mainly because *Playwright*, a traditionally end-to-end test runner, is used to run them.
 
 The logical steps in which these tests are run:
 
@@ -132,13 +130,13 @@ The logical steps in which these tests are run:
 2. Copy the contents of the predefined example project from `examples` to `examples-dev`. For example, copy `examples/angular` to `examples-dev/angular`
 3. Install the *Elements* build from the first step into the chosen example project in `examples-dev` (you modify `package.json` to point to the `dist` folder of `elements-core`, `elements` or `elements-dev-portal`)
 4. Serve the example from the `examples-dev` project on localhost over HTTP port 4200
-5. Run the *Cypress* test suite against this example application.
+5. Run the *Playwright* test suite against this example application. Playwright starts the example itself (`yarn serve:<example>`) and waits for it on port 4200.
 
 **You don't need to amend e2e tests** when working on *Elements* unless you are adding a new supported framework.
 These tests are run by the CI pipeline to ensure that a PR doesn't break any environments.
 That being said, if you for some reason want to run them by hand, here's how to do so:
 
-> **Note**: Unlike Jest tests, FI tests simulate real-world integration scenarios and therefore require *Elements* to be built before testing.
+> **Note**: Unlike unit tests, FI tests simulate real-world integration scenarios and therefore require *Elements* to be built before testing.
 
 #### Run Tests as the CI Would
 
@@ -151,6 +149,8 @@ yarn build
 yarn copy:react-vite
 # Build the chosen example (sub `react-vite` for any other example repo)
 yarn build:react-vite
+# Install the browser Playwright drives (only needed once, and again after upgrading Playwright)
+npx playwright install chromium
 # Run the example and the test suite against it
 yarn e2e:run:react-vite
 ```
@@ -160,7 +160,7 @@ yarn e2e:run:react-vite
 
 This is useful for either working on the tests or debugging failures.
 
-The first three steps are the same, but this time, instead of running the tests in headless mode, run them manually using the Cypress console.
+The first three steps are the same, but this time, instead of running the tests in headless mode, run them in Playwright's UI mode.
 
 ```shell
 # Make sure top-level dependencies are up-to-date
@@ -173,31 +173,27 @@ yarn copy:react-vite
 yarn build:react-vite
 # Run the example on port 4200. This is going to block so (unless you '&' it) or you'll need another terminal for the next step.
 yarn serve:react-vite
-# Open the Cypress console
+# Open Playwright's UI mode (it reuses the server that is already running on port 4200)
 yarn e2e:open
 ```
 
 > **Note**: You only need to run `yarn copy:$INTEGRATION-NAME` once after you clone the Elements repo.
 
-With the console open, select any test suite to run it visually. Check [Cypress Docs](https://docs.cypress.io/guides/core-concepts/test-runner.html) for more details about the Test Runner.
+With UI mode open, select any test to run it and step through it visually. Check the [Playwright UI mode docs](https://playwright.dev/docs/test-ui-mode) for more details.
 
-Don't forget that while *Cypress* hot-reloads on test code change, it needs a complete rebuild for *Elements* changes. There is no way around this for now. You won't hit this limitation often, but in case you do, one trick that may speed things up a bit is to substitute `yarn build:react-vite && yarn serve:react-vite` with `cd examples/react-vite; yarn start`.
+Don't forget that while *Playwright* re-runs on test code change, it needs a complete rebuild for *Elements* changes. There is no way around this for now. You won't hit this limitation often, but in case you do, one trick that may speed things up a bit is to substitute `yarn build:react-vite && yarn serve:react-vite` with `cd examples/react-vite; yarn start`.
 
 #### Edit the Tests
 
-The tests are located under `cypress/integration` and utilize the same principles as the unit tests.
-Fixtures, *Cypress* plugins, and support files can also be found in the relevant folder under `cypress`.
+The tests are located under `e2e` (`*.spec.ts`) and utilize the same principles as the unit tests: prefer `getByRole` and the other user-facing locators.
+Fixtures and support files can also be found in the relevant folder under `e2e`. The Playwright configuration is in `playwright.config.ts`.
 
 #### Inspect Test Results
 
-Test results can be found under the `cypress/results` directory. 
-*Cypress* records videos of every test suite run and takes screenshots for every failure. In addition, a machine-readable and human-readable `output.xml` is generated that contains a summary of the results.
+Test results can be found under the `e2e-results` directory. 
+*Playwright* keeps a trace, screenshot and video for every failing test (under `e2e-results/artifacts`; open a trace with `yarn playwright show-trace <path>/trace.zip`). In addition, a machine-readable `output.xml` is generated that contains a summary of the results.
 
-When running in *CircleCI*, the host interprets `output.xml` and displays it visually on the dashboard:
-![screenshot](https://user-images.githubusercontent.com/543372/105713328-4c12fa80-5f1b-11eb-869d-6aa382818c5d.png)
-
-Videos - and in case of failure, screenshots - can be found under the *Artifacts* tab.
-![screenshot](https://user-images.githubusercontent.com/543372/105713474-7f558980-5f1b-11eb-82b5-87ff764be27a.png)
+In CI, each e2e job uploads `e2e-results` (including traces, screenshots and videos of failing tests) as a build artifact named `e2e-<example>-results`.
 
 ## Yalc into platform-internal
 

@@ -9,7 +9,8 @@ node_modules
 # testing
 /coverage
 packages/*/coverage
-cypress/results
+e2e-results
+playwright-report
 test-results
 
 # production

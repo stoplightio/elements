@@ -1,6 +1,5 @@
 {
   "extends": "@stoplight/scripts/tsconfig.json",
-  "include": ["./cypress"],
   "compilerOptions": {
     "esModuleInterop": true,
     "baseUrl": "./packages",
