@@ -278,7 +278,7 @@ const Item = React.memo<{ item: OperationNode | WebhookNode }>(({ item }) => {
 });
 Item.displayName = 'Item';
 
-const Collapse: React.FC<{ isOpen: boolean }> = ({ isOpen, children }) => {
+const Collapse: React.FC<React.PropsWithChildren<{ isOpen: boolean }>> = ({ isOpen, children }) => {
   if (!isOpen) return null;
 
   return <Box>{children}</Box>;

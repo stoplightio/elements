@@ -21,7 +21,6 @@ export const createConfig = (name: string) =>
       testTimeout: 10000,
       server: { deps: { inline: [/@stoplight\//] } },
       environmentOptions: { jsdom: { url: 'http://localhost/' } },
-      snapshotSerializers: ['enzyme-to-json/serializer'],
       reporters: [
         'default',
         ['junit', { suiteName: name, outputFile: path.resolve(root, `test-results/${name}/results.xml`) }],

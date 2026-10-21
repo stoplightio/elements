@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
 import { fetchMock } from '@test-utils/fetchMock';
-import { act, renderHook } from '@testing-library/react-hooks';
+import { renderHook, waitFor } from '@testing-library/react';
 import * as React from 'react';
 
 import { DevPortalProvider } from '../../components/DevPortalProvider';
@@ -26,13 +26,11 @@ describe('data fetching', () => {
     ['useGetNodeContent', useGetNodeContent, { projectId: 'id', nodeSlug: 'node' }],
     ['useGetNodes', useGetNodes, { search: 'search', workspaceId: 'id' }],
   ])('includes authorization header when auth token is present in context for %s', async (_, hook, args) => {
-    const { waitFor } = renderHook(() => hook(args), {
+    renderHook(() => hook(args), {
       wrapper: ({ children }) => <DevPortalProvider platformAuthToken="secret">{children}</DevPortalProvider>,
     });
 
-    await act(async () => {
-      await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-    });
+    await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     const requestInit = fetchMock.mock.calls[0][1]!;
 
     const headers = new Headers(requestInit.headers);

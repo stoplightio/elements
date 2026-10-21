@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
 import * as React from 'react';
-import { useQuery } from 'react-query';
 
 import { PlatformContext } from '../components/DevPortalProvider';
 import { devPortalCacheKeys } from '../consts';
@@ -16,9 +16,9 @@ export function useGetNodeContent({
 }) {
   const { platformUrl, platformAuthToken, isLoggedIn } = React.useContext(PlatformContext);
 
-  return useQuery(
-    [...devPortalCacheKeys.branchNodeDetails(projectId, branchSlug ?? '', nodeSlug), platformUrl, isLoggedIn],
-    () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl, platformAuthToken }),
-    { enabled: nodeSlug && projectId ? true : false },
-  );
+  return useQuery({
+    queryKey: [...devPortalCacheKeys.branchNodeDetails(projectId, branchSlug ?? '', nodeSlug), platformUrl, isLoggedIn],
+    queryFn: () => getNodeContent({ nodeSlug, projectId, branchSlug, platformUrl, platformAuthToken }),
+    enabled: nodeSlug && projectId ? true : false,
+  });
 }

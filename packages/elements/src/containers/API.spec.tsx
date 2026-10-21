@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 
-import { act, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { MemoryRouter } from 'react-router-dom';
@@ -100,7 +100,7 @@ describe('API', () => {
       render(<API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={APIDocument} />);
 
       const users = await screen.findByText('users');
-      act(() => userEvent.click(users));
+      await userEvent.click(users);
 
       expect(screen.queryByText('/users/{user-id}')).toBeInTheDocument();
     });
@@ -109,10 +109,10 @@ describe('API', () => {
       render(<API logo="thisisarequiredprop" layout="stacked" apiDescriptionDocument={APIDocument} />);
 
       const users = await screen.findByText('users');
-      act(() => userEvent.click(users));
+      await userEvent.click(users);
 
       const usersPath = await screen.findByText('/users/{user-id}');
-      act(() => userEvent.click(usersPath));
+      await userEvent.click(usersPath);
 
       const usersSummary = await screen.findByText('Get basic information about a user.');
 

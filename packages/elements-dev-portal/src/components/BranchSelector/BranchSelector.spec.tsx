@@ -50,11 +50,11 @@ describe('Branch selector', () => {
     expect(getBranchSelector()).toHaveTextContent('main-name');
   });
 
-  it('selects a branch', () => {
+  it('selects a branch', async () => {
     render(<BranchSelectorWrapper />);
 
-    userEvent.click(getBranchSelector());
-    userEvent.click(screen.getByRole('menuitemradio', { name: 'beta' }));
+    await userEvent.click(getBranchSelector());
+    await userEvent.click(screen.getByRole('menuitemradio', { name: 'beta' }));
 
     expect(getBranchSelector()).toHaveTextContent('beta');
   });

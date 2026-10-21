@@ -58,7 +58,7 @@ export const Responses = ({
   const { isOpen, open, close } = useModalState();
 
   const onSelectionChange = React.useCallback(
-    keys => {
+    (keys: Set<React.Key>) => {
       const selectedId = keys.values().next().value;
       const selectedResponse = responses?.find(response => response.id === selectedId);
       if (selectedResponse) {

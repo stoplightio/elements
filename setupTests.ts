@@ -1,14 +1,13 @@
 import '@testing-library/jest-dom/vitest';
 
 import { ResizeObserver } from '@juggle/resize-observer';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { configure } from '@testing-library/react';
 
 import { fetchMock } from './test-utils/fetchMock';
 
-Enzyme.configure({ adapter: new Adapter() });
-
 process.env.TZ = 'UTC';
+
+configure({ asyncUtilTimeout: 5000 });
 
 Element.prototype.scrollTo = () => {};
 

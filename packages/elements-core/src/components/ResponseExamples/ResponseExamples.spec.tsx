@@ -25,12 +25,12 @@ describe('Response Examples', () => {
     expect(container).toHaveTextContent('example');
   });
 
-  it('allows to choose second example with select', () => {
+  it('allows to choose second example with select', async () => {
     const { container } = render(
       <ResponseExamples httpOperation={httpOperation} responseMediaType="application/json" responseStatusCode="200" />,
     );
 
-    chooseOption(screen.getByText('Response Example: First Example'), 'Second Example');
+    await chooseOption(screen.getByText('Response Example: First Example'), 'Second Example');
 
     expect(container).toHaveTextContent('another');
     expect(container).toHaveTextContent('example');
@@ -113,7 +113,7 @@ describe('Response Examples', () => {
     );
 
     const button = screen.getByRole('button', { name: 'load-example' });
-    userEvent.click(button);
+    await userEvent.click(button);
 
     await waitFor(() => expect(screen.queryByRole('button', { name: 'load-example' })).not.toBeInTheDocument());
     expect(screen.queryByText('Large examples are not rendered by default.')).not.toBeInTheDocument();

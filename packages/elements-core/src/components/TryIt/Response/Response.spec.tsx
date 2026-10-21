@@ -1,15 +1,27 @@
 import '@testing-library/jest-dom';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
-import { CodeViewer } from '@stoplight/mosaic-code-viewer';
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { shallow } from 'enzyme';
 import * as React from 'react';
 
 import { ResponseCodeViewer } from './ReponseCodeViewer';
 import { getResponseType, ResponseState, TryItResponse } from './Response';
+
+const codeViewerProps = vi.hoisted(() => vi.fn());
+
+vi.mock('@stoplight/mosaic-code-viewer', async importOriginal => {
+  const actual = await importOriginal<typeof import('@stoplight/mosaic-code-viewer')>();
+  const React = await import('react');
+  return {
+    ...actual,
+    CodeViewer: (props: Record<string, unknown>) => {
+      codeViewerProps(props);
+      return React.createElement(actual.CodeViewer as React.ElementType, props);
+    },
+  };
+});
 
 describe('Response', () => {
   window.URL.createObjectURL = vi.fn();
@@ -24,8 +36,8 @@ describe('Response', () => {
       null,
       4,
     );
-    const container = shallow(<ResponseCodeViewer language="json" value={body} />);
-    expect(container.find(CodeViewer).prop('showAsRaw')).toBe(true);
+    render(<ResponseCodeViewer language="json" value={body} />);
+    expect(codeViewerProps.mock.lastCall?.[0].showAsRaw).toBe(true);
   });
   it('shows highlighted code view with normal text', () => {
     const body = JSON.stringify(
@@ -33,8 +45,8 @@ describe('Response', () => {
       null,
       4,
     );
-    const container = shallow(<ResponseCodeViewer language="json" value={body} />);
-    expect(container.find(CodeViewer).prop('showAsRaw')).not.toBe(true);
+    render(<ResponseCodeViewer language="json" value={body} />);
+    expect(codeViewerProps.mock.lastCall?.[0].showAsRaw).not.toBe(true);
   });
   it('displays JSON response', async () => {
     const response: ResponseState = {
@@ -71,7 +83,7 @@ describe('Response', () => {
     expect(image).toBeVisible();
   });
 
-  it('displays JSON response formats correctly', () => {
+  it('displays JSON response formats correctly', async () => {
     const response: ResponseState = {
       status: 200,
       contentType: 'application/json',
@@ -85,7 +97,7 @@ describe('Response', () => {
 
     const button = screen.getByRole('button', { name: /body format/i });
 
-    userEvent.click(button);
+    await userEvent.click(button);
 
     const previewItem = screen.getByRole('menuitem', { name: 'Preview' });
     const rawItem = screen.getByRole('menuitem', { name: 'Raw' });
@@ -94,7 +106,7 @@ describe('Response', () => {
     expect(rawItem).toBeVisible();
   });
 
-  it('displays XML response formats correctly', () => {
+  it('displays XML response formats correctly', async () => {
     const response: ResponseState = {
       status: 200,
       contentType: 'application/xml',
@@ -108,7 +120,7 @@ describe('Response', () => {
 
     const button = screen.getByRole('button', { name: /body format/i });
 
-    userEvent.click(button);
+    await userEvent.click(button);
 
     const previewItem = screen.getByRole('menuitem', { name: 'Preview' });
     const rawItem = screen.getByRole('menuitem', { name: 'Raw' });

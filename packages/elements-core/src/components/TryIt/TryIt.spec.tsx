@@ -36,9 +36,9 @@ import { withMosaicProvider } from '../../hoc/withMosaicProvider';
 import { chooseOption } from '../../utils/tests/chooseOption';
 import { TryIt } from './index';
 
-function clickSend() {
+async function clickSend() {
   const button = screen.getByRole('button', { name: /send/i });
-  userEvent.click(button);
+  await userEvent.click(button);
 }
 
 const TryItWithPersistence = withMosaicProvider(withPersistenceBoundary(TryIt));
@@ -56,7 +56,7 @@ describe('TryIt', () => {
   it('Makes the correct basic request', async () => {
     render(<TryItWithPersistence httpOperation={basicOperation} />);
 
-    clickSend();
+    await clickSend();
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(fetchMock.mock.calls[0][0]).toBe('https://todos.stoplight.io/todos');
@@ -69,7 +69,7 @@ describe('TryIt', () => {
   it('uses cors proxy url, if provided', async () => {
     render(<TryItWithPersistence httpOperation={basicOperation} corsProxy="https://some.proxy.com/" />);
 
-    clickSend();
+    await clickSend();
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(fetchMock.mock.calls[0][0]).toBe('https://some.proxy.com/https://todos.stoplight.io/todos');
@@ -79,7 +79,7 @@ describe('TryIt', () => {
     render(<TryItWithPersistence httpOperation={operationWithUrlVariables} />);
 
     const button = screen.getByRole('button', { name: /send/i });
-    userEvent.click(button);
+    await userEvent.click(button);
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(fetchMock.mock.calls[0][0]).toBe('ftp://default-namespace.stoplight.io/api/eu/todos');
@@ -89,7 +89,7 @@ describe('TryIt', () => {
     render(<TryItWithPersistence httpOperation={operationWithoutServers} />);
 
     const button = screen.getByRole('button', { name: /send/i });
-    userEvent.click(button);
+    await userEvent.click(button);
 
     await waitFor(() => expect(fetchMock).toHaveBeenCalled());
     expect(fetchMock.mock.calls[0][0]).toBe('http://localhost/todos');
@@ -109,7 +109,7 @@ describe('TryIt', () => {
     let responseHeader = screen.queryByText('Response');
     expect(responseHeader).not.toBeInTheDocument();
 
-    clickSend();
+    await clickSend();
 
     responseHeader = await screen.findByText('Response');
     expect(responseHeader).toBeVisible();
@@ -126,7 +126,7 @@ describe('TryIt', () => {
 
     const { container } = render(<TryItWithPersistence httpOperation={basicOperation} />);
 
-    clickSend();
+    await clickSend();
 
     await screen.findByText('Response');
 
@@ -181,9 +181,9 @@ describe('TryIt', () => {
       <TryItWithPersistence httpOperation={operationWithNumericResponse} mockUrl="https://mock-todos.stoplight.io" />,
     );
 
-    userEvent.click(screen.getByRole('button', { name: /server/i }));
-    userEvent.click(screen.getByRole('menuitemradio', { name: /mock server/i }));
-    clickSend();
+    await userEvent.click(screen.getByRole('button', { name: /server/i }));
+    await userEvent.click(screen.getByRole('menuitemradio', { name: /mock server/i }));
+    await clickSend();
 
     await screen.findByText('Response');
 
@@ -234,9 +234,9 @@ describe('TryIt', () => {
       <TryItWithPersistence httpOperation={operationWithNumericResponse} mockUrl="https://mock-todos.stoplight.io" />,
     );
 
-    userEvent.click(screen.getByRole('button', { name: /server/i }));
-    userEvent.click(screen.getByRole('menuitemradio', { name: /mock server/i }));
-    clickSend();
+    await userEvent.click(screen.getByRole('button', { name: /server/i }));
+    await userEvent.click(screen.getByRole('menuitemradio', { name: /mock server/i }));
+    await clickSend();
 
     await screen.findByText('Response');
 
@@ -252,7 +252,7 @@ describe('TryIt', () => {
     let errorHeader = screen.queryByText('Error');
     expect(errorHeader).not.toBeInTheDocument();
 
-    clickSend();
+    await clickSend();
 
     errorHeader = await screen.findByText('Error');
     expect(errorHeader).toBeVisible();
@@ -273,7 +273,7 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} tryItCredentialsPolicy="same-origin" />);
 
       const button = screen.getByRole('button', { name: /send/i });
-      userEvent.click(button);
+      await userEvent.click(button);
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
       const requestInit = fetchMock.mock.calls[0][1]!;
@@ -284,7 +284,7 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} />);
 
       const button = screen.getByRole('button', { name: /send/i });
-      userEvent.click(button);
+      await userEvent.click(button);
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
       const requestInit = fetchMock.mock.calls[0][1]!;
@@ -384,37 +384,37 @@ describe('TryIt', () => {
 
       // path param
       const todoIdField = screen.getByLabelText('todoId');
-      userEvent.type(todoIdField, '123');
+      await userEvent.type(todoIdField, '123');
 
       // query params
       const limitField = screen.getByLabelText('limit');
-      chooseOption(limitField, '3');
+      await chooseOption(limitField, '3');
 
       const typeField = screen.getByLabelText('type');
-      chooseOption(typeField, 'another');
+      await chooseOption(typeField, 'another');
 
       const pairsField = screen.getByLabelText('pairs');
-      userEvent.type(pairsField, '{ "nestedKey": "nestedValue" }');
+      await userEvent.type(pairsField, '{{ "nestedKey": "nestedValue" }');
 
       const pagination = screen.getByLabelText('pagination');
-      userEvent.type(pagination, '{ "first": 50, "after": "cursor" }');
+      await userEvent.type(pagination, '{{ "first": 50, "after": "cursor" }');
 
       const itemsField = screen.getByLabelText('items');
-      userEvent.type(itemsField, '["first", "second"]');
+      await userEvent.type(itemsField, '[["first", "second"]');
 
       // header param
 
       const accountIdField = screen.getByLabelText('account-id');
-      userEvent.type(accountIdField, ' 1999');
+      await userEvent.type(accountIdField, ' 1999');
 
       const messageIdField = screen.getByLabelText('message-id-select');
-      chooseOption(messageIdField, 'example 2');
+      await chooseOption(messageIdField, 'example 2');
 
       const quoteField = screen.getByLabelText('quote-select');
-      chooseOption(quoteField, 'quote');
+      await chooseOption(quoteField, 'quote');
 
       // click send
-      clickSend();
+      await clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
       const url = new URL(fetchMock.mock.calls[0][0] as string);
@@ -451,7 +451,7 @@ describe('TryIt', () => {
 
       // fill path param
       const todoIdField = screen.getByLabelText('todoId');
-      userEvent.type(todoIdField, '123');
+      await userEvent.type(todoIdField, '123');
 
       // unmount (to make sure parameters are not simply stored in component state)
       rerender(
@@ -497,15 +497,15 @@ describe('TryIt', () => {
       expect(screen.getByLabelText('todoId')).toHaveValue('123');
     });
 
-    it('Persists string enum types', () => {
+    it('Persists string enum types', async () => {
       render(<TryItWithPersistence httpOperation={stringNumericEnumOperation} />);
 
       const cycleField = screen.getByLabelText('cycle');
       expect(cycleField).toHaveTextContent('00');
 
-      userEvent.click(cycleField);
+      await userEvent.click(cycleField);
 
-      userEvent.click(screen.getByRole('option', { name: '06' }));
+      await userEvent.click(screen.getByRole('option', { name: '06' }));
       expect(cycleField).toHaveTextContent('06');
     });
   });
@@ -544,7 +544,7 @@ describe('TryIt', () => {
       const checkboxName = screen.getByRole('checkbox', { name: 'age-checkbox' }) as HTMLInputElement;
       await userEvent.click(checkboxName);
 
-      clickSend();
+      await clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       const body = fetchMock.mock.calls[0][1]!.body as FormData;
@@ -565,10 +565,10 @@ describe('TryIt', () => {
 
         // path param
         const nameField = getByRole('textbox', { name: 'name' }) as HTMLInputElement;
-        userEvent.type(nameField, 'some-name');
+        await userEvent.type(nameField, 'some-name');
 
         // click send
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(fetchMock).toHaveBeenCalledTimes(1);
@@ -598,20 +598,20 @@ describe('TryIt', () => {
     });
 
     describe('File Upload', () => {
-      it('displays the name of the imported file in the string input', () => {
+      it('displays the name of the imported file in the string input', async () => {
         render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
 
-        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+        await userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 
         expect(screen.getByLabelText('someFile')).toHaveValue('some-file');
       });
 
-      it('allows to remove file after importing it', () => {
+      it('allows to remove file after importing it', async () => {
         render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
 
-        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+        await userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 
-        userEvent.click(screen.getByLabelText('Remove file'));
+        await userEvent.click(screen.getByLabelText('Remove file'));
 
         expect(screen.getByLabelText('someFile')).not.toHaveValue();
       });
@@ -619,9 +619,9 @@ describe('TryIt', () => {
       it('allows to upload file in multipart request', async () => {
         render(<TryItWithPersistence httpOperation={multipartFormdataOperation} />);
 
-        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+        await userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 
-        clickSend();
+        await clickSend();
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
         const body = fetchMock.mock.calls[0][1]!.body as FormData;
@@ -633,9 +633,9 @@ describe('TryIt', () => {
       it('allows to upload file in base64 format in multipart request', async () => {
         render(<TryItWithPersistence httpOperation={base64FileUpload} />);
 
-        userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+        await userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 
-        clickSend();
+        await clickSend();
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         const body = fetchMock.mock.calls[0][1]!.body as FormData;
 
@@ -664,9 +664,9 @@ describe('TryIt', () => {
     it('builds correct application/octet-stream request and send file in the body', async () => {
       render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
 
-      userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
+      await userEvent.upload(screen.getByLabelText('Upload'), new File(['something'], 'some-file'));
 
-      clickSend();
+      await clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       const request = fetchMock.mock.calls[0];
@@ -681,7 +681,7 @@ describe('TryIt', () => {
     it('allows to send empty value', async () => {
       render(<TryItWithPersistence httpOperation={octetStreamOperation} />);
 
-      clickSend();
+      await clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       const body = fetchMock.mock.calls[0][1]!.body as FormData;
@@ -694,7 +694,7 @@ describe('TryIt', () => {
       it('to operation with PATCH method', async () => {
         render(<TryItWithPersistence httpOperation={patchWithRequestBody} />);
 
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/s));
@@ -705,7 +705,7 @@ describe('TryIt', () => {
       it('to operation with HEAD method', async () => {
         render(<TryItWithPersistence httpOperation={headWithRequestBody} />);
 
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(typeof fetchMock.mock.calls[0]![1]!.body).not.toBe('string');
@@ -754,7 +754,7 @@ describe('TryIt', () => {
       it('resets the textbox after httpOperation change', async () => {
         const { rerender } = render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
         const textbox = screen.getByRole('textbox');
-        userEvent.type(textbox, 'asd');
+        await userEvent.type(textbox, 'asd');
         rerender(<TryItWithPersistence httpOperation={requestBody} />);
         await waitFor(() =>
           expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
@@ -764,15 +764,15 @@ describe('TryIt', () => {
         );
       });
 
-      it('allows users to choose request body examples from spec using dropdown menu', () => {
+      it('allows users to choose request body examples from spec using dropdown menu', async () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
         let examplesButton = screen.getByRole('button', { name: 'Examples' });
-        userEvent.click(examplesButton);
+        await userEvent.click(examplesButton);
 
         let examples = screen.getAllByRole('menuitem').map(el => el.textContent);
         expect(examples).toEqual(examplesItems);
 
-        userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
+        await userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
         expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
           name: 'Jane',
           age: 36,
@@ -780,17 +780,17 @@ describe('TryIt', () => {
         });
       });
 
-      it('restarts modified example in CodeEditor to initial value after choosing it again', () => {
+      it('restarts modified example in CodeEditor to initial value after choosing it again', async () => {
         render(<TryItWithPersistence httpOperation={examplesRequestBody} />);
         let examplesButton = screen.getByRole('button', { name: 'Examples' });
 
         const bodyTextBox = screen.getByRole('textbox');
 
-        userEvent.type(bodyTextBox, 'I broke the test. Oh noooo... :(');
+        await userEvent.type(bodyTextBox, 'I broke the test. Oh noooo... :(');
         expect(bodyTextBox).toHaveTextContent('I broke the test. Oh noooo... :(');
 
-        userEvent.click(examplesButton);
-        userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
+        await userEvent.click(examplesButton);
+        await userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
         expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
           name: 'Andrew',
           age: 19,
@@ -809,7 +809,7 @@ describe('TryIt', () => {
 
         expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual(json);
 
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
         expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual(json);
@@ -837,11 +837,11 @@ describe('TryIt', () => {
   });
 
   describe('Mocking', () => {
-    it('Shows mock button', () => {
+    it('Shows mock button', async () => {
       render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       expect(screen.getByRole('menuitemradio', { name: /mock server/i })).toBeInTheDocument();
     });
@@ -850,34 +850,34 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
       let serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       // select mock server
       let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       // open mock dropdown
       const mockButton = screen.getByRole('button', { name: /mock settings/i });
-      userEvent.click(mockButton);
+      await userEvent.click(mockButton);
 
       // set response code
       const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
       expect(responseCodeItem).toBeInTheDocument();
-      userEvent.click(responseCodeItem);
+      await userEvent.click(responseCodeItem);
 
       // and send
-      clickSend();
+      await clickSend();
 
       await waitFor(() => expect(screen.getByRole('button', { name: /send/i })).toBeEnabled());
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
 
       // select regular server and send
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
       let server1 = screen.getByRole('menuitemradio', { name: /live server/i });
-      userEvent.click(server1);
+      await userEvent.click(server1);
 
-      clickSend();
+      await clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
 
       expect(fetchMock).toHaveBeenCalledTimes(2);
@@ -905,13 +905,13 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={basicOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
       let serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       // select mock server
       let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
-      clickSend();
+      await clickSend();
 
       await waitFor(() => expect(screen.getByRole('button', { name: /send/i })).toBeEnabled());
 
@@ -938,23 +938,23 @@ describe('TryIt', () => {
       );
 
       let serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       // select mock server
       let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       // open mock dropdown
       const mockButton = screen.getByRole('button', { name: /mock settings/i });
-      userEvent.click(mockButton);
+      await userEvent.click(mockButton);
 
       // set response code
       const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
       expect(responseCodeItem).toBeInTheDocument();
-      userEvent.click(responseCodeItem);
+      await userEvent.click(responseCodeItem);
 
       // and send
-      clickSend();
+      await clickSend();
 
       // unmount (to make sure parameters are not simply stored in component state)
       rerender(
@@ -975,7 +975,7 @@ describe('TryIt', () => {
         </MosaicProvider>,
       );
 
-      clickSend();
+      await clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock).toBeCalledWith(
@@ -1016,14 +1016,14 @@ describe('TryIt', () => {
         expect(securitySchemesMenu).not.toBeInTheDocument();
       });
 
-      it('allows to select a security schemes from dropdown menu', () => {
+      it('allows to select a security schemes from dropdown menu', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         const securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         expect(securitySchemesButton).toHaveTextContent('OAuth 2.0');
       });
@@ -1032,20 +1032,20 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let APIKeyField = screen.getByLabelText('API Key');
-        userEvent.type(APIKeyField, '123');
+        await userEvent.type(APIKeyField, '123');
 
         // switch to OAuth
         let securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         let securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         // switch back to API Key
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'API Key (api_key)' })[0];
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         APIKeyField = screen.getByLabelText('API Key');
         expect(APIKeyField).toHaveValue('123');
@@ -1055,7 +1055,7 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let APIKeyField = screen.getByLabelText('API Key');
-        userEvent.type(APIKeyField, '123');
+        await userEvent.type(APIKeyField, '123');
 
         cleanup();
 
@@ -1065,19 +1065,19 @@ describe('TryIt', () => {
         expect(APIKeyField).toHaveValue('123');
       });
 
-      it('invalidated unsupported security schemes between different operations', () => {
+      it('invalidated unsupported security schemes between different operations', async () => {
         const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
 
         let usernameInput = screen.getByLabelText('Username');
         let passwordInput = screen.getByLabelText('Password');
 
-        userEvent.type(usernameInput, 'user');
-        userEvent.type(passwordInput, 'password');
+        await userEvent.type(usernameInput, 'user');
+        await userEvent.type(passwordInput, 'password');
 
         rerender(<TryItWithPersistence httpOperation={bearerSecurityOperation} />);
 
         const tokenInput = screen.getByLabelText('Token');
-        userEvent.type(tokenInput, 'Bearer 1234');
+        await userEvent.type(tokenInput, 'Bearer 1234');
 
         rerender(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
 
@@ -1088,14 +1088,14 @@ describe('TryIt', () => {
         expect(passwordInput).toBeInTheDocument();
       });
 
-      it('keep security schemes between different operations', () => {
+      it('keep security schemes between different operations', async () => {
         const { rerender } = render(<TryItWithPersistence httpOperation={basicSecurityOperation} />);
 
         let usernameInput = screen.getByLabelText('Username');
         let passwordInput = screen.getByLabelText('Password');
 
-        userEvent.type(usernameInput, 'user');
-        userEvent.type(passwordInput, 'password');
+        await userEvent.type(usernameInput, 'user');
+        await userEvent.type(passwordInput, 'password');
 
         rerender(<TryItWithPersistence httpOperation={putOperation} />);
 
@@ -1106,67 +1106,67 @@ describe('TryIt', () => {
         expect(passwordInput).toHaveValue('password');
       });
 
-      it('adds key value to menu items if multiple schemes of same security type', () => {
+      it('adds key value to menu items if multiple schemes of same security type', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         // switch back to API Key
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
       });
 
-      it('keeps distinct values for multiple schemes of same security type', () => {
+      it('keeps distinct values for multiple schemes of same security type', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         // Fill in 123 for API Key 1
         let APIKeyField = screen.getByLabelText('API Key');
-        userEvent.type(APIKeyField, '123');
+        await userEvent.type(APIKeyField, '123');
 
         // Fill in 456 for API Key 2
         let securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
         APIKeyField = screen.getByLabelText('API Key 2');
-        userEvent.type(APIKeyField, '456');
+        await userEvent.type(APIKeyField, '456');
 
         // switch back to API Key 1 confirm still 123
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
         APIKeyField = screen.getByLabelText('API Key');
         expect(APIKeyField).toHaveValue('123');
 
         // switch back to API Key 2 confirm still 456
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
         APIKeyField = screen.getByLabelText('API Key 2');
         expect(APIKeyField).toHaveValue('456');
       });
 
-      it('renders AND security correctly in menu item list, retaining values through rerender', () => {
+      it('renders AND security correctly in menu item list, retaining values through rerender', async () => {
         const { rerender } = render(<TryItWithPersistence httpOperation={putOperation} />);
 
         // Select AND security from menu
         let securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key & Basic Auth' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         // Fill in a value from each scheme
         let APIKeyField = screen.getByLabelText('API Key 2');
-        userEvent.type(APIKeyField, '123');
+        await userEvent.type(APIKeyField, '123');
 
         let usernameInput = screen.getByLabelText('Username');
-        userEvent.type(usernameInput, 'user');
+        await userEvent.type(usernameInput, 'user');
 
         // Rerender and confirm values
         rerender(<TryItWithPersistence httpOperation={putOperation} />);
@@ -1178,30 +1178,30 @@ describe('TryIt', () => {
         expect(APIKeyField).toHaveValue('123');
       });
 
-      it('renders None in the menu if a Optional security auth {} is presented', () => {
+      it('renders None in the menu if a Optional security auth {} is presented', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
       });
 
-      it('display No auth selected if user chooses None in the menu', () => {
+      it('display No auth selected if user chooses None in the menu', async () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         let securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OpenID Connect' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
         let noAuth = screen.queryByText('No auth selected');
         expect(noAuth).toBe(null);
 
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
         let noAuthCount = screen.getAllByText('No auth selected').length;
         expect(noAuthCount).toBe(1);
       });
@@ -1230,10 +1230,10 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={duplicatedSecurityScheme} />);
 
         const APIKeyField = screen.getByLabelText('API-Key');
-        userEvent.type(APIKeyField, '123');
+        await userEvent.type(APIKeyField, '123');
 
         // click send
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1253,10 +1253,10 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={singleSecurityOperation} />);
 
         const APIKeyField = screen.getByLabelText('API-Key');
-        userEvent.type(APIKeyField, '123');
+        await userEvent.type(APIKeyField, '123');
 
         // click send
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1270,19 +1270,19 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         const securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
 
-        userEvent.type(tokenInput, 'Bearer 0a1b2c');
+        await userEvent.type(tokenInput, 'Bearer 0a1b2c');
 
         const todoIdField = screen.getByLabelText('todoId');
-        userEvent.type(todoIdField, '123');
+        await userEvent.type(todoIdField, '123');
 
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1303,21 +1303,21 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         const securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Basic Auth (basicKey)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         const usernameInput = screen.getByLabelText('Username');
         const passwordInput = screen.getByLabelText('Password');
 
-        userEvent.type(usernameInput, 'user');
-        userEvent.type(passwordInput, 'password');
+        await userEvent.type(usernameInput, 'user');
+        await userEvent.type(passwordInput, 'password');
 
         const todoIdField = screen.getByLabelText('todoId');
-        userEvent.type(todoIdField, '123');
+        await userEvent.type(todoIdField, '123');
 
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1331,19 +1331,19 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         const securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Bearer Auth (bearerKey)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         const tokenInput = screen.getByLabelText('Token');
 
-        userEvent.type(tokenInput, '0a1b2c');
+        await userEvent.type(tokenInput, '0a1b2c');
 
         const todoIdField = screen.getByLabelText('todoId');
-        userEvent.type(todoIdField, '123');
+        await userEvent.type(todoIdField, '123');
 
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1357,10 +1357,10 @@ describe('TryIt', () => {
         render(<TryItWithPersistence httpOperation={putOperation} />);
 
         const securitySchemesButton = screen.getByLabelText('security-schemes');
-        userEvent.click(securitySchemesButton);
+        await userEvent.click(securitySchemesButton);
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Digest Auth (digest)' });
-        userEvent.click(securitySchemes);
+        await userEvent.click(securitySchemes);
 
         const authInput = screen.getByLabelText('Authorization');
 
@@ -1377,12 +1377,12 @@ describe('TryIt', () => {
 
         const expectedDigestContent = `Digest username="Mufasa", realm="testrealm@host.com", nonce="dcd98b7102dd2f0e8b11d0f600bfb0c093", uri="/dir/index.html", qop=auth, nc=00000001, cnonce="0a4f113b", response="6629fae49393a05397450978507c4ef1", opaque="5ccc069c403ebaf9f0171e9517f40e41"`;
 
-        userEvent.type(authInput, digestContent);
+        await userEvent.type(authInput, digestContent);
 
         const todoIdField = screen.getByLabelText('todoId');
-        userEvent.type(todoIdField, '123');
+        await userEvent.type(todoIdField, '123');
 
-        clickSend();
+        await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1400,7 +1400,7 @@ describe('TryIt', () => {
         </InlineRefResolverProvider>,
       );
 
-      clickSend();
+      await clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
       expect(JSON.parse(fetchMock.mock.calls[0]![1]!.body as string)).toEqual({ name: 'string', completed: true });
@@ -1420,10 +1420,10 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       expect(serversButton).toHaveTextContent('Development');
     });
@@ -1432,10 +1432,10 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       expect(serversButton).toHaveTextContent('PR');
 
@@ -1450,15 +1450,15 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       const todoIdField = screen.getByLabelText('todoId');
-      userEvent.type(todoIdField, '123');
+      await userEvent.type(todoIdField, '123');
 
-      clickSend();
+      await clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1469,17 +1469,17 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       expect(serversButton).toHaveTextContent('PR');
 
       const todoIdField = screen.getByLabelText('todoId');
-      userEvent.type(todoIdField, '123');
+      await userEvent.type(todoIdField, '123');
 
-      clickSend();
+      await clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1490,31 +1490,31 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       expect(serversButton).toHaveTextContent('PR');
 
       const todoIdField = screen.getByLabelText('todoId');
-      userEvent.type(todoIdField, '123');
+      await userEvent.type(todoIdField, '123');
 
       const prField = screen.getByLabelText('pr');
-      userEvent.type(prField, '123');
+      await userEvent.type(prField, '123');
 
       const protoField = screen.getByLabelText('proto');
-      chooseOption(protoField, 'https');
+      await chooseOption(protoField, 'https');
 
-      clickSend();
+      await clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
       expect(fetchMock.mock.calls[0][0]).toContain('https://x-123.todos-pr.stoplight.io');
       fetchMock.mockClear();
 
-      userEvent.clear(prField);
-      clickSend();
+      await userEvent.clear(prField);
+      await clickSend();
 
       await waitFor(() => expect(fetchMock).toHaveBeenCalled());
 
@@ -1549,11 +1549,11 @@ describe('TryIt', () => {
       );
 
       let serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       // select server b
       let enableItem = screen.getByRole('menuitemradio', { name: /server b/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       // unmount (to make sure parameters are not simply stored in component state)
       rerender(
@@ -1586,10 +1586,10 @@ describe('TryIt', () => {
       expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument();
     });
 
-    it('shows a warning message if at least one parameter is required but empty', () => {
+    it('shows a warning message if at least one parameter is required but empty', async () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
-      clickSend();
+      await clickSend();
 
       expect(screen.queryByText("You didn't provide all of the required parameters!")).toBeInTheDocument();
     });
@@ -1597,7 +1597,7 @@ describe('TryIt', () => {
     it('does not send a request if at least one parameter is required but empty', async () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
-      clickSend();
+      await clickSend();
 
       // Fetching is called asynchronously, so I am waiting for it
       // to be actually called. Without that the test always passes.
@@ -1610,9 +1610,9 @@ describe('TryIt', () => {
       render(<TryItWithPersistence httpOperation={putOperation} />);
 
       const todoIdField = screen.getByLabelText('todoId');
-      userEvent.type(todoIdField, '123');
+      await userEvent.type(todoIdField, '123');
 
-      clickSend();
+      await clickSend();
 
       await waitFor(() =>
         expect(screen.queryByText("You didn't provide all of the required parameters!")).not.toBeInTheDocument(),

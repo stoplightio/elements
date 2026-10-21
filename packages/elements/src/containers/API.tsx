@@ -13,9 +13,9 @@ import {
 } from '@stoplight/elements-core';
 import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
+import { useQuery } from '@tanstack/react-query';
 import { flow } from 'lodash';
 import * as React from 'react';
-import { useQuery } from 'react-query';
 import { useLocation } from 'react-router-dom';
 
 import { APIWithResponsiveSidebarLayout } from '../components/API/APIWithResponsiveSidebarLayout';
@@ -154,19 +154,17 @@ export const APIImpl: React.FC<APIProps> = props => {
   const apiDescriptionDocument = propsAreWithDocument(props) ? props.apiDescriptionDocument : undefined;
   const { isResponsiveLayoutEnabled } = useResponsiveLayout();
 
-  const { data: fetchedDocument, error } = useQuery(
-    [apiDescriptionUrl],
-    () =>
+  const { data: fetchedDocument, error } = useQuery({
+    queryKey: [apiDescriptionUrl],
+    queryFn: () =>
       fetch(apiDescriptionUrl).then(res => {
         if (res.ok) {
           return res.text();
         }
         throw new Error(`Unable to load description document, status code: ${res.status}`);
       }),
-    {
-      enabled: apiDescriptionUrl !== '' && !apiDescriptionDocument,
-    },
-  );
+    enabled: apiDescriptionUrl !== '' && !apiDescriptionDocument,
+  });
 
   const document = apiDescriptionDocument || fetchedDocument || '';
   const parsedDocument = useParsedValue(document);

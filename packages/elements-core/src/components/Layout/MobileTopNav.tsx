@@ -18,7 +18,7 @@ export const MobileTopNav = ({
   tree: TableOfContentsItem[];
   pathname: string;
   onTocClick(): void;
-}): JSX.Element => {
+}): React.JSX.Element => {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState<boolean>(false);
 
   const handleTocClick = () => {
@@ -60,7 +60,7 @@ export const MobileTopNav = ({
   );
 };
 
-const NavHeading = ({ heading }: { heading?: string }): JSX.Element => (
+const NavHeading = ({ heading }: { heading?: string }): React.JSX.Element => (
   <Flex flex={1} data-test="mobile-project-top-nav" style={{ minWidth: 0 }}>
     <Box
       fontSize="xl"

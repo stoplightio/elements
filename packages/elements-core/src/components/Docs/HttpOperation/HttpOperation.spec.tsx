@@ -61,14 +61,14 @@ describe('HttpOperation', () => {
       unmount();
     });
 
-    it('should correctly display with server variables at beginning, middle, and end', () => {
+    it('should correctly display with server variables at beginning, middle, and end', async () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       expect(serversButton).toHaveTextContent('PR');
 
@@ -468,14 +468,14 @@ describe('HttpOperation', () => {
       unmount();
     });
 
-    it('should allow to select different content type', () => {
+    it('should allow to select different content type', async () => {
       const { unmount } = render(<HttpOperation data={httpOperationWithRequestBodyContents} />);
 
       const select = screen.getByLabelText('Request Body Content Type');
 
       expect(select).toHaveTextContent('application/json');
 
-      chooseOption(select, 'application/xml');
+      await chooseOption(select, 'application/xml');
 
       expect(select).toHaveTextContent('application/xml');
 
@@ -519,7 +519,7 @@ describe('HttpOperation', () => {
       expect(requestSample).toBeInTheDocument();
 
       const select = screen.getByLabelText('Request Body Content Type');
-      chooseOption(select, 'application/x-www-form-urlencoded');
+      await chooseOption(select, 'application/x-www-form-urlencoded');
       const secondRequestSample = await screen.findByLabelText(
         "curl --request POST \\ --url https://todos.stoplight.io/users \\ --header 'Content-Type: application/x-www-form-urlencoded' \\ --data-urlencode name= \\ --data-urlencode completed= \\ --data-urlencode someEnum=a",
       );
@@ -580,14 +580,14 @@ describe('HttpOperation', () => {
       unmount();
     });
 
-    it('should allow changing content type', () => {
+    it('should allow changing content type', async () => {
       const { unmount } = render(<HttpOperation data={httpOperationWithResponseBodyContents} />);
 
       const select = screen.getByLabelText('Response Body Content Type');
 
       expect(select).toHaveTextContent('application/json');
 
-      chooseOption(select, 'application/xml');
+      await chooseOption(select, 'application/xml');
 
       expect(select).toHaveTextContent('application/xml');
 
@@ -611,7 +611,7 @@ describe('HttpOperation', () => {
 
       const select = screen.getByLabelText('Response Body Content Type');
 
-      chooseOption(select, 'application/xml');
+      await chooseOption(select, 'application/xml');
 
       expect(screen.queryByText('some_property')).not.toBeInTheDocument();
 
@@ -624,10 +624,10 @@ describe('HttpOperation', () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
 
       const serversButton = screen.getByRole('button', { name: /server/i });
-      userEvent.click(serversButton);
+      await userEvent.click(serversButton);
 
       const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
-      userEvent.click(enableItem);
+      await userEvent.click(enableItem);
 
       expect(serversButton).toHaveTextContent('Development');
 
@@ -636,7 +636,7 @@ describe('HttpOperation', () => {
 
       // operation header
       expect(screen.queryByText('{$request.body#/newPetAvailableUrl}')).toBeInTheDocument();
-      expect(screen.queryAllByText(/https:\/\/todos-dev.stoplight.io/).length).toEqual(1); // server url visible only in the main operation header, not in callback
+      expect(screen.queryAllByText(/^https:\/\/todos-dev\.stoplight\.io$/).length).toEqual(1); // server url visible only in the main operation header, not in callback
 
       // operation body
       expect(screen.queryByText('Callback body description')).toBeInTheDocument();
@@ -646,14 +646,14 @@ describe('HttpOperation', () => {
 
       unmount();
     });
-    it('should display callback selector and switch between events', () => {
+    it('should display callback selector and switch between events', async () => {
       const { unmount } = render(<HttpOperation data={{ ...httpOperation, deprecated: false }} />);
 
       const select = screen.getByLabelText('Callback');
 
       expect(select).toHaveTextContent('newPet - {$request.body#/newPetAvailableUrl} - post');
 
-      chooseOption(select, 'returnedPet - {$request.body#/returnedPetAvailableUrl} - post');
+      await chooseOption(select, 'returnedPet - {$request.body#/returnedPetAvailableUrl} - post');
 
       expect(select).toHaveTextContent('returnedPet - {$request.body#/returnedPetAvailableUrl} - post');
 

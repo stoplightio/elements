@@ -1,6 +1,6 @@
+import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import { render } from '@testing-library/react';
 import React from 'react';
-import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 
 import { withQueryClientProvider } from './withQueryClientProvider';
 

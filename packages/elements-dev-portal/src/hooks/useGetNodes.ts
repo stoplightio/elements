@@ -1,5 +1,5 @@
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import * as React from 'react';
-import { useQuery } from 'react-query';
 import { useDebounce } from 'use-debounce';
 
 import { PlatformContext } from '../components/DevPortalProvider';
@@ -21,14 +21,15 @@ export function useGetNodes({
 }) {
   const { platformUrl, platformAuthToken, isLoggedIn } = React.useContext(PlatformContext);
   const [debounceSearch] = useDebounce(search, 500);
-  return useQuery(
-    [
+  return useQuery({
+    queryKey: [
       ...devPortalCacheKeys.searchNodes({ projectIds, branchSlug: branch, workspaceId, search: debounceSearch }),
       platformUrl,
       isLoggedIn,
     ],
-    () =>
+    queryFn: () =>
       getNodes({ workspaceId, projectIds, branchSlug: branch, search: debounceSearch, platformUrl, platformAuthToken }),
-    { enabled: !pause, keepPreviousData: true },
-  );
+    enabled: !pause,
+    placeholderData: keepPreviousData,
+  });
 }

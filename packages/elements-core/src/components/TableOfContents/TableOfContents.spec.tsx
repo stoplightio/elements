@@ -1,5 +1,5 @@
 import { fireEvent, screen } from '@testing-library/dom';
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import * as React from 'react';
 
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
@@ -9,7 +9,7 @@ import { findFirstNode } from './utils';
 
 const TableOfContents = withMosaicProvider(TOC);
 
-const Link: React.FC = ({ children }) => <>{children}</>;
+const Link: React.FC<React.PropsWithChildren> = ({ children }) => <>{children}</>;
 
 describe('TableOfContents', () => {
   describe('Group', () => {
@@ -138,7 +138,7 @@ describe('TableOfContents', () => {
       expect(Root).toHaveClass('sl-bg-canvas-100');
       expect(screen.queryByTitle('Target')).toBeInTheDocument();
 
-      Root?.click();
+      act(() => Root?.click());
       expect(Root).toHaveClass('sl-bg-primary-tint');
       expect(screen.queryByTitle('Target')).not.toBeInTheDocument();
 
@@ -173,7 +173,7 @@ describe('TableOfContents', () => {
       expect(Root).toBeInTheDocument();
       expect(screen.queryByTitle(/Target/)).not.toBeInTheDocument();
 
-      Root?.click();
+      act(() => Root?.click());
 
       expect(screen.queryByTitle(/Target/)).toBeInTheDocument();
 
@@ -428,7 +428,7 @@ describe('utils', () => {
         );
 
         const node = screen.queryByText('Test Node');
-        node?.click();
+        act(() => node?.click());
         expect(onLinkClick).toHaveBeenCalled();
         unmount();
       });
@@ -460,7 +460,7 @@ describe('utils', () => {
         );
 
         const node = screen.queryByText('Test Node');
-        node?.click();
+        act(() => node?.click());
         expect(onLinkClick).not.toHaveBeenCalled();
         unmount();
       });

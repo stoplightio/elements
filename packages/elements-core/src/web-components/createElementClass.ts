@@ -2,7 +2,7 @@ import { safeParse, safeStringify } from '@stoplight/json';
 import { Optional } from '@stoplight/types';
 import { isEqual, mapValues } from 'lodash';
 import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+import { createRoot, Root } from 'react-dom/client';
 
 type TypeNameMap<T> = T extends string
   ? 'string'
@@ -34,6 +34,7 @@ export const createElementClass = <P extends Record<string, any>>(
 ): new () => HTMLElement => {
   return class extends HTMLElement {
     private _mountPoint: HTMLElement | undefined;
+    private _root: Root | undefined;
     private _props: Partial<P> = {};
 
     static get observedAttributes() {
@@ -77,6 +78,7 @@ export const createElementClass = <P extends Record<string, any>>(
       this._mountPoint = document.createElement('div');
       this._mountPoint.style.height = '100%';
       this.appendChild(this._mountPoint);
+      this._root = createRoot(this._mountPoint);
 
       for (const key in propDescriptors) {
         if (propDescriptors.hasOwnProperty(key)) {
@@ -89,8 +91,8 @@ export const createElementClass = <P extends Record<string, any>>(
 
     disconnectedCallback() {
       if (this._mountPoint) {
-        // Trigger unmount lifecycle without using unmountComponentAtNode which is deprecated
-        ReactDOM.render(null as any, this._mountPoint);
+        this._root?.unmount();
+        this._root = undefined;
         this.removeChild(this._mountPoint);
         this._mountPoint = undefined;
       }
@@ -145,9 +147,9 @@ export const createElementClass = <P extends Record<string, any>>(
     }
 
     private _renderComponent() {
-      if (this._mountPoint) {
+      if (this._mountPoint && this._root) {
         const props = mapValues(propDescriptors, (descriptor, key) => this._props[key] ?? descriptor.defaultValue);
-        ReactDOM.render(React.createElement(Component, props), this._mountPoint);
+        this._root.render(React.createElement(Component, props));
       }
     }
   };

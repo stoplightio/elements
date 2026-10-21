@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 
@@ -38,7 +38,7 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const todoIdField = await screen.findByLabelText('todoId');
-    userEvent.type(todoIdField, '123456789');
+    await userEvent.type(todoIdField, '123456789');
 
     const codeViewer = await screen.findByLabelText(/curl/);
     await waitFor(() => expect(codeViewer).toHaveTextContent(/todos\/123456789/));
@@ -48,19 +48,19 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} mockUrl="https://mock-todos.stoplight.io" />);
 
     const serversButton = screen.getByRole('button', { name: /server/i });
-    act(() => userEvent.click(serversButton));
+    await userEvent.click(serversButton);
 
     // enable mocking
     let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
-    act(() => userEvent.click(enableItem));
+    await userEvent.click(enableItem);
 
     // open mock dropdown
     const mockButton = screen.getByRole('button', { name: /mock settings/i });
-    act(() => userEvent.click(mockButton));
+    await userEvent.click(mockButton);
 
     // set response code
     const responseCodeItem = screen.getByRole('menuitemcheckbox', { name: '200' });
-    act(() => userEvent.click(responseCodeItem));
+    await userEvent.click(responseCodeItem);
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent(/https:\/\/mock-todos\.stoplight\.io/);
@@ -74,16 +74,16 @@ describe('TryItWithRequestSamples', () => {
     await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123'/));
 
     const apiKeyField = await screen.findByLabelText('API Key');
-    userEvent.type(apiKeyField, '123456789');
+    await userEvent.type(apiKeyField, '123456789');
 
     await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123456789'/));
 
-    userEvent.clear(apiKeyField);
-    userEvent.type(apiKeyField, '23456789');
+    await userEvent.clear(apiKeyField);
+    await userEvent.type(apiKeyField, '23456789');
 
     await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=23456789'/));
 
-    userEvent.clear(apiKeyField);
+    await userEvent.clear(apiKeyField);
 
     await waitFor(() => expect(codeViewer).toHaveTextContent(/&API\+Key=123'/));
   });
@@ -113,10 +113,10 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const serversButton = screen.getByRole('button', { name: /server/i });
-    act(() => userEvent.click(serversButton));
+    await userEvent.click(serversButton);
 
     let enableItem = screen.getByRole('menuitemradio', { name: /development/i });
-    act(() => userEvent.click(enableItem));
+    await userEvent.click(enableItem);
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent('https://todos-dev.stoplight.io');
@@ -126,16 +126,16 @@ describe('TryItWithRequestSamples', () => {
     render(<TryItWithRequestSamples httpOperation={putTodosOperation} />);
 
     const serversButton = screen.getByRole('button', { name: /server/i });
-    userEvent.click(serversButton);
+    await userEvent.click(serversButton);
 
     let enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
-    userEvent.click(enableItem);
+    await userEvent.click(enableItem);
 
     const protoField = screen.getByLabelText('proto');
-    chooseOption(protoField, 'https');
+    await chooseOption(protoField, 'https');
 
     const prField = screen.getByLabelText('pr');
-    userEvent.type(prField, '123');
+    await userEvent.type(prField, '123');
 
     const codeViewer = await screen.findByLabelText(/curl/);
     expect(codeViewer).toHaveTextContent('https://x-123.todos-pr.stoplight.io');

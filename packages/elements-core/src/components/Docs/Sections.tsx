@@ -11,7 +11,13 @@ export interface ISectionTitle {
   isCompact?: boolean;
 }
 
-export const SectionTitle: React.FC<ISectionTitle> = ({ title, id, size = 2, isCompact = false, children }) => {
+export const SectionTitle: React.FC<React.PropsWithChildren<ISectionTitle>> = ({
+  title,
+  id,
+  size = 2,
+  isCompact = false,
+  children,
+}) => {
   return (
     <Flex w="full">
       <Box py={1} pr={6} as={LinkHeading} size={size} aria-label={title} id={id || slugify(title)}>
@@ -24,7 +30,7 @@ export const SectionTitle: React.FC<ISectionTitle> = ({ title, id, size = 2, isC
   );
 };
 
-export const SectionSubtitle: React.FC<ISectionTitle> = props => {
+export const SectionSubtitle: React.FC<React.PropsWithChildren<ISectionTitle>> = props => {
   return <SectionTitle {...props} size={3} />;
 };
 
@@ -34,14 +40,9 @@ type SubSectionPanelProps = {
   rightComponent?: React.ReactNode;
 };
 
-export const SubSectionPanel: React.FC<SubSectionPanelProps & Pick<PanelProps, 'defaultIsOpen' | 'onChange'>> = ({
-  title,
-  children,
-  hasContent,
-  rightComponent,
-  defaultIsOpen = true,
-  onChange,
-}) => {
+export const SubSectionPanel: React.FC<
+  React.PropsWithChildren<SubSectionPanelProps & Pick<PanelProps, 'defaultIsOpen' | 'onChange'>>
+> = ({ title, children, hasContent, rightComponent, defaultIsOpen = true, onChange }) => {
   return (
     <Panel isCollapsible={hasContent} defaultIsOpen={defaultIsOpen} onChange={onChange} appearance="outlined">
       <Panel.Titlebar fontWeight="medium" rightComponent={rightComponent}>

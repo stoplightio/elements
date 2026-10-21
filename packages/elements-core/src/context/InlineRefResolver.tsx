@@ -24,6 +24,7 @@ type InlineRefResolverProviderProps = {
   document?: unknown;
   resolver?: ReferenceResolver;
   maxRefDepth?: number;
+  children?: React.ReactNode;
 };
 
 /**

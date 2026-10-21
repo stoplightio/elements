@@ -12,7 +12,7 @@ export type BranchSelectorProps = {
 export const BranchSelector = ({ branchSlug, branches, onChange }: BranchSelectorProps) => {
   const currentBranch = branches.find(branch => (!branchSlug ? branch.is_default : branch.slug === branchSlug));
   const handleChange = React.useCallback(
-    (selectedSlug: React.ReactText) => {
+    (selectedSlug: string | number) => {
       const selectedBranch = branches.find(branch => branch.slug === selectedSlug);
       if (selectedBranch) {
         onChange(selectedBranch);

@@ -5,5 +5,5 @@
     "module": "esnext",
     "moduleResolution": "node"
   },
-  "include": ["src"]
+  "include": ["src", "../packages/elements-core/src/react-19-compat.d.ts"]
 }

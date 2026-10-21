@@ -5,17 +5,17 @@ import { StaticRouter } from 'react-router-dom/server.js';
 
 import { RouterType } from '../types';
 
-const RouterComponent: Dictionary<React.ComponentType, RouterType> = {
+interface RouterProps {
+  basename?: string;
+  location?: string;
+}
+
+const RouterComponent: Dictionary<React.ComponentType<React.PropsWithChildren<RouterProps>>, RouterType> = {
   history: BrowserRouter,
   memory: MemoryRouter,
   hash: HashRouter,
   static: StaticRouter as any,
 };
-
-interface RouterProps {
-  basename?: string;
-  location?: string;
-}
 
 export const useRouter = (router: RouterType, basePath: string, staticRouterPath?: string) => {
   const Router = RouterComponent[router];

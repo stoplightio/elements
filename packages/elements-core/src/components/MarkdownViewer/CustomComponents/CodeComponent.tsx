@@ -66,7 +66,7 @@ const SchemaAndDescription = ({ title: titleProp, schema }: ISchemaAndDescriptio
 export { DefaultSMDComponents };
 
 export const CodeComponent: CustomComponentMapping['code'] = props => {
-  const { title, jsonSchema, http, resolved, children } = props;
+  const { title, jsonSchema, http, resolved, children } = props as typeof props & { children?: React.ReactNode };
 
   const resolver = useInlineRefResolver();
 

@@ -121,7 +121,7 @@ export const APIWithSidebarLayout: React.FC<SidebarLayoutProps> = ({
 type SidebarProps = {
   serviceNode: ServiceNode;
   logo?: string;
-  container: React.RefObject<HTMLElement>;
+  container: React.RefObject<HTMLElement | null>;
   pathname: string;
   tree: TableOfContentsItem[];
 };

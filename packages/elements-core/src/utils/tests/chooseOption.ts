@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/dom';
-import userEvent, { TargetElement } from '@testing-library/user-event';
+import userEvent from '@testing-library/user-event';
 
-export function chooseOption(select: TargetElement, option: string) {
-  userEvent.click(select);
-  userEvent.selectOptions(screen.getByRole('listbox'), screen.getByRole('option', { name: option }));
+export async function chooseOption(select: Element, option: string) {
+  await userEvent.click(select);
+  await userEvent.selectOptions(screen.getByRole('listbox'), screen.getByRole('option', { name: option }));
 }

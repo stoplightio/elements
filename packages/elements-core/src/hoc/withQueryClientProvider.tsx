@@ -1,5 +1,5 @@
+import { QueryClient, QueryClientProvider, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
-import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 
 import { getDisplayName } from './utils';
 

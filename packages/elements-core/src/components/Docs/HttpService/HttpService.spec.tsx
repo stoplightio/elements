@@ -1,6 +1,5 @@
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
-import { render, screen, waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { render, renderHook, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -101,7 +100,7 @@ describe('HttpService', () => {
     await waitFor(() => expect(screen.queryAllByRole('region')).toHaveLength(1));
 
     const serverUrl = screen.getByLabelText('Development API');
-    userEvent.click(serverUrl.parentElement!);
+    await userEvent.click(serverUrl.parentElement!);
 
     await waitFor(() => expect(screen.queryAllByRole('region')).toHaveLength(2));
 
@@ -230,7 +229,7 @@ describe('HttpService', () => {
       expect(expandButtons.length).toEqual(2);
     });
 
-    it('should expand first scheme by default', () => {
+    it('should expand first scheme by default', async () => {
       render(<SecuritySchemes secSchemes={[[apiKey], [oauth]]} parentId="2@adfg4F" />);
 
       const apiKeyDescription = screen.queryByText(/An API key/);
@@ -240,7 +239,7 @@ describe('HttpService', () => {
       expect(oauthDescription).not.toBeInTheDocument();
 
       const oauthScheme = screen.getByRole('heading', { name: 'OAuth 2.0' });
-      userEvent.click(oauthScheme);
+      await userEvent.click(oauthScheme);
       oauthDescription = screen.queryByText('Implicit OAuth Flow');
       expect(oauthDescription).toBeInTheDocument();
     });
@@ -320,7 +319,7 @@ describe('HttpService', () => {
   });
 
   describe('export button', () => {
-    it('should render correctly', () => {
+    it('should render correctly', async () => {
       const wrapper = render(
         <Router>
           <MosaicProvider>
@@ -335,7 +334,7 @@ describe('HttpService', () => {
       const exportButton = wrapper.getByRole('button', { name: 'Export' });
       expect(exportButton).toBeInTheDocument();
 
-      userEvent.click(exportButton);
+      await userEvent.click(exportButton);
       expect(wrapper.getByRole('menuitem', { name: 'Original' })).toBeInTheDocument();
       expect(wrapper.getByRole('menuitem', { name: 'Bundled References' })).toBeInTheDocument();
     });

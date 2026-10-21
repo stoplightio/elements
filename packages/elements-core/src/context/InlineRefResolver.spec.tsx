@@ -1,4 +1,4 @@
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import * as React from 'react';
 
 import type { ReferenceInfo } from '../utils/ref-resolving/ReferenceResolver';
@@ -15,10 +15,10 @@ describe('InlineRefResolver', () => {
     it('does not return document if it is not a proper object', () => {
       const document = 'This is not an object, so should not be returned from useDocument hook';
 
-      const wrapper: React.FC<{ document: unknown }> = ({ children, document }) => (
+      const wrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
         <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
       );
-      const { result } = renderHook(() => useDocument(), { wrapper, initialProps: { document } });
+      const { result } = renderHook(() => useDocument(), { wrapper });
 
       expect(result.current).toBeUndefined();
     });
@@ -28,14 +28,14 @@ describe('InlineRefResolver', () => {
     it('returns the same function on every rerender', () => {
       const document = { some: 'document object' };
 
-      const wrapper: React.FC<{ document: object }> = ({ children, document }) => (
+      const wrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
         <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
       );
-      const { result, rerender } = renderHook(() => useInlineRefResolver(), { wrapper, initialProps: { document } });
+      const { result, rerender } = renderHook(() => useInlineRefResolver(), { wrapper });
 
       const firstReturnedFunction = result.current;
 
-      rerender({ document });
+      rerender();
 
       const secondReturnedFunction = result.current;
 
@@ -45,7 +45,9 @@ describe('InlineRefResolver', () => {
 
   describe('useResolvedObject hook', () => {
     it('returns the same proxy, given the same object', () => {
-      const wrapper: React.FC = ({ children }) => <InlineRefResolverProvider>{children}</InlineRefResolverProvider>;
+      const wrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
+        <InlineRefResolverProvider>{children}</InlineRefResolverProvider>
+      );
       const objectToResolve = { some: 'object' };
       const { result, rerender } = renderHook(() => useResolvedObject(objectToResolve), { wrapper });
 
@@ -60,11 +62,11 @@ describe('InlineRefResolver', () => {
   });
 
   describe('useSchemaInlineRefResolver', () => {
-    const wrapper: React.FC<{ document: Record<string, unknown> }> = ({ children, document }) => (
+    let document: Record<string, unknown>;
+
+    const wrapper: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
       <InlineRefResolverProvider document={document}>{children}</InlineRefResolverProvider>
     );
-
-    let document: Record<string, unknown>;
 
     beforeEach(() => {
       document = {
@@ -111,7 +113,7 @@ describe('InlineRefResolver', () => {
     });
 
     it('translates resolved schema', () => {
-      const { result } = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+      const { result } = renderHook(() => useSchemaInlineRefResolver(), { wrapper });
 
       const resolved = result.current[0](
         {
@@ -170,8 +172,8 @@ describe('InlineRefResolver', () => {
         },
       };
 
-      const renderedHook = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
-      const renderedHook2 = renderHook(() => useSchemaInlineRefResolver(), { wrapper, initialProps: { document } });
+      const renderedHook = renderHook(() => useSchemaInlineRefResolver(), { wrapper });
+      const renderedHook2 = renderHook(() => useSchemaInlineRefResolver(), { wrapper });
 
       const resolved = renderedHook.result.current[0]({ ...refInfo }, [], JSON.parse(JSON.stringify(currentObject)));
 

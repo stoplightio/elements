@@ -18,7 +18,7 @@ const components: Partial<DefaultComponentMapping> = {
   h4: ({ color, ...props }) => <LinkHeading size={4} {...props} />,
 };
 
-const InternalRoutes = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const InternalRoutes = ({ children }: { children: React.ReactNode }): React.JSX.Element => {
   return (
     <Routes>
       <Route

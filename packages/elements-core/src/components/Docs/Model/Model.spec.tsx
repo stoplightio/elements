@@ -64,7 +64,7 @@ describe('Model', () => {
     render(<Model data={exampleSchema} />);
 
     const button = screen.getByRole('button', { name: 'load-example' });
-    userEvent.click(button);
+    await userEvent.click(button);
 
     expect(await screen.findByText('"iamtoobig"')).toBeInTheDocument();
     vi.restoreAllMocks();
@@ -92,7 +92,7 @@ describe('Model', () => {
     expect(menuTrigger).toHaveTextContent('Example: default');
     expect(container).toHaveTextContent('"propA": "first"');
 
-    chooseOption(menuTrigger, 'example-1');
+    await chooseOption(menuTrigger, 'example-1');
     expect(container).toHaveTextContent('"propA": "second"');
   });
 
@@ -122,7 +122,7 @@ describe('Model', () => {
     expect(menuTrigger).toHaveTextContent('Example: firstTitle');
     expect(container).toHaveTextContent('"propA": "first"');
 
-    chooseOption(menuTrigger, 'secondTitle');
+    await chooseOption(menuTrigger, 'secondTitle');
     expect(container).toHaveTextContent('"propA": "second"');
   });
 
@@ -143,7 +143,7 @@ describe('Model', () => {
   });
 
   describe('export button', () => {
-    it('should render correctly', () => {
+    it('should render correctly', async () => {
       const wrapper = render(
         <MosaicProvider>
           <Model data={exampleSchema} exportProps={{ original: { onPress: vi.fn() }, bundled: { onPress: vi.fn() } }} />
@@ -154,7 +154,7 @@ describe('Model', () => {
       const exportButton = wrapper.getByRole('button', { name: 'Export' });
       expect(exportButton).toBeInTheDocument();
 
-      userEvent.click(exportButton);
+      await userEvent.click(exportButton);
       expect(wrapper.getByRole('menuitem', { name: 'Original' })).toBeInTheDocument();
       expect(wrapper.getByRole('menuitem', { name: 'Bundled References' })).toBeInTheDocument();
     });
