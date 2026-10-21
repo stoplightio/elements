@@ -1,29 +1,35 @@
 const fs = require('fs');
-const express = require('express');
+const http = require('http');
 const path = require('path');
 
-const directoryList = fs
-  .readdirSync('.', { withFileTypes: true })
+const root = __dirname;
+const types = { '.js': 'text/javascript', '.css': 'text/css', '.html': 'text/html' };
+
+const pages = fs
+  .readdirSync(root, { withFileTypes: true })
   .filter(entry => entry.isDirectory() && entry.name !== 'node_modules')
   .map(entry => entry.name);
 
-const app = express();
-app.disable('x-powered-by');
-
-app.get('/', (req, res) => {
-  res.sendFile('index.html', { root: __dirname });
-});
-
-app.get('/modules/:modulePath(*)', (req, res) => {
-  res.sendFile(path.join('node_modules', req.params.modulePath), { root: __dirname });
-});
-
-for (const dir of directoryList) {
-  app.get([`/${dir}`, `/${dir}/*`], (req, res) => {
-    res.sendFile(`${dir}/index.html`, { root: __dirname });
-  });
+function resolveFile(urlPath) {
+  const [, first, ...rest] = urlPath.split('/');
+  if (first === '') return 'index.html';
+  if (first === 'modules') return path.join('node_modules', ...rest);
+  if (pages.includes(first)) return path.join(first, 'index.html');
+  return null;
 }
 
-app.listen(4200, () => {
-  console.log('Listening on 4200');
-});
+http
+  .createServer((req, res) => {
+    const file = resolveFile(decodeURIComponent(new URL(req.url, 'http://localhost').pathname));
+    const fullPath = file && path.join(root, file);
+
+    // refuse anything that escapes the example directory
+    if (!fullPath || !fullPath.startsWith(root + path.sep) || !fs.existsSync(fullPath)) {
+      res.writeHead(404).end('Not found');
+      return;
+    }
+
+    res.writeHead(200, { 'Content-Type': types[path.extname(fullPath)] || 'application/octet-stream' });
+    fs.createReadStream(fullPath).pipe(res);
+  })
+  .listen(4200, () => console.log('Listening on 4200'));

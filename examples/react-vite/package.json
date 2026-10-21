@@ -1,0 +1,40 @@
+{
+  "name": "@stoplight/elements-starter-react",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Basic React app with embedded Stoplight Elements",
+  "author": "Stoplight <support@stoplight.io>",
+  "license": "Unlicense",
+  "type": "module",
+  "scripts": {
+    "start": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@stoplight/elements": "^9.0.0",
+    "@stoplight/elements-dev-portal": "^3.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.28.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "typescript": "^5.9.0",
+    "vite": "^8.0.0",
+    "vite-plugin-node-polyfills": "^0.28.0"
+  },
+  "resolutions": {
+    "xml-parser-xo": "4.1.5",
+    "pbkdf2": "3.1.3",
+    "sha.js": "2.4.12",
+    "lodash": "^4.18.1",
+    "brace-expansion": "2.0.2",
+    "js-cookie": "3.0.7",
+    "@remix-run/router": "1.23.2",
+    "minimatch": "^5.1.6",
+    "@stoplight/http-spec": "^7.0.0"
+  }
+}

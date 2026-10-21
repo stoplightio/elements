@@ -148,11 +148,11 @@ yarn
 # Build Elements itself
 yarn build
 # Copy the contents of the predefined example application and make it use the local build
-yarn copy:react-cra
-# Build the chosen example (sub `react-cra` for any other example repo)
-yarn build:react-cra
+yarn copy:react-vite
+# Build the chosen example (sub `react-vite` for any other example repo)
+yarn build:react-vite
 # Run the example and the test suite against it
-yarn e2e:run:react-cra
+yarn e2e:run:react-vite
 ```
 > **Note**: You only need to run `yarn copy:$INTEGRATION-NAME` once after you clone the Elements repo.
 
@@ -168,11 +168,11 @@ yarn
 # Build Elements itself
 yarn build
 # Copy the contents of the predefined example application and make it use the local build
-yarn copy:react-cra
-# Build the chosen example (sub `react-cra` for any other example repo)
-yarn build:react-cra
+yarn copy:react-vite
+# Build the chosen example (sub `react-vite` for any other example repo)
+yarn build:react-vite
 # Run the example on port 4200. This is going to block so (unless you '&' it) or you'll need another terminal for the next step.
-yarn serve:react-cra
+yarn serve:react-vite
 # Open the Cypress console
 yarn e2e:open
 ```
@@ -181,7 +181,7 @@ yarn e2e:open
 
 With the console open, select any test suite to run it visually. Check [Cypress Docs](https://docs.cypress.io/guides/core-concepts/test-runner.html) for more details about the Test Runner.
 
-Don't forget that while *Cypress* hot-reloads on test code change, it needs a complete rebuild for *Elements* changes. There is no way around this for now. You won't hit this limitation often, but in case you do, one trick that may speed things up a bit is to substitute `yarn build:react-cra && yarn serve:react-cra` with `cd examples/react-cra; yarn start`.
+Don't forget that while *Cypress* hot-reloads on test code change, it needs a complete rebuild for *Elements* changes. There is no way around this for now. You won't hit this limitation often, but in case you do, one trick that may speed things up a bit is to substitute `yarn build:react-vite && yarn serve:react-vite` with `cd examples/react-vite; yarn start`.
 
 #### Edit the Tests
 

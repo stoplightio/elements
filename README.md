@@ -32,17 +32,18 @@ Let's chat about features, ideas, what you're doing with Elements, on [GitHub Di
 ## 👁️🗨 ️️Examples
 
 Stoplight Elements comes with a few example integration projects, showing you how to utilize Elements with different frameworks.
-- **[react-cra](./examples/react-cra)** - An example app built using Create React App utilizing Stoplight Elements.
-- **[angular](./examples/angular)** - An angular app utilizing the Web Components distribution of Elements.
-- **[bootstrap](./examples/bootstrap)** - A single HTML page utilizing the Web Components distribution via a global script tag.
+- **[react-vite](./examples/react-vite)** - A React app built with [Vite](https://vite.dev) utilizing Stoplight Elements.
+- **[angular](./examples/angular)** - An Angular app utilizing the Web Components distribution of Elements.
+- **[bootstrap](./examples/bootstrap)** - Single HTML pages (styled with Bootstrap) utilizing the Web Components distribution via a global script tag.
+- **[static-html](./examples/static-html)** - Plain HTML pages utilizing the Web Components distribution, served by a tiny Node.js server.
 
-To run these examples yourself:
+To run the **react-vite**, **angular** and **static-html** examples yourself:
 1. Clone this repo.
 2. Go to `examples` folder and open an example, e.g.: `examples/angular`.
 3. Run `yarn` to install all dependencies.
-4. Run `yarn start` to run the example.
+4. Run `yarn start` to run the example (for **static-html** run `yarn serve` instead).
 
-> **Note:** for **bootstrap** example just go straight to its directory and open the HTML file.
+> **Note:** for the **bootstrap** example just go straight to its directory and open the HTML files in a browser.
 
 ## 🏁 Usage
 

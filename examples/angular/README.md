@@ -1,7 +1,7 @@
 # Stoplight Elements - Angular Example
 
 Stoplight Elements can be used in any framework using the Web Components distribution.
-This example project demonstrates usage in an Angular 11 application.
+This example project demonstrates usage in an Angular application.
 
 ## Try the example
 
