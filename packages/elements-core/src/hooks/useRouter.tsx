@@ -1,7 +1,6 @@
 import { Dictionary } from '@stoplight/types';
 import * as React from 'react';
-import { BrowserRouter, HashRouter, MemoryRouter } from 'react-router-dom';
-import { StaticRouter } from 'react-router-dom/server.js';
+import { BrowserRouter, HashRouter, MemoryRouter, StaticRouter } from 'react-router';
 
 import { RouterType } from '../types';
 

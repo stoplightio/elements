@@ -5,7 +5,7 @@ import URI from 'urijs';
 
 import { BundledBranchNode, IntegrationKind } from '../../../types';
 
-export const createResolvedImageComponent = (branchNode: BundledBranchNode) => {
+export const createResolvedImageComponent = (branchNode: BundledBranchNode): CustomComponentMapping['img'] => {
   const ResolvedImage: CustomComponentMapping['img'] = ({ title, alt, src }) => {
     return <img src={resolveImageUrlHandler(src || '', branchNode)} title={title} alt={alt} />;
   };

@@ -17,12 +17,13 @@ export const ResponseCodeViewer: <E extends React.ElementType = 'pre'>(
   return (
     <CodeViewer
       language="json"
-      showAsRaw={MAX_HIGHLIGHT_LINE_COUNT < lineCount}
+      // showAsRaw is forwarded to the underlying code container, but is not part of CodeViewerProps
+      {...({ showAsRaw: MAX_HIGHLIGHT_LINE_COUNT < lineCount } as object)}
       style={{
         color: 'white',
       }}
       value={value}
-      {...rest}
+      {...(rest as object)}
     />
   );
 };

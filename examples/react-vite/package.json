@@ -12,11 +12,11 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "@stoplight/elements": "^9.0.0",
-    "@stoplight/elements-dev-portal": "^3.0.0",
+    "@stoplight/elements": "^10.0.0",
+    "@stoplight/elements-dev-portal": "^4.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^6.28.0"
+    "react-router": "^8.5.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",
@@ -33,7 +33,6 @@
     "lodash": "^4.18.1",
     "brace-expansion": "2.0.2",
     "js-cookie": "3.0.7",
-    "@remix-run/router": "1.23.2",
     "minimatch": "^5.1.6",
     "@stoplight/http-spec": "^7.0.0"
   }

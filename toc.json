@@ -43,7 +43,7 @@
           "title": "Usage with Angular",
           "uri": "docs/getting-started/elements/angular.md"
         },
-          {
+        {
           "type": "item",
           "title": "Elements Configuration Options",
           "uri": "docs/getting-started/elements/elements-options.md"
@@ -104,6 +104,11 @@
       "type": "item",
       "title": "Great API Documentation",
       "uri": "docs/guides/great-api-docs.md"
+    },
+    {
+      "type": "item",
+      "title": "Migrating to Elements 10",
+      "uri": "docs/guides/migrating-to-v10.md"
     }
   ]
 }

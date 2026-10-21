@@ -1,5 +1,5 @@
 import { DevPortalProvider } from '@stoplight/elements-dev-portal';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
 import { StoplightAPI } from './components/API';
 import { Navigation } from './components/Navigation';

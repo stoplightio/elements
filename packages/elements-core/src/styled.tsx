@@ -11,7 +11,7 @@ export const Styled = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-export function withStyles<T>(Component: React.ComponentType<T>): React.FC<T> {
+export function withStyles<T extends object>(Component: React.ComponentType<T>): React.FC<T> {
   const Inner: React.FC<T> = props => (
     <Styled>
       <Component {...props} />

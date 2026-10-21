@@ -3,7 +3,8 @@
   "compilerOptions": {
     "allowSyntheticDefaultImports": true,
     "module": "esnext",
-    "moduleResolution": "node"
+    "moduleResolution": "bundler",
+    "customConditions": ["require"]
   },
   "include": ["src", "../packages/elements-core/src/react-19-compat.d.ts"]
 }

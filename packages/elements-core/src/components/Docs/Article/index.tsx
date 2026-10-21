@@ -2,7 +2,7 @@ import { IMarkdownViewerProps } from '@stoplight/markdown-viewer';
 import { Box } from '@stoplight/mosaic';
 import { withErrorBoundary } from '@stoplight/react-error-boundary';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { useRouterType } from '../../../context/RouterType';
 import { MarkdownViewer } from '../../MarkdownViewer';

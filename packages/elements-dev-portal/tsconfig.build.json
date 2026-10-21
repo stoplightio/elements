@@ -13,7 +13,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "dist",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
+    "customConditions": ["require"],
     "paths": {
       "@stoplight/elements-core": ["../elements-core/dist"],
       "@stoplight/elements-core/*": ["../elements-core/dist/*"]

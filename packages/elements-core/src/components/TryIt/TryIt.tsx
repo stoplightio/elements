@@ -141,7 +141,7 @@ export const TryIt: React.FC<TryItProps> = ({
 
   const getValues = () =>
     Object.keys(bodyParameterValues)
-      .filter(param => !isAllowedEmptyValues[param] ?? true)
+      .filter(param => !isAllowedEmptyValues[param])
       .reduce<BodyParameterValues>((previousValue, currentValue) => {
         previousValue[currentValue] = bodyParameterValues[currentValue];
         return previousValue;

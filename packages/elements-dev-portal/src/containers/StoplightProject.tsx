@@ -20,7 +20,7 @@ import {
   useNavigate,
   useOutletContext,
   useParams,
-} from 'react-router-dom';
+} from 'react-router';
 
 import { BranchSelector } from '../components/BranchSelector';
 import { DevPortalProvider } from '../components/DevPortalProvider';

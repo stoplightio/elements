@@ -13,6 +13,7 @@
   "compilerOptions": {
     "baseUrl": "./",
     "outDir": "dist",
-    "moduleResolution": "node"
+    "moduleResolution": "bundler",
+    "customConditions": ["require"]
   }
 }

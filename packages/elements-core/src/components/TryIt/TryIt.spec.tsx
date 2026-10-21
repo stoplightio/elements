@@ -697,7 +697,7 @@ describe('TryIt', () => {
         await clickSend();
 
         await waitFor(() => expect(fetchMock).toHaveBeenCalled());
-        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{.*}/s));
+        expect(fetchMock.mock.calls[0]![1]!.body).toEqual(expect.stringMatching(/{[\s\S]*}/));
       });
     });
 

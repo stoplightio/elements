@@ -1,6 +1,6 @@
 import { Flex, Provider as MosaicProvider, useIconStore } from '@stoplight/mosaic';
 import React, { useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router';
 
 import { DemoNavbar } from './components/DemoNavbar';
 import { ElementsAPI } from './components/ElementsAPI';

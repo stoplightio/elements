@@ -1,7 +1,7 @@
 import { CustomLinkComponent } from '@stoplight/elements-core';
 import { fireEvent, render, screen } from '@testing-library/react';
 import * as React from 'react';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router';
 
 import nodeContent from '../../__fixtures__/node-content.json';
 import { NodeContent } from './NodeContent';
@@ -122,7 +122,7 @@ describe('NodeContent Component Navigation Links', () => {
     unmount();
 
     afterAll(() => {
-      window.location = originalLocation;
+      (window as any).location = originalLocation;
     });
   });
 });

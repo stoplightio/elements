@@ -170,4 +170,4 @@ const NetworkErrorMessage = () => (
 
 export class NetworkError extends Error {}
 
-const isNetworkError = (error: Error) => error instanceof NetworkError;
+const isNetworkError = (error: Error): boolean => error instanceof NetworkError;

@@ -1,6 +1,6 @@
 import { Box, Flex } from '@stoplight/mosaic';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 type SidebarLayoutProps = {
   sidebar: React.ReactNode;

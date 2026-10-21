@@ -6,12 +6,12 @@ import { getDisplayName } from '../hoc/utils';
 /**
  * Provides a context for storing jotai atom values.
  */
-export const PersistenceContextProvider = JotaiProvider;
+export const PersistenceContextProvider: typeof JotaiProvider = JotaiProvider;
 
 /**
  * HOC that Wraps `WrappedComponent` in a `PersistenceContextProvider`.
  */
-export function withPersistenceBoundary<T>(WrappedComponent: React.ComponentType<T>) {
+export function withPersistenceBoundary<T extends object>(WrappedComponent: React.ComponentType<T>) {
   const WithPersistenceBoundary: React.FC<T> = props => {
     return (
       <PersistenceContextProvider>

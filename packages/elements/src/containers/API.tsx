@@ -16,7 +16,7 @@ import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { useQuery } from '@tanstack/react-query';
 import { flow } from 'lodash';
 import * as React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { APIWithResponsiveSidebarLayout } from '../components/API/APIWithResponsiveSidebarLayout';
 import { APIWithSidebarLayout } from '../components/API/APIWithSidebarLayout';

@@ -1,6 +1,6 @@
 import { Box, Flex, Heading } from '@stoplight/mosaic';
 import * as React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 
 import { useResponsiveLayout } from '../../hooks/useResponsiveLayout';
 import { LogoProps } from '../../types';

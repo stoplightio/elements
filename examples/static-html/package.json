@@ -10,8 +10,8 @@
   "author": "Stoplight <support@stoplight.io>",
   "license": "Unlicense",
   "dependencies": {
-    "@stoplight/elements": "^9.0.0",
-    "@stoplight/elements-dev-portal": "^3.0.0"
+    "@stoplight/elements": "^10.0.0",
+    "@stoplight/elements-dev-portal": "^4.0.0"
   },
   "resolutions": {
     "xml-parser-xo": "4.1.5"

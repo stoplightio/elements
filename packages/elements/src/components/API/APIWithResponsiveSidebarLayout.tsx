@@ -8,7 +8,7 @@ import {
 import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router';
 
 import { ServiceNode } from '../../utils/oas/types';
 import { computeAPITree, findFirstNodeSlug, isInternal, resolveRelativePath } from './utils';

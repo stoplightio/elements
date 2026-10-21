@@ -5,6 +5,8 @@
     "esModuleInterop": true,
     "baseUrl": "./packages",
     "lib": ["es2021", "dom"],
+    "moduleResolution": "bundler",
+    "customConditions": ["require"],
     "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"],
     "paths": {
       "@test-utils/*": ["../test-utils/*"],
