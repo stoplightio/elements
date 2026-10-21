@@ -21,10 +21,7 @@ export type TableOfContentsDivider = {
 };
 
 export type TableOfContentsGroupItem =
-  | TableOfContentsGroup
-  | TableOfContentsNodeGroup
-  | TableOfContentsNode
-  | TableOfContentsExternalLink;
+  TableOfContentsGroup | TableOfContentsNodeGroup | TableOfContentsNode | TableOfContentsExternalLink;
 
 export type TableOfContentsGroup = {
   title: string;

@@ -172,8 +172,8 @@ export const TryIt: React.FC<TryItProps> = ({
         bodyInput: formDataState.isFormDataBody
           ? getValues()
           : formDataState.isBinaryBody
-          ? getBinaryValue()
-          : textRequestBody,
+            ? getBinaryValue()
+            : textRequestBody,
         auth: operationAuthValue,
         ...(isMockingEnabled && { mockData: getMockData(mockUrl, httpOperation, mockingOptions) }),
         chosenServer,
@@ -226,8 +226,8 @@ export const TryIt: React.FC<TryItProps> = ({
         bodyInput: formDataState.isFormDataBody
           ? getValues()
           : formDataState.isBinaryBody
-          ? getBinaryValue()
-          : textRequestBody,
+            ? getBinaryValue()
+            : textRequestBody,
         mockData,
         auth: operationAuthValue,
         chosenServer,

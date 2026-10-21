@@ -36,7 +36,7 @@ export const extractCodeSamples = (obj: unknown): CodeSample[] => {
   return codeSamples.reduce((extracted, item) => {
     if (isPlainObject(item) && isString(item['lang']) && isString(item['source'])) {
       const lib = isString(item['lib']) ? item['lib'] : undefined;
-      const label = isString(item['label']) ? item['label'] : lib ?? item['lang'];
+      const label = isString(item['label']) ? item['label'] : (lib ?? item['lang']);
       extracted.push({
         lang: item['lang'],
         lib,

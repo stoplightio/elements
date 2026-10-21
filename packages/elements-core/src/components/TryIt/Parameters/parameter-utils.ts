@@ -68,7 +68,7 @@ function enumOptions(enumValues: JSONSchema7Type[], required?: boolean) {
   const options = map(enumValues, v => {
     // Handle objects and arrays by stringifying them
     const stringValue =
-      typeof v === 'object' && v !== null ? safeStringify(v) ?? String(v) : typeof v === 'number' ? v : String(v);
+      typeof v === 'object' && v !== null ? (safeStringify(v) ?? String(v)) : typeof v === 'number' ? v : String(v);
     // Encode the value to be safe for CSS selectors, but keep the original label
     const safeValue = encodeSafeSelectorValue(stringValue);
     return { value: safeValue, label: String(stringValue) };
@@ -80,8 +80,8 @@ export function parameterOptions(parameter: ParameterSpec) {
   return parameter.schema?.type === 'boolean'
     ? booleanOptions
     : parameter.schema?.enum !== undefined
-    ? enumOptions(parameter.schema.enum, parameter.required)
-    : null;
+      ? enumOptions(parameter.schema.enum, parameter.required)
+      : null;
 }
 
 export const selectExampleOption = { value: '', label: 'Pick an example' };

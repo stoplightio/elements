@@ -42,11 +42,11 @@ export const Request: React.FunctionComponent<IRequestProps> = ({
   const securitySchemes = security ?? [];
   const hasRequestData = Boolean(
     securitySchemes.length ||
-      pathParams.length ||
-      queryParams.length ||
-      headerParams.length ||
-      cookieParams.length ||
-      !bodyIsEmpty,
+    pathParams.length ||
+    queryParams.length ||
+    headerParams.length ||
+    cookieParams.length ||
+    !bodyIsEmpty,
   );
   if (!hasRequestData) return null;
 
