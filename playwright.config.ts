@@ -25,7 +25,7 @@ export default defineConfig({
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: example
     ? {
-        command: `yarn serve:${example}`,
+        command: `npm run serve:${example}`,
         url: baseURL,
         reuseExistingServer: !process.env.CI,
         timeout: 120_000,

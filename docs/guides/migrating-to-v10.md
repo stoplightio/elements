@@ -62,6 +62,25 @@ Elements now uses `@tanstack/react-query` v5 instead of `react-query` v3. As wit
 
 If you share a client with Elements, move to `@tanstack/react-query` v5.
 
+### If you use npm: avoid a second copy of React
+
+`@stoplight/mosaic` (a dependency of Elements) depends on `use-resize-observer` 9, which declares a peer dependency on React up to 18. npm installs peer dependencies automatically, so it adds a second, nested copy of React 18 for that package, and your page then fails at runtime with an error such as `Cannot read properties of undefined (reading 'ReactCurrentBatchConfig')`.
+
+Add an override to your `package.json` so that package uses your copy of React:
+
+```json
+{
+  "overrides": {
+    "use-resize-observer": {
+      "react": "^19.0.0",
+      "react-dom": "^19.0.0"
+    }
+  }
+}
+```
+
+Run `npm ls react react-dom` to check that there is a single version of each. Yarn Classic doesn't install peer dependencies automatically, so it isn't affected. This override can go once Mosaic updates `use-resize-observer`.
+
 ### Server-side rendering
 
 `router: 'static'` works as before. Elements uses `StaticRouter` from `react-router` internally, and your server needs Node 22.22 or later.

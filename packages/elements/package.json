@@ -35,8 +35,8 @@
     "node": ">=22.22.0"
   },
   "scripts": {
-    "build": "yarn build.react && yarn build.webcomponents",
-    "postbuild": "yarn build.styles",
+    "build": "npm run build.react && npm run build.webcomponents",
+    "postbuild": "npm run build.styles",
     "build.react": "sl-scripts bundle",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css",
     "build.webcomponents": "node --max-old-space-size=4096 ./../../node_modules/webpack/bin/webpack.js -c ./web-components.config.js",

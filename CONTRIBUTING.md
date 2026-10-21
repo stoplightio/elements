@@ -27,17 +27,17 @@ Elements is an open-source project, and Stoplight loves contributions. If you're
 
 Before you start development, you have to install Elements and its dependencies.
 
-Make sure you have [Node.js](https://nodejs.org/en/) version 16 or higher installed. Consider using [nvm](https://github.com/nvm-sh/nvm) to manage different versions of Node.js on your computer.
+Make sure you have [Node.js](https://nodejs.org/en/) version 22.22 or higher installed. Consider using [nvm](https://github.com/nvm-sh/nvm) to manage different versions of Node.js on your computer.
 
-For dependencies, use [yarn](https://yarnpkg.com/). Install it, following the [guideline](https://yarnpkg.com/getting-started/install).
+For dependencies, use [npm](https://docs.npmjs.com/), which comes with Node.js.
 
 Clone elements repository by running `git clone git@github.com:stoplightio/elements.git` (provided you have [SSH keys added](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account) in GitHub).
 
 Next, move into the repository by running `cd elements`.
 
-Now run `yarn` to install dependencies.
+Now run `npm install` to install dependencies.
 
-To validate that the installation was successful, move into the demo folder by running `cd demo` and run `yarn start`. You should see a demo website, under the address `http://localhost:4025`.
+To validate that the installation was successful, move into the demo folder by running `cd demo` and run `npm start`. You should see a demo website, under the address `http://localhost:4025`.
 
 ## Develop Elements
 
@@ -47,7 +47,7 @@ Most of the code is in `elements-core`; `elements` and `elements-dev-portal` onl
 
 Most often, you'll develop Elements (in all the packages) using [storybooks](https://storybook.js.org/).
 
-Each package has its own storybook. To run a storybook for a specific package, in the main directory run, for example, `yarn elements-core storybook`. This starts a storybook for the `elements-core` package.
+Each package has its own storybook. To run a storybook for a specific package, in the main directory run, for example, `npm run storybook -w @stoplight/elements-core`. This starts a storybook for the `elements-core` package.
 
 Now you can develop the code and test your changes in the storybook. 
 
@@ -100,23 +100,23 @@ Unit tests are currently located in a directory `__tests__` close to the compone
   
 #### Run Unit Tests
 
-Assuming you work on the `elements` package, you can run `vitest` on it using the shorthand
+Assuming you work on the `elements` package, you can run `vitest` on it with
 ```shell
-yarn elements test
+npm test -w @stoplight/elements
 ```
 
-There is **no need to build *Elements* beforehand**, the test runs on the currently saved TypeScript code. Make sure to install dependencies, however. (`yarn`)
+There is **no need to build *Elements* beforehand**, the test runs on the currently saved TypeScript code. Make sure to install dependencies, however. (`npm install`)
 
 Any arguments you append after the command are forwarded to Vitest. Some useful combinations:
 ```shell
 # Show the result of each individual test case
-yarn elements test --reporter=verbose
+npm test -w @stoplight/elements -- --reporter=verbose
 # Only run tests related to files changed since the last commit.
-yarn elements test --changed
+npm test -w @stoplight/elements -- --changed
 # Keep running the tests whenever you change a source or test file.
-yarn elements test.watch
+npm run test.watch -w @stoplight/elements
 # Run the test(s) whose name matches the argument regex
-yarn elements test -t Test\ Name
+npm test -w @stoplight/elements -- -t "Test Name"
 ```
 
 ### Framework Integration
@@ -130,7 +130,7 @@ The logical steps in which these tests are run:
 2. Copy the contents of the predefined example project from `examples` to `examples-dev`. For example, copy `examples/angular` to `examples-dev/angular`
 3. Install the *Elements* build from the first step into the chosen example project in `examples-dev` (you modify `package.json` to point to the `dist` folder of `elements-core`, `elements` or `elements-dev-portal`)
 4. Serve the example from the `examples-dev` project on localhost over HTTP port 4200
-5. Run the *Playwright* test suite against this example application. Playwright starts the example itself (`yarn serve:<example>`) and waits for it on port 4200.
+5. Run the *Playwright* test suite against this example application. Playwright starts the example itself (`npm run serve:<example>`) and waits for it on port 4200.
 
 **You don't need to amend e2e tests** when working on *Elements* unless you are adding a new supported framework.
 These tests are run by the CI pipeline to ensure that a PR doesn't break any environments.
@@ -142,19 +142,19 @@ That being said, if you for some reason want to run them by hand, here's how to 
 
 ```shell
 # Make sure top-level dependencies are up-to-date
-yarn 
+npm install
 # Build Elements itself
-yarn build
+npm run build
 # Copy the contents of the predefined example application and make it use the local build
-yarn copy:react-vite
+npm run copy:react-vite
 # Build the chosen example (sub `react-vite` for any other example repo)
-yarn build:react-vite
+npm run build:react-vite
 # Install the browser Playwright drives (only needed once, and again after upgrading Playwright)
 npx playwright install chromium
 # Run the example and the test suite against it
-yarn e2e:run:react-vite
+npm run e2e:run:react-vite
 ```
-> **Note**: You only need to run `yarn copy:$INTEGRATION-NAME` once after you clone the Elements repo.
+> **Note**: You only need to run `npm run copy:$INTEGRATION-NAME` once after you clone the Elements repo.
 
 #### Run the Tests Manually
 
@@ -164,24 +164,24 @@ The first three steps are the same, but this time, instead of running the tests 
 
 ```shell
 # Make sure top-level dependencies are up-to-date
-yarn 
+npm install
 # Build Elements itself
-yarn build
+npm run build
 # Copy the contents of the predefined example application and make it use the local build
-yarn copy:react-vite
+npm run copy:react-vite
 # Build the chosen example (sub `react-vite` for any other example repo)
-yarn build:react-vite
+npm run build:react-vite
 # Run the example on port 4200. This is going to block so (unless you '&' it) or you'll need another terminal for the next step.
-yarn serve:react-vite
+npm run serve:react-vite
 # Open Playwright's UI mode (it reuses the server that is already running on port 4200)
-yarn e2e:open
+npm run e2e:open
 ```
 
-> **Note**: You only need to run `yarn copy:$INTEGRATION-NAME` once after you clone the Elements repo.
+> **Note**: You only need to run `npm run copy:$INTEGRATION-NAME` once after you clone the Elements repo.
 
 With UI mode open, select any test to run it and step through it visually. Check the [Playwright UI mode docs](https://playwright.dev/docs/test-ui-mode) for more details.
 
-Don't forget that while *Playwright* re-runs on test code change, it needs a complete rebuild for *Elements* changes. There is no way around this for now. You won't hit this limitation often, but in case you do, one trick that may speed things up a bit is to substitute `yarn build:react-vite && yarn serve:react-vite` with `cd examples/react-vite; yarn start`.
+Don't forget that while *Playwright* re-runs on test code change, it needs a complete rebuild for *Elements* changes. There is no way around this for now. You won't hit this limitation often, but in case you do, one trick that may speed things up a bit is to substitute `npm run build:react-vite && npm run serve:react-vite` with `cd examples/react-vite; npm start`.
 
 #### Edit the Tests
 
@@ -191,7 +191,7 @@ Fixtures and support files can also be found in the relevant folder under `e2e`.
 #### Inspect Test Results
 
 Test results can be found under the `e2e-results` directory. 
-*Playwright* keeps a trace, screenshot and video for every failing test (under `e2e-results/artifacts`; open a trace with `yarn playwright show-trace <path>/trace.zip`). In addition, a machine-readable `output.xml` is generated that contains a summary of the results.
+*Playwright* keeps a trace, screenshot and video for every failing test (under `e2e-results/artifacts`; open a trace with `npx playwright show-trace <path>/trace.zip`). In addition, a machine-readable `output.xml` is generated that contains a summary of the results.
 
 In CI, each e2e job uploads `e2e-results` (including traces, screenshots and videos of failing tests) as a build artifact named `e2e-<example>-results`.
 
@@ -199,16 +199,16 @@ In CI, each e2e job uploads `e2e-results` (including traces, screenshots and vid
 
 Elements is used in the Stoplight Platform, as well as in open source projects. Here is how you (if you are a Stoplight employee) can test integrating Elements locally:
 
-1. Inside of elements root directory, run `yarn build` then `cd packages/elements-core/dist` then `yalc publish`
+1. Inside of elements root directory, run `npm run build` then `cd packages/elements-core/dist` then `yalc publish`
 2. Copy the yalc published version output to terminal `@stoplight/elements-core@7.2.0`
-3. Go to `packages/ninja`, run `yalc add @stoplight/elements-core@7.2.0` and `yarn install --check-files`
+3. Go to `packages/ninja`, run `yalc add @stoplight/elements-core@7.2.0` and `npm install`
 
 ## Release Elements
 
 1. Make sure you are in the root directory of this repo and on the `main` branch.
 2. Pull all the latest changes.
 3. Create a new branch. The name doesn't matter, but here's an example: `chore/release`.
-4. Run `yarn version`. You are asked a few questions.
+4. Run `npm run version` (this runs `lerna version`, not `npm version`). You are asked a few questions.
     - Don't release `elements-demo`. You have to choose "Custom Version" and enter the same, old version by hand. Awkward, but it works.
     - For other packages, choose the proposed version (patch or minor update) from the console. Remember to read the [versioning guidelines](#versioning-guidelines).
 5. After the script gets finalized, a commit is created for you.

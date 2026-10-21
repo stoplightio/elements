@@ -11,10 +11,10 @@ jobs:
       image: node:lts
     steps:
     - uses: actions/checkout@v4.1.0
-    - run: yarn --frozen-lockfile
-    - run: yarn type-check
-    - run: yarn lint
-    - run: yarn test.prod
+    - run: npm ci
+    - run: npm run type-check
+    - run: npm run lint
+    - run: npm run test.prod
     - uses: actions/upload-artifact@v4.1.0
       with:
         name: test-results
@@ -25,12 +25,13 @@ jobs:
       image: node:lts
     steps:
     - uses: actions/checkout@v4.1.0
-    - run: yarn --frozen-lockfile
-    - run: yarn build
+    - run: npm ci
+    - run: npm run build
     - uses: actions/upload-artifact@v4.1.0
       with:
         name: build-output
         path: |
+          demo/package.json
           packages/elements/dist/
           packages/elements/package.json
           packages/elements-core/dist/
@@ -45,7 +46,7 @@ jobs:
           node_modules/@stoplight/scripts/
           use-local-elements.sh
           package.json
-          yarn.lock
+          package-lock.json
           lerna.json
   build-docs:
     runs-on: ubuntu-latest
@@ -53,8 +54,8 @@ jobs:
       image: node:lts
     steps:
     - uses: actions/checkout@v4.1.0
-    - run: yarn --frozen-lockfile
-    - run: yarn build.docs
+    - run: npm ci
+    - run: npm run build.docs
   e2e-react-vite:
     runs-on: ubuntu-latest
     container:
@@ -71,19 +72,19 @@ jobs:
         name: build-output
         path: ./
     - name: Install root dependencies
-      run: yarn --frozen-lockfile
+      run: npm ci
     - name: Example - use local builds
-      run: yarn copy:${{ env.example-name }}
+      run: npm run copy:${{ env.example-name }}
     - name: Example - Install dependencies
-      run: yarn install
+      run: npm install
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Example - Build
-      run: yarn build
+      run: npm run build
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Install Playwright browser
       run: npx playwright install --with-deps chromium
     - name: Run E2E checks
-      run: yarn e2e:run:${{ env.example-name }}
+      run: npm run e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
       if: always()
       with:
@@ -105,19 +106,19 @@ jobs:
         name: build-output
         path: ./
     - name: Install root dependencies
-      run: yarn --frozen-lockfile
+      run: npm ci
     - name: Example - use local builds
-      run: yarn copy:${{ env.example-name }}
+      run: npm run copy:${{ env.example-name }}
     - name: Example - Install dependencies
-      run: yarn install
+      run: npm install
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Example - Build
-      run: yarn build
+      run: npm run build
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Install Playwright browser
       run: npx playwright install --with-deps chromium
     - name: Run E2E checks
-      run: yarn e2e:run:${{ env.example-name }}
+      run: npm run e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
       if: always()
       with:
@@ -139,19 +140,19 @@ jobs:
         name: build-output
         path: ./
     - name: Install root dependencies
-      run: yarn --frozen-lockfile
+      run: npm ci
     - name: Example - use local builds
-      run: yarn copy:${{ env.example-name }}
+      run: npm run copy:${{ env.example-name }}
     - name: Example - Install dependencies
-      run: yarn install
+      run: npm install
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Example - Build
-      run: yarn build
+      run: npm run build
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Install Playwright browser
       run: npx playwright install --with-deps chromium
     - name: Run E2E checks
-      run: yarn e2e:run:${{ env.example-name }}
+      run: npm run e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
       if: always()
       with:
@@ -174,8 +175,8 @@ jobs:
     - name: Configure Git safe directory
       run: git config --global --add safe.directory /__w/elements/elements
     - name: Install Dependencies
-      run: yarn --frozen-lockfile
+      run: npm ci
     - name: Set NPM Token
       run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
     - name: Run Release Script
-      run: yarn release
+      run: npm run release

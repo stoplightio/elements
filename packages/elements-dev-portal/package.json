@@ -34,8 +34,8 @@
     "node": ">=22.22.0"
   },
   "scripts": {
-    "build": "yarn version.set && yarn build.react && yarn build.webcomponents",
-    "postbuild": "yarn build.styles",
+    "build": "npm run version.set && npm run build.react && npm run build.webcomponents",
+    "postbuild": "npm run build.styles",
     "build.react": "sl-scripts bundle",
     "build.webcomponents": "node --max-old-space-size=4096 ./../../node_modules/webpack/bin/webpack.js -c ./web-components.config.js",
     "build.docs": "storybook build -c .storybook -o dist-storybook",
@@ -45,7 +45,7 @@
     "release": "sl-scripts release",
     "release.docs": "sl-scripts release:docs",
     "release.dryRun": "sl-scripts release --dry-run --debug",
-    "storybook": "yarn version.set && storybook dev -p 9001",
+    "storybook": "npm run version.set && storybook dev -p 9001",
     "test": "vitest run",
     "test.prod": "vitest run --coverage --maxWorkers=2",
     "test.update": "vitest run --update",

@@ -30,8 +30,8 @@
     "node": ">=22.22.0"
   },
   "scripts": {
-    "build": "yarn build.react",
-    "postbuild": "yarn build.styles",
+    "build": "npm run build.react",
+    "postbuild": "npm run build.styles",
     "build.react": "sl-scripts bundle",
     "build.styles": "postcss src/styles.css -o dist/styles.min.css && cp src/core.css dist",
     "build.docs": "storybook build -o dist-storybook",

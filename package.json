@@ -19,7 +19,6 @@
     "@babel/preset-react": "^7.23.3",
     "@babel/preset-typescript": "^7.23.3",
     "@playwright/test": "1.64.1",
-    "@stoplight/eslint-config": "2.1.0",
     "@storybook/addon-docs": "10.6.3",
     "@storybook/addon-styling-webpack": "^3.0.2",
     "@storybook/addon-webpack5-compiler-swc": "^4.0.3",
@@ -33,10 +32,11 @@
     "css-loader": "6.7.1",
     "cssnano": "5.0.6",
     "eslint": "8.57.1",
+    "eslint-config-prettier": "^9.1.2",
     "eslint-plugin-import": "2.29.1",
     "eslint-plugin-jest": "^28.14.0",
     "eslint-plugin-prettier": "3.4.0",
-    "eslint-plugin-react": "7.24.0",
+    "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-simple-import-sort": "7.0.0",
     "eslint-plugin-storybook": "10.6.3",
@@ -62,7 +62,7 @@
     "webpack-cli": "5.1.4",
     "webpack-dev-server": "4.15.1"
   },
-  "resolutions": {
+  "overrides": {
     "fast-xml-parser": "4.5.5",
     "xml-parser-xo": "4.1.5",
     "@types/react": "19.3.0",
@@ -86,34 +86,35 @@
     "piscina": "^4.9.3",
     "webpack-dev-middleware": "^6.1.2",
     "serialize-javascript": "^7.0.3",
-    "pacote": "^21.5.1"
+    "pacote": "^21.5.1",
+    "use-resize-observer": {
+      "react": "^19.0.0",
+      "react-dom": "^19.0.0"
+    },
+    "npm": "11.19.1"
   },
   "scripts": {
-    "demo": "yarn workspace @stoplight/elements-demo",
-    "elements": "yarn workspace @stoplight/elements",
-    "elements-core": "yarn workspace @stoplight/elements-core",
-    "elements-dev-portal": "yarn workspace @stoplight/elements-dev-portal",
-    "build": "yarn workspace @stoplight/elements-core build && yarn workspace @stoplight/elements build && yarn workspace @stoplight/elements-dev-portal build",
-    "build.docs": "yarn workspace @stoplight/elements build.docs",
-    "postbuild": "yarn workspace @stoplight/elements test.packaging && yarn workspace @stoplight/elements-core test.packaging && yarn workspace @stoplight/elements-dev-portal test.packaging",
+    "build": "npm run build -w @stoplight/elements-core && npm run build -w @stoplight/elements && npm run build -w @stoplight/elements-dev-portal",
+    "build.docs": "npm run build.docs -w @stoplight/elements",
+    "postbuild": "npm run test.packaging -w @stoplight/elements && npm run test.packaging -w @stoplight/elements-core && npm run test.packaging -w @stoplight/elements-dev-portal",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
     "version": "lerna version --no-push",
     "release": "lerna publish from-package --yes --registry https://registry.npmjs.org --loglevel silly",
-    "release.docs": "yarn workspace @stoplight/elements release.docs",
-    "type-check": "yarn workspaces run type-check && tsc -p e2e",
-    "test": "yarn workspace @stoplight/elements test && yarn workspace @stoplight/elements-core test && yarn workspace @stoplight/elements-dev-portal test --passWithNoTests",
-    "test.prod": "yarn workspace @stoplight/elements test.prod && yarn workspace @stoplight/elements-core test.prod && yarn workspace @stoplight/elements-dev-portal test.prod --passWithNoTests",
-    "prepublishOnly": "yarn build",
+    "release.docs": "npm run release.docs -w @stoplight/elements",
+    "type-check": "npm run type-check --workspaces --if-present && tsc -p e2e",
+    "test": "npm test -w @stoplight/elements && npm test -w @stoplight/elements-core && npm test -w @stoplight/elements-dev-portal -- --passWithNoTests",
+    "test.prod": "npm run test.prod -w @stoplight/elements && npm run test.prod -w @stoplight/elements-core && npm run test.prod -w @stoplight/elements-dev-portal -- --passWithNoTests",
+    "prepublishOnly": "npm run build",
     "/// examples ///": "",
     "copy:angular": "mkdir examples-dev ; cp -a -v ./examples/angular ./examples-dev ; sh ./use-local-elements.sh angular",
-    "build:angular": "(cd ./examples-dev/angular && yarn reinstall && yarn build)",
-    "serve:angular": "(cd ./examples-dev/angular && yarn serve)",
+    "build:angular": "(cd ./examples-dev/angular && npm run reinstall && npm run build)",
+    "serve:angular": "(cd ./examples-dev/angular && npm run serve)",
     "copy:react-vite": "mkdir examples-dev ; cp -a -v ./examples/react-vite ./examples-dev ; sh ./use-local-elements.sh react-vite",
-    "build:react-vite": "(cd ./examples-dev/react-vite && yarn reinstall && yarn build)",
-    "serve:react-vite": "(cd ./examples-dev/react-vite && yarn serve)",
+    "build:react-vite": "(cd ./examples-dev/react-vite && npm run reinstall && npm run build)",
+    "serve:react-vite": "(cd ./examples-dev/react-vite && npm run serve)",
     "copy:static-html": "mkdir examples-dev ; cp -a -v ./examples/static-html ./examples-dev ; sh ./use-local-elements.sh static-html",
-    "build:static-html": "(cd ./examples-dev/static-html && yarn reinstall && yarn build)",
-    "serve:static-html": "(cd ./examples-dev/static-html && yarn serve)",
+    "build:static-html": "(cd ./examples-dev/static-html && npm run reinstall && npm run build)",
+    "serve:static-html": "(cd ./examples-dev/static-html && npm run serve)",
     "/// e2e ///": "",
     "e2e:open": "playwright test --ui",
     "e2e:execute": "playwright test",
@@ -142,5 +143,14 @@
       "@commitlint/config-conventional"
     ]
   },
-  "dependencies": {}
+  "allowScripts": {
+    "@fortawesome/fontawesome-common-types": false,
+    "@fortawesome/fontawesome-svg-core": false,
+    "@fortawesome/free-solid-svg-icons": false,
+    "@parcel/watcher": false,
+    "@scarf/scarf": false,
+    "@swc/core": false,
+    "esbuild": false,
+    "nx": false
+  }
 }

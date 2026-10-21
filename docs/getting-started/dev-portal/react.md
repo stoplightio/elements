@@ -13,7 +13,7 @@ Use the [React App template](https://github.com/stoplightio/cra-template-element
 npx create-react-app my-dir --template @stoplight/elements-dev-portal
 ```
 
-Then, run `cd my-dir` and `yarn start` to see a basic Elements Dev Portal website in the browser.
+Then, run `cd my-dir` and `npm start` to see a basic Elements Dev Portal website in the browser.
 
 When the server has started, navigate to `http://localhost:3000` to see Elements Dev Portal rendering an [example Git project](https://github.com/stoplightio/studio-demo). Follow the instructions below to change your `projectId` and load up one of your projects.
 
@@ -24,7 +24,7 @@ To install Elements Dev Portal in an existing React app, follow these instructio
 1. Install the [`@stoplight/elements-dev-portal`](https://www.npmjs.com/package/@stoplight/elements-dev-portal) package with NPM/Yarn.
 
 ```bash
-yarn add @stoplight/elements-dev-portal
+npm install @stoplight/elements-dev-portal
 ```
 
 2. In `App.js` import the API component and CSS file from the Elements library.
@@ -76,7 +76,7 @@ See [Dev Portal Configuration Options](dev-portal-options.md).
 Now start the development server.
 
 ```bash
-yarn start
+npm start
 ```
 
 And you should see the API reference documentation for the Zoom API.

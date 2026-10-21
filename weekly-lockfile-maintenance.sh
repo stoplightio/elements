@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Question: Why does this script exist? Why not use dependabot?
-# Answer: https://11sigma.com/blog/2021/09/03/yarn-lock-how-it-works-and-what-you-risk-without-maintaining-yarn-dependencies-deep-dive/
+# Answer: dependabot only bumps the packages we depend on directly; this refreshes the transitive ones in package-lock.json too.
 
 # https://stackoverflow.com/questions/3822621/how-to-exit-if-a-command-failed/19469570#19469570
 set -e 
@@ -17,9 +17,9 @@ git pull --ff-only
 BRANCH_NAME=feat/lockfile-maintenance-ci-job-$(date +"%m-%d-%Y")
 git checkout -b "$BRANCH_NAME"
 
-yarn upgrade
+npm update
 
-git add yarn.lock
+git add package-lock.json
 git commit -m "chore: weekly lockfile maintenance"
 git push --set-upstream origin "$BRANCH_NAME"
 

@@ -40,8 +40,8 @@ Stoplight Elements comes with a few example integration projects, showing you ho
 To run the **react-vite**, **angular** and **static-html** examples yourself:
 1. Clone this repo.
 2. Go to `examples` folder and open an example, e.g.: `examples/angular`.
-3. Run `yarn` to install all dependencies.
-4. Run `yarn start` to run the example (for **static-html** run `yarn serve` instead).
+3. Run `npm install` to install all dependencies.
+4. Run `npm start` to run the example (for **static-html** run `npm run serve` instead).
 
 > **Note:** for the **bootstrap** example just go straight to its directory and open the HTML files in a browser.
 

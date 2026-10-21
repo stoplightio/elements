@@ -7,7 +7,7 @@ Learn how to get started with Elements in an Angular project.
 First, install the Elements library.
 
 ```bash
-yarn add @stoplight/elements
+npm install @stoplight/elements
 ```
 
 Add the Elements CSS and JavaScript bundles to your Angular config.
@@ -42,7 +42,7 @@ Add the Elements CSS and JavaScript bundles to your Angular config.
 Now, generate a new Angular component for your API reference docs.
 
 ```bash
-yarn ng generate component api-reference --type=component
+npx ng generate component api-reference --type=component
 ```
 
 This should generate an `api-reference` folder with a few files. In the `api-reference.component.html` file, add the Stoplight API component.
@@ -97,7 +97,7 @@ export class ApiReferenceComponent {}
 Now, start the development server.
 
 ```bash
-yarn start
+npm start
 ```
 
 And you should see the API reference documentation for the Zoom API.

@@ -13,7 +13,7 @@
     "@stoplight/elements": "^10.0.0",
     "@stoplight/elements-dev-portal": "^4.0.0"
   },
-  "resolutions": {
+  "overrides": {
     "xml-parser-xo": "4.1.5"
   }
 }
