@@ -7,7 +7,6 @@ import * as React from 'react';
  * Renders the known x-enum-Description vendor extension
  * @returns React.ReactElement
  */
-// eslint-disable-next-line storybook/prefer-pascal-case
 export const renderExtensionRenderer = (props: any) => {
   const { nestingLevel, schemaNode: node, vendorExtensions } = props;
 

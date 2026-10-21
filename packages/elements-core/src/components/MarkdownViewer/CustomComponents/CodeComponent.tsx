@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import { JsonSchemaViewer } from '@stoplight/json-schema-viewer';
 import { DefaultSMDComponents } from '@stoplight/markdown-viewer';
 import { Box, Flex, Icon } from '@stoplight/mosaic';

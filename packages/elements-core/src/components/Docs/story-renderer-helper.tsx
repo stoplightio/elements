@@ -11,7 +11,6 @@ import { ExtensionAddonRenderer, ExtensionRowProps } from './Docs';
  * Renders the known x-enum-Description vendor extension
  * @returns React.ReactElement
  */
-// eslint-disable-next-line storybook/prefer-pascal-case
 export const renderExtensionRenderer: ExtensionAddonRenderer = (props: ExtensionRowProps) => {
   const { nestingLevel, schemaNode, vendorExtensions } = props;
   const { 'x-enum-descriptions': enumDescriptions = {} } = vendorExtensions;

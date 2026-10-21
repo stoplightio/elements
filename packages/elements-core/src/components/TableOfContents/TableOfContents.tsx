@@ -130,7 +130,6 @@ export const TableOfContents = React.memo<TableOfContentsProps>(
       if (!hasAnyLastIndexMatch && firstMatchItem && 'index' in firstMatchItem && firstMatchItem.index) {
         setLastActiveIndex(firstMatchItem.index);
       }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [firstMatchItem, hasAnyLastIndexMatch]);
 
     const container = React.useRef<HTMLDivElement>(null);
