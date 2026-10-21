@@ -10,11 +10,14 @@ import { todosApiBundled as bundledYaml } from '../__fixtures__/api-descriptions
 import { zoomApiYaml as yaml } from '../__fixtures__/api-descriptions/zoomApiYaml';
 import { useExportDocumentProps } from './useExportDocumentProps';
 
-jest.mock('file-saver');
+vi.mock('file-saver', () => {
+  const saveAs = vi.fn();
+  return { default: { saveAs }, saveAs };
+});
 
 describe('useExportDocumentProps', () => {
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
   it('exports json document', () => {
     const data = renderHook(() =>

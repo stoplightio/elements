@@ -40,26 +40,26 @@ describe('Model', () => {
   });
 
   it('does not show examples with more lines than supported, by default', async () => {
-    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+    vi.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
       return example.split(/\r\n|\r|\n/).length > size;
     });
-    jest
-      .spyOn(exampleGenerationUtils, 'generateExamplesFromJsonSchema')
-      .mockReturnValue([{ label: '', data: generatedExample }]);
+    vi.spyOn(exampleGenerationUtils, 'generateExamplesFromJsonSchema').mockReturnValue([
+      { label: '', data: generatedExample },
+    ]);
 
     render(<Model data={exampleSchema} />);
 
     await screen.findByText('Large examples are not rendered by default.');
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('shows examples bigger than supported after clicking "Load Examples" button', async () => {
-    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+    vi.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
       return example.split(/\r\n|\r|\n/).length > size;
     });
-    jest
-      .spyOn(exampleGenerationUtils, 'generateExamplesFromJsonSchema')
-      .mockReturnValue([{ label: '', data: generatedExample }]);
+    vi.spyOn(exampleGenerationUtils, 'generateExamplesFromJsonSchema').mockReturnValue([
+      { label: '', data: generatedExample },
+    ]);
 
     render(<Model data={exampleSchema} />);
 
@@ -67,7 +67,7 @@ describe('Model', () => {
     userEvent.click(button);
 
     expect(await screen.findByText('"iamtoobig"')).toBeInTheDocument();
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('uses examples defined in the schema', async () => {
@@ -146,10 +146,7 @@ describe('Model', () => {
     it('should render correctly', () => {
       const wrapper = render(
         <MosaicProvider>
-          <Model
-            data={exampleSchema}
-            exportProps={{ original: { onPress: jest.fn() }, bundled: { onPress: jest.fn() } }}
-          />
+          <Model data={exampleSchema} exportProps={{ original: { onPress: vi.fn() }, bundled: { onPress: vi.fn() } }} />
           ,
         </MosaicProvider>,
       );
@@ -167,7 +164,7 @@ describe('Model', () => {
         <MosaicProvider>
           <Model
             data={exampleSchema}
-            exportProps={{ original: { onPress: jest.fn() }, bundled: { onPress: jest.fn() } }}
+            exportProps={{ original: { onPress: vi.fn() }, bundled: { onPress: vi.fn() } }}
             layoutOptions={{ hideExport: true }}
           />
         </MosaicProvider>,
@@ -191,7 +188,7 @@ describe('Model', () => {
 
   describe('Vendor Extensions', () => {
     it('should call rendorExtensionAddon', async () => {
-      const vendorExtensionRenderer = jest.fn();
+      const vendorExtensionRenderer = vi.fn();
       const { unmount } = render(
         <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
           <Model data={exampleSchema} />
@@ -211,7 +208,7 @@ describe('Model', () => {
     });
 
     it('should display vendor extensions', async () => {
-      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+      const vendorExtensionRenderer = vi.fn().mockImplementation(props => {
         return renderExtensionRenderer(props);
       });
 

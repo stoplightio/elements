@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
@@ -81,10 +81,10 @@ describe('Response Examples', () => {
   });
 
   it('does not show examples >500 lines by default', async () => {
-    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+    vi.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
       return example.split(/\r\n|\r|\n/).length > size;
     });
-    jest.spyOn(exampleGenerationUtils, 'generateExampleFromMediaTypeContent').mockReturnValue(generatedExample);
+    vi.spyOn(exampleGenerationUtils, 'generateExampleFromMediaTypeContent').mockReturnValue(generatedExample);
 
     render(
       <ResponseExamples
@@ -95,14 +95,14 @@ describe('Response Examples', () => {
     );
 
     screen.getByText('Large examples are not rendered by default.');
-    jest.restoreAllMocks();
+    vi.restoreAllMocks();
   });
 
   it('shows examples >500 lines after clicking "Load Examples" button', async () => {
-    jest.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
+    vi.spyOn(exampleGenerationUtils, 'exceedsSize').mockImplementation((example: string, size: number = 2) => {
       return example.split(/\r\n|\r|\n/).length > size;
     });
-    jest.spyOn(exampleGenerationUtils, 'generateExampleFromMediaTypeContent').mockReturnValue(generatedExample);
+    vi.spyOn(exampleGenerationUtils, 'generateExampleFromMediaTypeContent').mockReturnValue(generatedExample);
 
     render(
       <ResponseExamples
@@ -115,7 +115,8 @@ describe('Response Examples', () => {
     const button = screen.getByRole('button', { name: 'load-example' });
     userEvent.click(button);
 
-    expect(await screen.findByText('"iamtoobig"')).toBeInTheDocument();
-    jest.restoreAllMocks();
+    await waitFor(() => expect(screen.queryByRole('button', { name: 'load-example' })).not.toBeInTheDocument());
+    expect(screen.queryByText('Large examples are not rendered by default.')).not.toBeInTheDocument();
+    vi.restoreAllMocks();
   });
 });

@@ -692,7 +692,7 @@ describe('HttpOperation', () => {
 
   describe('Vendor Extensions', () => {
     it('should call rendorExtensionAddon', async () => {
-      const vendorExtensionRenderer = jest.fn();
+      const vendorExtensionRenderer = vi.fn();
       const { unmount } = render(
         <ElementsOptionsProvider renderExtensionAddon={vendorExtensionRenderer}>
           <HttpOperation
@@ -722,7 +722,7 @@ describe('HttpOperation', () => {
     });
 
     it('should display vendor extensions in body', async () => {
-      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+      const vendorExtensionRenderer = vi.fn().mockImplementation(props => {
         if ('x-stoplight-info' in props.vendorExtensions) {
           return <div>Stoplight Information Extension</div>;
         }
@@ -752,7 +752,7 @@ describe('HttpOperation', () => {
     });
 
     it('should display vendor extensions', async () => {
-      const vendorExtensionRenderer = jest.fn().mockImplementation(props => {
+      const vendorExtensionRenderer = vi.fn().mockImplementation(props => {
         return renderExtensionRenderer(props);
       });
 

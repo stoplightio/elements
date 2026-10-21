@@ -17,7 +17,7 @@
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-github-btn": "1.4.0",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.30.6"
   },
   "devDependencies": {
     "@types/jest": "^26.0.22",

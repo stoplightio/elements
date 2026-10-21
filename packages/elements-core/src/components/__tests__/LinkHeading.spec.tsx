@@ -1,10 +1,6 @@
-/**
- * @jest-environment jest-environment-jsdom-global
- */
-
+// @vitest-environment-options {"url": "https://elements-demo.stoplight.io"}
 import '@testing-library/jest-dom';
 
-import { jest } from '@jest/globals';
 import { render } from '@testing-library/react';
 import * as React from 'react';
 import { BrowserRouter, HashRouter } from 'react-router-dom';
@@ -12,14 +8,12 @@ import { BrowserRouter, HashRouter } from 'react-router-dom';
 import { RouterTypeContext } from '../../context/RouterType';
 import { LinkHeading } from '../LinkHeading';
 
-declare const jsdom: { reconfigure(opts: { url: string }): void };
-
 describe('LinkHeading', () => {
-  const scroll = jest.fn();
+  const scroll = vi.fn();
   const scrollIntoView = HTMLElement.prototype.scrollIntoView;
 
   beforeAll(() => {
-    jest.useFakeTimers();
+    vi.useFakeTimers();
     HTMLElement.prototype.scrollIntoView = scroll;
   });
 
@@ -28,13 +22,13 @@ describe('LinkHeading', () => {
   });
 
   afterAll(() => {
-    jest.useRealTimers();
+    vi.useRealTimers();
     HTMLElement.prototype.scrollIntoView = scrollIntoView;
   });
 
   describe('given browser router', () => {
     beforeEach(() => {
-      jsdom.reconfigure({ url: 'https://elements-demo.stoplight.io/route' });
+      window.history.pushState({}, '', '/route');
     });
 
     it('should not append id to the route', () => {
@@ -66,7 +60,7 @@ describe('LinkHeading', () => {
         </RouterTypeContext.Provider>,
       );
 
-      jest.advanceTimersByTime(300);
+      vi.advanceTimersByTime(300);
       expect(scroll).toBeCalledWith({
         behavior: 'smooth',
         block: 'start',
@@ -76,7 +70,7 @@ describe('LinkHeading', () => {
 
   describe('given hash router', () => {
     beforeEach(() => {
-      jsdom.reconfigure({ url: 'https://elements-demo.stoplight.io' });
+      window.history.pushState({}, '', '/');
     });
 
     afterEach(() => {
@@ -115,7 +109,7 @@ describe('LinkHeading', () => {
         </RouterTypeContext.Provider>,
       );
 
-      jest.advanceTimersByTime(300);
+      vi.advanceTimersByTime(300);
       expect(scroll).toBeCalledWith({
         behavior: 'smooth',
         block: 'start',

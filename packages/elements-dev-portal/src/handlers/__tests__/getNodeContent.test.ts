@@ -1,4 +1,4 @@
-import fetchMock from 'jest-fetch-mock';
+import { fetchMock } from '@test-utils/fetchMock';
 
 import { getNodeContent } from '../getNodeContent';
 

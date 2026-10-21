@@ -12,10 +12,10 @@ import { ResponseCodeViewer } from './ReponseCodeViewer';
 import { getResponseType, ResponseState, TryItResponse } from './Response';
 
 describe('Response', () => {
-  window.URL.createObjectURL = jest.fn();
+  window.URL.createObjectURL = vi.fn();
 
   afterEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
   });
 
   it('shows raw code view with large text', () => {

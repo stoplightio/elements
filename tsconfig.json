@@ -5,7 +5,9 @@
     "esModuleInterop": true,
     "baseUrl": "./packages",
     "lib": ["es2021", "dom"],
+    "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"],
     "paths": {
+      "@test-utils/*": ["../test-utils/*"],
       "@stoplight/elements": ["./elements/src"],
       "@stoplight/elements/*": ["./elements/src/*"],
       "@stoplight/elements-dev-portal": ["./elements-dev-portal/src"],

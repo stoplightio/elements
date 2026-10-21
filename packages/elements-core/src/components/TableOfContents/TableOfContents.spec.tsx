@@ -402,7 +402,7 @@ describe('utils', () => {
       });
 
       it('should handle node click and set active state', () => {
-        const onLinkClick = jest.fn();
+        const onLinkClick = vi.fn();
         const { unmount } = render(
           <TableOfContents
             activeId=""
@@ -434,7 +434,7 @@ describe('utils', () => {
       });
 
       it('should not trigger link click when node is already active', () => {
-        const onLinkClick = jest.fn();
+        const onLinkClick = vi.fn();
         const { unmount } = render(
           <TableOfContents
             activeId="test-node"

@@ -2,9 +2,9 @@ import '@testing-library/jest-dom';
 
 import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
+import { fetchMock } from '@test-utils/fetchMock';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
 import { httpOperation as octetStreamOperation } from '../../__fixtures__/operations/application-octet-stream-post';

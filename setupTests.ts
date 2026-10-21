@@ -1,10 +1,10 @@
-import '@testing-library/jest-dom';
+import '@testing-library/jest-dom/vitest';
 
 import { ResizeObserver } from '@juggle/resize-observer';
-import fetchMock from 'jest-fetch-mock';
+import Enzyme from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
 
-const Enzyme = require('enzyme');
-const Adapter = require('enzyme-adapter-react-16');
+import { fetchMock } from './test-utils/fetchMock';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -19,10 +19,10 @@ window.IntersectionObserver = class implements IntersectionObserver {
   readonly rootMargin!: string;
   readonly thresholds!: ReadonlyArray<number>;
 
-  public readonly observe = jest.fn();
-  public readonly unobserve = jest.fn();
-  public readonly disconnect = jest.fn();
-  public readonly takeRecords = jest.fn();
+  public readonly observe = vi.fn();
+  public readonly unobserve = vi.fn();
+  public readonly disconnect = vi.fn();
+  public readonly takeRecords = vi.fn();
 };
 
 fetchMock.enableMocks();

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom';
 
+import { fetchMock } from '@test-utils/fetchMock';
 import { act, renderHook } from '@testing-library/react-hooks';
-import fetchMock from 'jest-fetch-mock';
 import * as React from 'react';
 
 import { DevPortalProvider } from '../../components/DevPortalProvider';

@@ -4,7 +4,11 @@
     "src"
   ],
   "exclude": [
-    "**/__*__/**"
+    "**/__*__/**",
+    "**/*.spec.ts",
+    "**/*.spec.tsx",
+    "**/*.test.ts",
+    "**/*.test.tsx"
   ],
   "compilerOptions": {
     "baseUrl": "./",

@@ -326,7 +326,7 @@ describe('HttpService', () => {
           <MosaicProvider>
             <HttpService
               data={httpService}
-              exportProps={{ original: { onPress: jest.fn() }, bundled: { onPress: jest.fn() } }}
+              exportProps={{ original: { onPress: vi.fn() }, bundled: { onPress: vi.fn() } }}
             />
           </MosaicProvider>
         </Router>,
@@ -346,7 +346,7 @@ describe('HttpService', () => {
           <MosaicProvider>
             <HttpService
               data={httpService}
-              exportProps={{ original: { onPress: jest.fn() }, bundled: { onPress: jest.fn() } }}
+              exportProps={{ original: { onPress: vi.fn() }, bundled: { onPress: vi.fn() } }}
               layoutOptions={{ hideExport: true }}
             />
           </MosaicProvider>

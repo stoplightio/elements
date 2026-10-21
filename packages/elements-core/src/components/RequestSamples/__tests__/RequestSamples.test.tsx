@@ -4,7 +4,6 @@ import { screen } from '@testing-library/dom';
 import { cleanup, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
-import { TextDecoder, TextEncoder } from 'util';
 
 import { withPersistenceBoundary } from '../../../context/Persistence';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';
@@ -37,10 +36,6 @@ const sampleRequest = {
   headersSize: 678,
   bodySize: -1,
 };
-
-globalThis.TextEncoder = TextEncoder;
-// @ts-ignore
-globalThis.TextDecoder = TextDecoder;
 
 describe('RequestSend', () => {
   beforeEach(() => {

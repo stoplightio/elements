@@ -46,10 +46,10 @@
     "release.docs": "sl-scripts release:docs",
     "release.dryRun": "sl-scripts release --dry-run --debug",
     "storybook": "storybook dev -p 9001",
-    "test": "jest",
-    "test.prod": "yarn test --coverage --maxWorkers=2",
-    "test.update": "yarn test --updateSnapshot",
-    "test.watch": "yarn test --watch",
+    "test": "vitest run",
+    "test.prod": "vitest run --coverage --maxWorkers=2",
+    "test.update": "vitest run --update",
+    "test.watch": "vitest",
     "test.packaging": "node --input-type=commonjs -e \"require('./dist/index.js')\" && node --input-type=module -e \"import './dist/index.mjs'\"",
     "type-check": "tsc --noEmit"
   },
@@ -74,13 +74,13 @@
     "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "react-query": "^3.34.19",
-    "react-router-dom": "^6.28.0"
+    "react-router-dom": "^6.30.6"
   },
   "devDependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@stoplight/scripts": "10.0.0",
     "@testing-library/dom": "^7.26.5",
-    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^11.1.1",
     "@testing-library/react-hooks": "^8.0.1",
     "@testing-library/user-event": "^12.2.0",
@@ -95,7 +95,6 @@
     "enzyme": "3.x.x",
     "enzyme-adapter-react-16": "1.x.x",
     "enzyme-to-json": "3.x.x",
-    "jest-fetch-mock": "^3.0.3",
     "react": "16.14.0",
     "react-dom": "16.14.0",
     "react-test-renderer": "^16.8.0",

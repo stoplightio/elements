@@ -65,7 +65,7 @@ const languages = Object.values(requestSampleConfigs).flatMap<string>(({ httpSni
 test.each(languages)('given %s, convertRequestToSample converts a request to a sample', async input => {
   const [language, library] = input.split(' / ');
 
-  expect(convertRequestToSample(language, library, har)).resolves.toMatchSnapshot();
+  await expect(convertRequestToSample(language, library, har)).resolves.toMatchSnapshot();
 });
 
 describe('curly bracket encoding', () => {

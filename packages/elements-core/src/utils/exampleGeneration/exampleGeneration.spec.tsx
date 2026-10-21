@@ -12,7 +12,7 @@ const modelWithNoExamples: JSONSchema7 = require('../../__fixtures__/models/mode
 describe('generateExamplesFromJsonSchema', () => {
   it('returns error message when example generation fails ', () => {
     const errorMessage = 'This is a mocked Error message';
-    jest.spyOn(Sampler, 'sample').mockImplementationOnce(() => {
+    vi.spyOn(Sampler, 'sample').mockImplementationOnce(() => {
       throw Error(errorMessage);
     });
 
