@@ -90,11 +90,16 @@ export const createElementClass = <P extends Record<string, any>>(
     }
 
     disconnectedCallback() {
-      if (this._mountPoint) {
-        this._root?.unmount();
-        this._root = undefined;
-        this.removeChild(this._mountPoint);
-        this._mountPoint = undefined;
+      const root = this._root;
+      const mountPoint = this._mountPoint;
+      this._root = undefined;
+      this._mountPoint = undefined;
+
+      if (root && mountPoint) {
+        mountPoint.remove();
+        // The element can be removed while React is rendering (when a React or Angular app removes it), and React
+        // does not allow unmounting a root synchronously then.
+        queueMicrotask(() => root.unmount());
       }
     }
 

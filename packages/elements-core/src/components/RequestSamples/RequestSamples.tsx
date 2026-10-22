@@ -4,7 +4,7 @@ import { Dictionary } from '@stoplight/types';
 import { Request } from 'har-format';
 import { useAtom } from 'jotai';
 import { cloneDeep, find, findKey } from 'lodash';
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import { atomWithPersistedValue } from '../../utils/jotai/atomWithPersistedValue';
 import { convertRequestToSample } from './convertRequestToSample';

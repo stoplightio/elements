@@ -1,7 +1,6 @@
 import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import { flow } from 'lodash';
-import * as React from 'react';
 
 import { withPersistenceBoundary } from '../../../context/Persistence';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';

@@ -4,7 +4,13 @@ import { defineConfig } from 'vitest/config';
 
 const root = path.dirname(fileURLToPath(import.meta.url));
 
-export const createConfig = (name: string) =>
+type Thresholds = { statements: number; branches: number; functions: number; lines: number };
+
+/**
+ * @param thresholds the lowest coverage `npm run test.prod` accepts. Set a few points below the current coverage, so
+ * that dropping it fails the build, and raise it when the coverage grows.
+ */
+export const createConfig = (name: string, thresholds: Thresholds) =>
   defineConfig({
     resolve: {
       alias: [
@@ -27,6 +33,7 @@ export const createConfig = (name: string) =>
       ],
       coverage: {
         provider: 'v8',
+        thresholds,
         include: ['src/**/*.{ts,tsx}'],
         exclude: [
           '**/__tests__/**',

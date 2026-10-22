@@ -43,10 +43,13 @@ you need to do.
 
 ### Security
 
-- Fixes CVE-2026-53669 (open redirect through a backslash in `<Link>` and `useNavigate`) by moving to React Router 8.
-  The fix is not available for React Router 6.
-- The dependency tree no longer contains React Router 6 and `react-query` 3. The remaining `npm audit` findings come
-  from `@stoplight/http-spec`, which depends on `postman-collection`. Elements doesn't load the Postman code.
+- Fixes [CVE-2026-53669](https://github.com/advisories/GHSA-wrjc-x8rr-h8h6) (open redirect through a backslash in
+  `<Link>` and `useNavigate`) by moving to React Router 8. The fix is not available for React Router 6.
+- The dependency tree no longer contains React Router 6 and `react-query` 3. The remaining `npm audit` findings
+  ([GHSA-qxc2-j82w-r537](https://github.com/advisories/GHSA-qxc2-j82w-r537) in `@faker-js/faker`,
+  [GHSA-w5hq-g745-h8pq](https://github.com/advisories/GHSA-w5hq-g745-h8pq) in `uuid`, and the two packages that
+  depend on them) come from `@stoplight/http-spec` → `postman-collection`. Elements doesn't load the Postman code and
+  none of the bundles contain it.
 
 ### Not changed
 

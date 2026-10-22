@@ -1,5 +1,4 @@
 import { Meta, StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { httpOperation as putTodosOperation } from '../../__fixtures__/operations/put-todos';
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';

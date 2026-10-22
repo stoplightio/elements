@@ -1,6 +1,5 @@
 import { Flex } from '@stoplight/mosaic';
 import { StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { TableOfContents } from './TableOfContents';
 import { TableOfContentsProps } from './types';

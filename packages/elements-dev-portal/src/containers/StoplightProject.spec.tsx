@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 
 import { fetchMock } from '@test-utils/fetchMock';
 import { render, screen } from '@testing-library/react';
-import * as React from 'react';
 
 import branches from '../__fixtures__/branches.json';
 import nodeContent from '../__fixtures__/node-content.json';

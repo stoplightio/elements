@@ -1,7 +1,7 @@
 // @vitest-environment-options {"url": "https://elements-demo.stoplight.io"}
 import '@testing-library/jest-dom';
 
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import * as React from 'react';
 import { BrowserRouter, HashRouter } from 'react-router';
 
@@ -60,7 +60,9 @@ describe('LinkHeading', () => {
         </RouterTypeContext.Provider>,
       );
 
-      vi.advanceTimersByTime(300);
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
       expect(scroll).toBeCalledWith({
         behavior: 'smooth',
         block: 'start',
@@ -109,7 +111,9 @@ describe('LinkHeading', () => {
         </RouterTypeContext.Provider>,
       );
 
-      vi.advanceTimersByTime(300);
+      act(() => {
+        vi.advanceTimersByTime(300);
+      });
       expect(scroll).toBeCalledWith({
         behavior: 'smooth',
         block: 'start',

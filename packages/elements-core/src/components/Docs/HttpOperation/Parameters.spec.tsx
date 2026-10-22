@@ -3,7 +3,6 @@ import { screen } from '@testing-library/dom';
 import { render } from '@testing-library/react';
 import { JSONSchema7 } from 'json-schema';
 import { omit } from 'lodash';
-import * as React from 'react';
 
 import { Parameters } from './Parameters';
 

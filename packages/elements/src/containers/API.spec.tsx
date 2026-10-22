@@ -1,13 +1,24 @@
 import '@testing-library/jest-dom';
 
-import { render, screen } from '@testing-library/react';
+import { fetchMock } from '@test-utils/fetchMock';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import * as React from 'react';
-import { MemoryRouter } from 'react-router';
+import { MemoryRouter, useLocation } from 'react-router';
 
 import { InstagramAPI } from '../__fixtures__/api-descriptions/Instagram';
 import { simpleApiWithoutDescription } from '../__fixtures__/api-descriptions/simpleApiWithoutDescription';
 import { API } from './API';
+
+const LocationDisplay = () => <div data-testid="location">{useLocation().pathname}</div>;
+
+const renderAt = (path: string, ui: React.ReactElement) =>
+  render(
+    <MemoryRouter initialEntries={[path]}>
+      <LocationDisplay />
+      {ui}
+    </MemoryRouter>,
+  );
 
 describe('API', () => {
   const APIDocument = {
@@ -51,48 +62,91 @@ describe('API', () => {
     expect(await screen.findByAltText('logo')).toBeInTheDocument();
   });
 
-  it('displays internal operations by default', () => {
-    const { unmount } = render(
-      <MemoryRouter initialEntries={['/paths/internal-operation/get']}>
-        <API layout="sidebar" apiDescriptionDocument={APIDocument} />
-      </MemoryRouter>,
-    );
+  it('displays internal operations by default', async () => {
+    renderAt('/paths/internal-operation/get', <API layout="sidebar" apiDescriptionDocument={APIDocument} />);
 
-    expect(screen.getByText('If you see this, something went wrong')).toBeInTheDocument();
-
-    unmount();
+    expect(await screen.findByText('If you see this, something went wrong')).toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/paths/internal-operation/get');
   });
 
-  it('displays internal models by default', () => {
-    render(
-      <MemoryRouter initialEntries={['/schemas/InternalObject']}>
-        <API layout="sidebar" apiDescriptionDocument={APIDocument} />
-      </MemoryRouter>,
-    );
+  it('displays internal models by default', async () => {
+    renderAt('/schemas/InternalObject', <API layout="sidebar" apiDescriptionDocument={APIDocument} />);
 
-    expect(screen.getByText('Cool object, but internal.')).toBeInTheDocument();
+    expect(await screen.findByText('Cool object, but internal.')).toBeInTheDocument();
+    expect(screen.getByTestId('location')).toHaveTextContent('/schemas/InternalObject');
   });
 
-  it('reroutes to main page on internal operation if hideInternal is on', () => {
-    render(
-      <MemoryRouter initialEntries={['/paths/internal-operation/get']}>
-        <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
-      </MemoryRouter>,
+  it('reroutes away from an internal operation if hideInternal is on', async () => {
+    renderAt(
+      '/paths/internal-operation/get',
+      <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />,
     );
 
+    await waitFor(() => expect(screen.getByTestId('location')).not.toHaveTextContent('/paths/internal-operation/get'));
+    expect(await screen.findAllByRole('heading', { name: /Instagram API/ })).not.toHaveLength(0);
     expect(screen.queryByText('If you see this, something went wrong')).not.toBeInTheDocument();
-    expect(location.pathname).toBe('/');
   });
 
-  it('reroutes to main page on internal model if hideInternal is on', () => {
-    render(
-      <MemoryRouter initialEntries={['/schemas/InternalObject']}>
-        <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />
-      </MemoryRouter>,
-    );
+  it('reroutes away from an internal model if hideInternal is on', async () => {
+    renderAt('/schemas/InternalObject', <API layout="sidebar" apiDescriptionDocument={APIDocument} hideInternal />);
 
+    await waitFor(() => expect(screen.getByTestId('location')).not.toHaveTextContent('/schemas/InternalObject'));
+    expect(await screen.findAllByRole('heading', { name: /Instagram API/ })).not.toHaveLength(0);
     expect(screen.queryByText('Cool object, but internal.')).not.toBeInTheDocument();
-    expect(location.pathname).toBe('/');
+  });
+
+  describe('loading the description', () => {
+    beforeEach(() => {
+      fetchMock.mockClear();
+    });
+
+    it('fetches the document from apiDescriptionUrl', async () => {
+      fetchMock.mockResponseOnce(JSON.stringify(InstagramAPI));
+
+      render(<API layout="sidebar" apiDescriptionUrl="https://example.com/instagram.json" />);
+
+      expect(await screen.findByAltText('logo')).toBeInTheDocument();
+      expect(fetchMock).toHaveBeenCalledWith('https://example.com/instagram.json');
+    });
+
+    it('does not fetch when a document is passed as well', async () => {
+      render(
+        <API layout="sidebar" apiDescriptionUrl="https://example.com/x.json" apiDescriptionDocument={InstagramAPI} />,
+      );
+
+      expect(await screen.findByAltText('logo')).toBeInTheDocument();
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
+
+    it('says so when the document cannot be fetched', async () => {
+      fetchMock.mockResponseOnce('not found', { status: 404 });
+
+      render(<API layout="sidebar" apiDescriptionUrl="https://example.com/missing.json" />);
+
+      expect(await screen.findByText('Document could not be loaded')).toBeInTheDocument();
+    });
+
+    it('says so when the request fails', async () => {
+      fetchMock.mockRejectOnce(new Error('network down'));
+
+      render(<API layout="sidebar" apiDescriptionUrl="https://example.com/down.json" />);
+
+      expect(await screen.findByText('Document could not be loaded')).toBeInTheDocument();
+    });
+
+    it('says so when the document is not an OpenAPI description', async () => {
+      render(<API layout="sidebar" apiDescriptionDocument={{ not: 'openapi' }} />);
+
+      expect(await screen.findByText('Failed to parse OpenAPI file')).toBeInTheDocument();
+    });
+  });
+
+  describe('layouts', () => {
+    it('renders the responsive layout', async () => {
+      render(<API layout="responsive" apiDescriptionDocument={APIDocument} />);
+
+      expect(await screen.findAllByRole('heading', { name: /Instagram API/ })).not.toHaveLength(0);
+    });
   });
 
   describe('stackedLayout', () => {

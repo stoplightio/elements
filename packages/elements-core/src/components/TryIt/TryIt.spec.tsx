@@ -5,7 +5,6 @@ import { HttpParamStyles, IHttpOperation } from '@stoplight/types';
 import { fetchMock } from '@test-utils/fetchMock';
 import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import * as React from 'react';
 
 import { httpOperation as octetStreamOperation } from '../../__fixtures__/operations/application-octet-stream-post';
 import { httpOperation as base64FileUpload } from '../../__fixtures__/operations/base64-file-upload';
@@ -34,6 +33,7 @@ import { InlineRefResolverProvider } from '../../context/InlineRefResolver';
 import { PersistenceContextProvider, withPersistenceBoundary } from '../../context/Persistence';
 import { withMosaicProvider } from '../../hoc/withMosaicProvider';
 import { chooseOption } from '../../utils/tests/chooseOption';
+import { waitForMenuToClose } from '../../utils/tests/waitForMenuToClose';
 import { TryIt } from './index';
 
 async function clickSend() {
@@ -183,6 +183,7 @@ describe('TryIt', () => {
 
     await userEvent.click(screen.getByRole('button', { name: /server/i }));
     await userEvent.click(screen.getByRole('menuitemradio', { name: /mock server/i }));
+    await waitForMenuToClose();
     await clickSend();
 
     await screen.findByText('Response');
@@ -236,6 +237,7 @@ describe('TryIt', () => {
 
     await userEvent.click(screen.getByRole('button', { name: /server/i }));
     await userEvent.click(screen.getByRole('menuitemradio', { name: /mock server/i }));
+    await waitForMenuToClose();
     await clickSend();
 
     await screen.findByText('Response');
@@ -773,6 +775,7 @@ describe('TryIt', () => {
         expect(examples).toEqual(examplesItems);
 
         await userEvent.click(screen.getByRole('menuitem', { name: 'named example' }));
+        await waitForMenuToClose();
         expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
           name: 'Jane',
           age: 36,
@@ -791,6 +794,7 @@ describe('TryIt', () => {
 
         await userEvent.click(examplesButton);
         await userEvent.click(screen.getByRole('menuitem', { name: 'example-1' }));
+        await waitForMenuToClose();
         expect(JSON.parse(screen.getByRole('textbox').textContent || '')).toEqual({
           name: 'Andrew',
           age: 19,
@@ -855,6 +859,7 @@ describe('TryIt', () => {
       // select mock server
       let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       // open mock dropdown
       const mockButton = screen.getByRole('button', { name: /mock settings/i });
@@ -864,6 +869,7 @@ describe('TryIt', () => {
       const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
       expect(responseCodeItem).toBeInTheDocument();
       await userEvent.click(responseCodeItem);
+      await waitForMenuToClose();
 
       // and send
       await clickSend();
@@ -876,6 +882,7 @@ describe('TryIt', () => {
       await userEvent.click(serversButton);
       let server1 = screen.getByRole('menuitemradio', { name: /live server/i });
       await userEvent.click(server1);
+      await waitForMenuToClose();
 
       await clickSend();
       await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
@@ -910,6 +917,7 @@ describe('TryIt', () => {
       // select mock server
       let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       await clickSend();
 
@@ -943,6 +951,7 @@ describe('TryIt', () => {
       // select mock server
       let enableItem = screen.getByRole('menuitemradio', { name: /mock server/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       // open mock dropdown
       const mockButton = screen.getByRole('button', { name: /mock settings/i });
@@ -952,6 +961,7 @@ describe('TryIt', () => {
       const responseCodeItem = await screen.getByRole('menuitemcheckbox', { name: '200' });
       expect(responseCodeItem).toBeInTheDocument();
       await userEvent.click(responseCodeItem);
+      await waitForMenuToClose();
 
       // and send
       await clickSend();
@@ -1024,6 +1034,7 @@ describe('TryIt', () => {
 
         const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         expect(securitySchemesButton).toHaveTextContent('OAuth 2.0');
       });
@@ -1040,12 +1051,14 @@ describe('TryIt', () => {
 
         let securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         // switch back to API Key
         await userEvent.click(securitySchemesButton);
 
         securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'API Key (api_key)' })[0];
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         APIKeyField = screen.getByLabelText('API Key');
         expect(APIKeyField).toHaveValue('123');
@@ -1114,12 +1127,14 @@ describe('TryIt', () => {
 
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         // switch back to API Key
         await userEvent.click(securitySchemesButton);
 
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
       });
 
       it('keeps distinct values for multiple schemes of same security type', async () => {
@@ -1134,6 +1149,7 @@ describe('TryIt', () => {
         await userEvent.click(securitySchemesButton);
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
         APIKeyField = screen.getByLabelText('API Key 2');
         await userEvent.type(APIKeyField, '456');
 
@@ -1141,6 +1157,7 @@ describe('TryIt', () => {
         await userEvent.click(securitySchemesButton);
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
         APIKeyField = screen.getByLabelText('API Key');
         expect(APIKeyField).toHaveValue('123');
 
@@ -1148,6 +1165,7 @@ describe('TryIt', () => {
         await userEvent.click(securitySchemesButton);
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key (api_key2)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
         APIKeyField = screen.getByLabelText('API Key 2');
         expect(APIKeyField).toHaveValue('456');
       });
@@ -1160,6 +1178,7 @@ describe('TryIt', () => {
         await userEvent.click(securitySchemesButton);
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'API Key & Basic Auth' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         // Fill in a value from each scheme
         let APIKeyField = screen.getByLabelText('API Key 2');
@@ -1186,6 +1205,7 @@ describe('TryIt', () => {
 
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
       });
 
       it('display No auth selected if user chooses None in the menu', async () => {
@@ -1196,12 +1216,14 @@ describe('TryIt', () => {
 
         let securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'OpenID Connect' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
         let noAuth = screen.queryByText('No auth selected');
         expect(noAuth).toBe(null);
 
         await userEvent.click(securitySchemesButton);
         securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'None' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
         let noAuthCount = screen.getAllByText('No auth selected').length;
         expect(noAuthCount).toBe(1);
       });
@@ -1274,6 +1296,7 @@ describe('TryIt', () => {
 
         const securitySchemes = screen.getAllByRole('menuitemcheckbox', { name: 'OAuth 2.0' })[0];
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         const tokenInput = screen.getByLabelText('Token');
 
@@ -1307,6 +1330,7 @@ describe('TryIt', () => {
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Basic Auth (basicKey)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         const usernameInput = screen.getByLabelText('Username');
         const passwordInput = screen.getByLabelText('Password');
@@ -1335,6 +1359,7 @@ describe('TryIt', () => {
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Bearer Auth (bearerKey)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         const tokenInput = screen.getByLabelText('Token');
 
@@ -1361,6 +1386,7 @@ describe('TryIt', () => {
 
         const securitySchemes = screen.getByRole('menuitemcheckbox', { name: 'Digest Auth (digest)' });
         await userEvent.click(securitySchemes);
+        await waitForMenuToClose();
 
         const authInput = screen.getByLabelText('Authorization');
 
@@ -1424,6 +1450,7 @@ describe('TryIt', () => {
 
       const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       expect(serversButton).toHaveTextContent('Development');
     });
@@ -1436,6 +1463,7 @@ describe('TryIt', () => {
 
       const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       expect(serversButton).toHaveTextContent('PR');
 
@@ -1454,6 +1482,7 @@ describe('TryIt', () => {
 
       const enableItem = screen.getByRole('menuitemradio', { name: /development/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       const todoIdField = screen.getByLabelText('todoId');
       await userEvent.type(todoIdField, '123');
@@ -1473,6 +1502,7 @@ describe('TryIt', () => {
 
       const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       expect(serversButton).toHaveTextContent('PR');
 
@@ -1494,6 +1524,7 @@ describe('TryIt', () => {
 
       const enableItem = screen.getByRole('menuitemradio', { name: /pr/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       expect(serversButton).toHaveTextContent('PR');
 
@@ -1554,6 +1585,7 @@ describe('TryIt', () => {
       // select server b
       let enableItem = screen.getByRole('menuitemradio', { name: /server b/i });
       await userEvent.click(enableItem);
+      await waitForMenuToClose();
 
       // unmount (to make sure parameters are not simply stored in component state)
       rerender(

@@ -1,5 +1,4 @@
 import { Box, Flex, Heading, VStack } from '@stoplight/mosaic';
-import React from 'react';
 
 export const Forbidden = () => (
   <Flex align="center" justify="center" flexGrow>

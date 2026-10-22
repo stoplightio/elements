@@ -1,5 +1,4 @@
 import type { LinkProps } from '@stoplight/mosaic';
-import React from 'react';
 
 const externalRegex = new RegExp('^(?:[a-z]+:)?//', 'i');
 

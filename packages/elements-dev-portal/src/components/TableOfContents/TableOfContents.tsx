@@ -4,7 +4,6 @@ import {
   TableOfContents as ElementsTableOfContents,
 } from '@stoplight/elements-core';
 import { BoxProps, Flex } from '@stoplight/mosaic';
-import * as React from 'react';
 
 import { ProjectTableOfContents } from '../../types';
 

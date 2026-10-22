@@ -1,5 +1,4 @@
 import { Meta, StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { examplesRequestBody } from '../../__fixtures__/operations/examples-request-body';
 import { httpOperation as multipartOperation } from '../../__fixtures__/operations/multipart-formdata-post';

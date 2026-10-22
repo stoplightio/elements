@@ -161,9 +161,9 @@ Elements ships ES2020. If your bundler transpiles `node_modules` for older brows
 
 ## Security
 
-React Router 6 does not have a fix for CVE-2026-53669 (open redirect via backslash in `<Link>` and `useNavigate`), and the fix is only available from 7.18.0. Moving to Elements 10 removes React Router 6 from your dependency tree.
+React Router 6 does not have a fix for [CVE-2026-53669](https://github.com/advisories/GHSA-wrjc-x8rr-h8h6) (open redirect via backslash in `<Link>` and `useNavigate`, affecting React Router 6.0.0 up to 7.17.x), and the fix is only available from 7.18.0. Moving to Elements 10 removes React Router 6 from your dependency tree.
 
-`npm audit` still reports a few findings for `@stoplight/http-spec`, which depends on `postman-collection`. Elements doesn't load the Postman code, it only uses the OpenAPI parts of `http-spec`, and none of the Elements bundles contain it.
+`npm audit` still reports four findings, all through `@stoplight/http-spec` → `postman-collection`: [GHSA-qxc2-j82w-r537](https://github.com/advisories/GHSA-qxc2-j82w-r537) in `@faker-js/faker` and [GHSA-w5hq-g745-h8pq](https://github.com/advisories/GHSA-w5hq-g745-h8pq) in `uuid`, plus the two packages that depend on them. Elements only imports the OpenAPI parts of `http-spec` (`@stoplight/http-spec/oas` and `/hash`), never its `postman` entry point, and none of the Elements bundles contain `postman-collection`, `faker` or `uuid` from that tree.
 
 ## What did not change
 

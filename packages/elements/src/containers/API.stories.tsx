@@ -1,6 +1,5 @@
 import { parse } from '@stoplight/yaml';
 import { StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { badgesForSchema } from '../__fixtures__/api-descriptions/badgesForSchema';
 import { simpleApiWithInternalOperations } from '../__fixtures__/api-descriptions/simpleApiWithInternalOperations';

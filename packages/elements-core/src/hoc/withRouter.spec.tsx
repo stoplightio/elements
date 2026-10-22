@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react';
-import * as React from 'react';
 import { Link, MemoryRouter, Route, Routes } from 'react-router';
 
 import { RoutingProps } from '../types';

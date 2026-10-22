@@ -28,6 +28,8 @@ export type SearchResultsListProps = {
   isEmbedded?: boolean;
   showDivider?: boolean;
   onClick: (result: NodeSearchResult) => void;
+  /** Gives access to the list, to move focus to it */
+  listBoxRef?: React.Ref<HTMLDivElement>;
 };
 
 const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick, onSearch }: SearchProps) => {
@@ -64,7 +66,7 @@ const SearchImpl = ({ isLoading, search, searchResults, isOpen, onClose, onClick
       isOpen={!!isOpen}
       onClose={onClose}
     >
-      <SearchResultsList searchResults={searchResults} onClick={onClick} />
+      <SearchResultsList searchResults={searchResults} onClick={onClick} listBoxRef={listBoxRef} />
     </Modal>
   );
 };
@@ -74,8 +76,8 @@ export const SearchResultsList = ({
   onClick,
   isEmbedded,
   showDivider = true,
+  listBoxRef,
 }: SearchResultsListProps) => {
-  const listBoxRef = React.useRef<HTMLDivElement>(null);
   const onSelectionChange = React.useCallback(
     (keys: Set<React.Key>) => {
       const selectedId = keys.values().next().value;

@@ -14,6 +14,8 @@ export default [
   },
 
   react.configs.flat.recommended,
+  // the automatic JSX runtime doesn't need React in scope
+  react.configs.flat['jsx-runtime'],
   prettierConfig,
   ...storybook.configs['flat/recommended'],
 

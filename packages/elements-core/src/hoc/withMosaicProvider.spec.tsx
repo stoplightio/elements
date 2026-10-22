@@ -1,6 +1,5 @@
 import { Provider as MosaicProvider, useMosaicContext } from '@stoplight/mosaic';
 import { render } from '@testing-library/react';
-import React from 'react';
 
 import { withMosaicProvider } from './withMosaicProvider';
 

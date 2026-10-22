@@ -1,5 +1,4 @@
 import { Meta, StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { httpOperation } from '../../__fixtures__/operations/operation-with-examples';
 import { ResponseExamples, ResponseExamplesProps } from './ResponseExamples';

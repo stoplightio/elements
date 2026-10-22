@@ -1,5 +1,4 @@
 import { Box, Flex, Icon } from '@stoplight/mosaic';
-import React from 'react';
 
 export const UpgradeToStarter = () => (
   <Flex

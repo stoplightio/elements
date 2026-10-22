@@ -6,7 +6,7 @@
     "moduleResolution": "bundler",
     "customConditions": ["require"],
     "types": ["node", "vitest/globals", "@testing-library/jest-dom/vitest"],
-    "jsx": "react",
+    "jsx": "react-jsx",
 
     "strict": true,
     "noFallthroughCasesInSwitch": true,

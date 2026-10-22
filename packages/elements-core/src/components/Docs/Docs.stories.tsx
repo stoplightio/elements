@@ -1,6 +1,5 @@
 import { NodeType } from '@stoplight/types';
 import { Meta, StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import model from '../../__fixtures__/schemas/contact.json';
 import { Docs, DocsProps } from './Docs';

@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 
 import { NodeType } from '@stoplight/types';
 import { render, screen } from '@testing-library/react';
-import * as React from 'react';
 
 import { schemaWithRefs } from '../../__fixtures__/articles/schema-with-refs';
 import { withPersistenceBoundary } from '../../context/Persistence';

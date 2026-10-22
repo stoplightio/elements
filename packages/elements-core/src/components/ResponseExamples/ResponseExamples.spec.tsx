@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import React from 'react';
 
 import { httpOperation as bigExampleOperation } from '../../__fixtures__/operations/big-response';
 import { httpOperation } from '../../__fixtures__/operations/operation-with-examples';

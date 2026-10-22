@@ -1,5 +1,4 @@
 import { StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { StoplightProject, StoplightProjectProps } from './StoplightProject';
 

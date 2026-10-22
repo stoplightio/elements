@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import * as React from 'react';
 
 import { httpOperation as putTodosOperation } from '../../__fixtures__/operations/put-todos';
 import { operationWithUrlVariables } from '../../__fixtures__/operations/with-url-variables';

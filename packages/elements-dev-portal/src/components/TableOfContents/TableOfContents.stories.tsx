@@ -1,5 +1,4 @@
 import { StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { useGetTableOfContents } from '../../hooks/useGetTableOfContents';
 import { TableOfContents } from './';

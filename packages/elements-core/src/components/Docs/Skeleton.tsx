@@ -1,5 +1,4 @@
 import cn from 'classnames';
-import * as React from 'react';
 
 export const DocsSkeleton = ({ className, padding = '12' }: { className?: string; padding?: string }) => {
   return (

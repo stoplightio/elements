@@ -2,7 +2,6 @@ import { isPlainObject } from '@stoplight/json';
 import { isRegularNode } from '@stoplight/json-schema-tree';
 import { MarkdownViewer } from '@stoplight/markdown-viewer';
 import { Box } from '@stoplight/mosaic';
-import * as React from 'react';
 
 import { ElementsOptionsProvider } from '../../context/Options';
 import { ExtensionAddonRenderer, ExtensionRowProps } from './Docs';

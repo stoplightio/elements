@@ -2,7 +2,6 @@ import { Provider as MosaicProvider } from '@stoplight/mosaic';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { JSONSchema7 } from 'json-schema';
-import * as React from 'react';
 
 import { ElementsOptionsProvider } from '../../../context/Options';
 import * as exampleGenerationUtils from '../../../utils/exampleGeneration/exampleGeneration';

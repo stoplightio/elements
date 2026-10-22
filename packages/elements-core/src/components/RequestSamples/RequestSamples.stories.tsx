@@ -1,5 +1,4 @@
 import { Meta, StoryFn } from '@storybook/react-vite';
-import * as React from 'react';
 
 import { RequestSamples, RequestSamplesProps } from './RequestSamples';
 

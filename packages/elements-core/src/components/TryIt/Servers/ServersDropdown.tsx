@@ -2,7 +2,6 @@ import { faServer } from '@fortawesome/free-solid-svg-icons';
 import { FieldButton, Menu, MenuItem } from '@stoplight/mosaic';
 import type { IServer } from '@stoplight/types';
 import { useAtom } from 'jotai';
-import * as React from 'react';
 
 import { getServerUrlWithVariableValues } from '../../../utils/http-spec/IServer';
 import { chosenServerAtom } from '../chosenServer';
