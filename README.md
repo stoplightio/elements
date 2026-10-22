@@ -32,7 +32,8 @@ Available as React Components, or Web Components, you can use Elements all toget
 - **React Components**: React and React DOM 19.2.7 or later. If your app has its own router and you want Elements to use
   it, that has to be [React Router](https://reactrouter.com) 8.
 - **Web Components**: no framework, they come with everything they need. Browsers that support ES2020 (Chrome and Edge
-  80, Firefox 74, Safari 13.1 and later).
+  80, Firefox 74, Safari 13.1 and later). The tests run in current Chromium, Firefox and WebKit; the older versions are
+  the ones that support the syntax, and are not tested.
 - **Build tooling and server-side rendering**: Node.js 22.22 or later (React Router 8 sets it as `engines`).
 
 Need to stay on an older React? Use `@stoplight/elements` 9.x and `@stoplight/elements-dev-portal` 3.x.

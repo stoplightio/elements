@@ -1,29 +1,27 @@
 // must run before anything that reads `process`, see ../../../process-shim.js
 import '../../../process-shim';
-
-import * as React from 'react';
-import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
+import '../src/styles.css';
 
 import { PersistenceContextProvider, Styled } from '@stoplight/elements-core';
+import { Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
+import * as React from 'react';
+
 import { DevPortalProvider } from '../src/components/DevPortalProvider';
 
 export * from '../../../.storybook/preview';
-
-import '../src/styles.css';
-
 
 const ThemeProvider = (Story, context) => {
   const theme = context.globals.theme;
   React.useEffect(() => {
     subscribeTheme({ mode: theme === 'dark' ? 'dark' : 'light' });
-  }, [subscribeTheme, theme]);
-  return (
-    <Story {...context} />
-  );
+  }, [theme]);
+  return <Story {...context} />;
 };
 
-const PersistenceBoundaryDecorator = (Story) => (
-  <PersistenceContextProvider><Story /></PersistenceContextProvider>
+const PersistenceBoundaryDecorator = Story => (
+  <PersistenceContextProvider>
+    <Story />
+  </PersistenceContextProvider>
 );
 
 const MosaicProviderDecorator = Story => (
@@ -46,4 +44,10 @@ const StyledDecorator = Story => (
   </Styled>
 );
 
-export const decorators = [ThemeProvider, MosaicProviderDecorator, PersistenceBoundaryDecorator, DevPortalProviderDecorator, StyledDecorator];
+export const decorators = [
+  ThemeProvider,
+  MosaicProviderDecorator,
+  PersistenceBoundaryDecorator,
+  DevPortalProviderDecorator,
+  StyledDecorator,
+];

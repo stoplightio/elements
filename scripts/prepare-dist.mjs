@@ -56,8 +56,15 @@ const declarationFiles = dir =>
 
 const specifier = /(\bfrom\s+|\bimport\s*\(\s*|\bimport\s+)(['"])(\.{1,2}(?:\/[^'"]*)?)\2/g;
 
+// The packages only export their root, so a declaration that imports `@stoplight/elements-core/components/Docs` can't be
+// resolved by a consumer, and the types that come from it silently become `any`.
+const deepImport = /(?:from\s+|import\s*\(\s*|import\s+)['"](@stoplight\/elements(?:-core|-dev-portal)?\/[^'"]+)['"]/;
+
 for (const file of declarationFiles(resolve('dist'))) {
   const source = readFileSync(file, 'utf-8');
+  const deep = source.match(deepImport);
+  if (deep)
+    throw new Error(`${file}: imports ${deep[1]}, which the package does not export. Import from the package root.`);
   const completed = source.replace(specifier, (match, prefix, quote, path) => {
     if (/\.(js|json|css)$/.test(path)) return match;
     const target = resolve(dirname(file), path);

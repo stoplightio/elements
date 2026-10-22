@@ -10,7 +10,20 @@ import tseslint from 'typescript-eslint';
 
 export default [
   {
-    ignores: ['**/coverage', '**/dist', '**/.cache-loader', '**/node_modules', '**/.yalc'],
+    ignores: [
+      '**/coverage',
+      '**/dist',
+      '**/dist-storybook',
+      '**/.cache-loader',
+      '**/node_modules',
+      '**/.yalc',
+      // the example apps have their own dependencies and tooling, and the folders below are generated
+      'examples/**',
+      'examples-dev/**',
+      'e2e-results/**',
+      'test-results/**',
+      'e2e-visual-baseline/**',
+    ],
   },
 
   react.configs.flat.recommended,
@@ -20,7 +33,7 @@ export default [
   ...storybook.configs['flat/recommended'],
 
   {
-    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+    files: ['**/*.{js,jsx,mjs,cjs,ts,tsx,mts,cts}'],
 
     languageOptions: {
       parser: tseslint.parser,

@@ -1,4 +1,5 @@
 import {
+  type ExtensionAddonRenderer,
   InlineRefResolverProvider,
   NonIdealState,
   RoutingProps,
@@ -11,7 +12,6 @@ import {
   withRouter,
   withStyles,
 } from '@stoplight/elements-core';
-import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Icon } from '@stoplight/mosaic';
 import { useQuery } from '@tanstack/react-query';
 import { flow } from 'lodash';

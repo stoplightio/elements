@@ -6,11 +6,11 @@ on:
   workflow_dispatch:
     inputs:
       elements-version:
-        description: Published version of @stoplight/elements to compare with
-        default: 9.0.29
+        description: Published version of @stoplight/elements to compare with (empty is the newest 9.x)
+        default: ''
       dev-portal-version:
-        description: Published version of @stoplight/elements-dev-portal to compare with
-        default: 3.0.29
+        description: Published version of @stoplight/elements-dev-portal to compare with (empty is the newest 3.x)
+        default: ''
 
 jobs:
   compat:
@@ -26,18 +26,27 @@ jobs:
         - react-vite
         - angular
         - static-html
+        react:
+        - '19'
+        include:
+        # Elements 9 was made for React 18, so the behavior check also runs the way it was meant to be used
+        - example: react-vite
+          react: '18'
     steps:
     - uses: actions/checkout@v4.1.0
     - run: npm ci
     - run: npm run build
     - name: Install Playwright browser
       run: npx playwright install --with-deps chromium
-    - name: Behavior - same tests against the published version
-      run: npm run e2e:baseline -- ${{ matrix.example }} ${{ inputs.elements-version }} ${{ inputs.dev-portal-version }}
+    - name: Behavior - same tests against the published version (React ${{ matrix.react }})
+      run: npm run e2e:baseline -- ${{ matrix.example }} '${{ inputs.elements-version }}' '${{ inputs.dev-portal-version }}' --project=chromium
+      env:
+        REACT: ${{ matrix.react }}
     - name: Appearance - screenshots against the published version
-      run: npm run e2e:visual-compat -- ${{ matrix.example }} ${{ inputs.elements-version }} ${{ inputs.dev-portal-version }}
+      if: matrix.react == '19'
+      run: npm run e2e:visual-compat -- ${{ matrix.example }} '${{ inputs.elements-version }}' '${{ inputs.dev-portal-version }}'
     - uses: actions/upload-artifact@v4.1.0
       if: always()
       with:
-        name: compat-${{ matrix.example }}-results
+        name: compat-${{ matrix.example }}-react-${{ matrix.react }}-results
         path: e2e-results

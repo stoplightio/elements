@@ -68,7 +68,8 @@
     "build.docs": "npm run build.docs -w @stoplight/elements",
     "postbuild": "npm run test.packaging -w @stoplight/elements && npm run test.packaging -w @stoplight/elements-core && npm run test.packaging -w @stoplight/elements-dev-portal && npm run test.packaging.types",
     "test.packaging.types": "tsc -p scripts/consumer-types",
-    "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
+    "test.consumer": "node scripts/test-consumer-install.mjs",
+    "lint": "eslint .",
     "version": "lerna version --no-push",
     "release": "lerna publish from-package --yes --registry https://registry.npmjs.org --loglevel silly",
     "type-check": "npm run type-check --workspaces --if-present && tsc -p e2e && tsc -p tsconfig.check.json",
@@ -93,27 +94,6 @@
     "e2e:run:static-html": "EXAMPLE=static-html playwright test",
     "e2e:baseline": "scripts/e2e-baseline.sh",
     "e2e:visual-compat": "scripts/visual-compat.sh"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "eslint --fix"
-    ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
-  },
-  "config": {
-    "commitizen": {
-      "path": "node_modules/cz-conventional-changelog"
-    }
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
   },
   "allowScripts": {
     "@fortawesome/fontawesome-common-types": false,

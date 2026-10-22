@@ -32,10 +32,18 @@ you need to do.
   [ES modules only](docs/guides/migrating-to-v10.md#es-modules-only).
 - **Node.js 22.22 or later** for build tooling and server-side rendering, which is what React Router 8 requires. The packages don't set `engines` themselves, but React Router 8 does (`>=22.22.0`), so a package manager that enforces `engines` for dependencies (Yarn Classic, or npm with `engine-strict`) refuses older versions anyway.
 - **The JavaScript that Elements ships targets ES2020** instead of ES2015. This applies to the ES module build
-  and to the web component bundles, so browsers need to support ES2020 (Chrome and Edge 80, Firefox 74, Safari 13.1).
+  and to the web component bundles, so browsers need to support ES2020 (Chrome and Edge 80, Firefox 74, Safari 13.1). The end-to-end tests run in current Chromium, Firefox and WebKit, not in those older versions.
 - **TypeScript:** the type declarations use `React.JSX` and the types of React 19. `withStyles`,
   `withMosaicProvider`, `withQueryClientProvider` and `withPersistenceBoundary` only accept components whose props are
   objects. `ReactRouterMarkdownLink` takes the `LinkProps` of React Router 8.
+
+### Known issues
+
+- **With npm, two overrides are required** until `@stoplight/mosaic`, `@stoplight/markdown-viewer` and
+  `@stoplight/json-schema-viewer` are released with fixes: without them npm installs a second copy of React DOM 18 and
+  two copies of `@sentry/react`, and the packages fail to load with React 19. See
+  [If you use npm](docs/guides/migrating-to-v10.md#if-you-use-npm-add-two-overrides). The web components are not
+  affected.
 
 ### Changed
 

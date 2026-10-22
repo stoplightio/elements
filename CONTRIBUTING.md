@@ -132,7 +132,7 @@ The logical steps in which these tests are run:
 2. Copy the contents of the predefined example project from `examples` to `examples-dev`. For example, copy `examples/angular` to `examples-dev/angular`
 3. Install the *Elements* build from the first step into the chosen example project in `examples-dev` (you modify `package.json` to point to the `dist` folder of `elements-core`, `elements` or `elements-dev-portal`)
 4. Serve the example from the `examples-dev` project on localhost over HTTP port 4200
-5. Run the *Playwright* test suite against this example application. Playwright starts the example itself (`npm run serve:<example>`) and waits for it on port 4200.
+5. Run the *Playwright* test suite against this example application. Playwright starts the example itself (`npm run serve:<example>`) and waits for it on port 4200. It runs every test in Chromium, Firefox and WebKit. Add `--project=chromium` (or another engine) to run one of them. The screenshot comparison in `e2e/visual.spec.ts` only runs in Chromium.
 
 **You don't need to amend e2e tests** when working on *Elements* unless you are adding a new supported framework.
 These tests are run by the CI pipeline to ensure that a PR doesn't break any environments.
@@ -152,11 +152,15 @@ npm run copy:react-vite
 # Build the chosen example (sub `react-vite` for any other example repo)
 npm run build:react-vite
 # Install the browser Playwright drives (only needed once, and again after upgrading Playwright)
-npx playwright install chromium
+npx playwright install chromium firefox webkit
 # Run the example and the test suite against it
 npm run e2e:run:react-vite
 ```
 > **Note**: You only need to run `npm run copy:$INTEGRATION-NAME` once after you clone the Elements repo.
+
+#### Check that an app can install the packages
+
+After `npm run build`, `npm run test.consumer` packs the built packages, installs them in a fresh temporary project with React 19, and checks that there is one copy of React and React DOM, that all three load, and that `API` renders without errors. It uses the overrides from [the migration guide](docs/guides/migrating-to-v10.md#if-you-use-npm-add-two-overrides), which npm users need until `@stoplight/mosaic`, `@stoplight/markdown-viewer` and `@stoplight/json-schema-viewer` are released with fixes. `npm run test.consumer -- --plain` runs the same checks without them. It fails today, and it is the way to find out that the overrides can go: when it passes, remove them from the guide, this script and the root `package.json`.
 
 #### Run the Tests Manually
 
@@ -199,13 +203,15 @@ In CI, each e2e job uploads `e2e-results` (including traces, screenshots and vid
 
 ### Compare a build with a published version
 
-After a big change (a major upgrade of a dependency, or of the build tooling), it is not enough that the tests pass: you want to know that Elements still behaves and looks the way it did. Two scripts check that by running the *same* tests against a published version of Elements and against your local build. Both need a local build (`npm run build`) and take the example to use (`react-vite`, `angular` or `static-html`) and, optionally, the versions of `@stoplight/elements` and `@stoplight/elements-dev-portal` to compare with (they default to the last 9.x and 3.x releases).
+After a big change (a major upgrade of a dependency, or of the build tooling), it is not enough that the tests pass: you want to know that Elements still behaves and looks the way it did. Two scripts check that by running the *same* tests against a published version of Elements and against your local build. Both need a local build (`npm run build`) and take the example to use (`react-vite`, `angular` or `static-html`) and, optionally, the versions of `@stoplight/elements` and `@stoplight/elements-dev-portal` to compare with (they default to the newest 9.x and 3.x releases on npm, looked up when the script runs).
 
 ```bash
 # Run the end-to-end tests against the published version. The tests that are about the local build only are skipped.
 npm run e2e:baseline -- react-vite
 # Same, with other versions, and only some of the tests
 npm run e2e:baseline -- react-vite 9.0.29 3.0.29 persistence
+# Elements 9 was made for React 18: run the react-vite example on React 18 and React Router 6 instead of React 19
+REACT=18 npm run e2e:baseline -- react-vite
 
 # Record screenshots of pages with the published version, then compare the local build with them
 npm run e2e:visual-compat -- react-vite
@@ -213,7 +219,7 @@ npm run e2e:visual-compat -- react-vite
 VISUAL_TOLERANCE=0 npm run e2e:visual-compat -- react-vite
 ```
 
-A test that passes with the published version but fails with your build is a change in behavior, so it is worth a look. A test that fails with the published version is a test that describes something new, mark it with `test.skip(process.env.BASELINE === '1', '...')`. The same checks can be run in CI for all examples at once with the "compat" workflow on GitHub Actions (run it by hand and give it the versions to compare with). The screenshots are recorded in `e2e-visual-baseline`, which git ignores. Differences are written to `e2e-results/artifacts`, as the expected page, the actual page and an image of the difference.
+A test that passes with the published version but fails with your build is a change in behavior, so it is worth a look. A test that fails with the published version is a test that describes something new, mark it with `test.skip(process.env.BASELINE === '1', '...')`. The same checks can be run in CI for all examples at once with the "compat" workflow on GitHub Actions (run it by hand; it compares with the newest 9.x and 3.x unless you give it versions, and it also runs the behavior check on React 18). The appearance check covers the overview, operation and schema pages of the Zoom API on a desktop, a wide screen and a phone, in light and dark mode, plus a sent request with its response and a changed request sample language. The screenshots are recorded in `e2e-visual-baseline`, which git ignores. Differences are written to `e2e-results/artifacts`, as the expected page, the actual page and an image of the difference.
 
 ## Build
 

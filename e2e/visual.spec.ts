@@ -2,12 +2,14 @@ import type { Page } from '@playwright/test';
 
 import { expect, test } from './support/fixtures';
 import { redirectUnpkgToLocalDistFolder } from './support/redirectUnpkg';
-import { mockZoomApiDescription } from './support/zoom';
+import { mockZoomApi, mockZoomApiDescription } from './support/zoom';
 
 // These tests compare how pages look with screenshots that were recorded from another build of Elements, to check
 // that two builds look the same. They only run when `VISUAL` is set, because there are no recorded screenshots to
 // compare with otherwise. See scripts/visual-compat.sh.
 test.skip(!process.env.VISUAL, 'compares with screenshots of another build, see scripts/visual-compat.sh');
+// the engines render text and borders differently, so a build is only compared with the same engine's screenshots
+test.skip(({ browserName }) => browserName !== 'chromium', 'screenshots are recorded in Chromium');
 
 const example = process.env.EXAMPLE ?? 'unknown';
 
@@ -69,6 +71,12 @@ test.describe('Appearance', () => {
       await expect(page.getByRole('heading', { name: /Create a user/i })).toBeVisible();
       await expectLooksTheSame(page, 'operation-post-dark');
     });
+
+    test('schema', async ({ page }) => {
+      await page.goto('/zoom-api/schemas/Account');
+      await expect(page.getByRole('heading', { name: /Account/i })).toBeVisible();
+      await expectLooksTheSame(page, 'schema-dark');
+    });
   });
 
   test.describe('on a phone', () => {
@@ -79,6 +87,42 @@ test.describe('Appearance', () => {
       await expect(page.getByRole('heading', { name: /Retrieve a user/i })).toBeVisible();
       await expectLooksTheSame(page, 'operation-get-phone');
     });
+
+    test('overview', async ({ page }) => {
+      await page.goto('/zoom-api');
+      await expect(page.getByRole('heading', { name: 'Zoom API', level: 1, exact: true })).toBeVisible();
+      await expectLooksTheSame(page, 'overview-phone');
+    });
+
+    test('operation with a request body', async ({ page }) => {
+      await page.goto('/zoom-api/operations/userCreate');
+      await expect(page.getByRole('heading', { name: /Create a user/i })).toBeVisible();
+      await expectLooksTheSame(page, 'operation-post-phone');
+    });
+  });
+
+  test('operation with a response', async ({ page }) => {
+    await mockZoomApi(page, { id: 'u-1', email: 'user@example.com', type: 1 });
+    await page.goto('/zoom-api/operations/user');
+    await page.getByRole('textbox', { name: 'userId' }).fill('abc123');
+    await page.getByRole('button', { name: 'Send API Request' }).click();
+    await expect(page.getByText('200 OK', { exact: true })).toBeVisible();
+    await expectLooksTheSame(page, 'operation-get-response');
+  });
+
+  test('operation with another request sample language', async ({ page }) => {
+    await page.goto('/zoom-api/operations/userCreate');
+    await page.getByRole('button', { name: /request sample language/i }).click();
+    await page.getByRole('menuitemcheckbox', { name: 'Obj-C', exact: true }).click();
+    await expect(page.getByRole('button', { name: /request sample language/i })).toContainText('Obj-C');
+    await expectLooksTheSame(page, 'request-sample-objc');
+  });
+
+  test('overview on a wide screen', async ({ page }) => {
+    await page.setViewportSize({ width: 1920, height: 1080 });
+    await page.goto('/zoom-api');
+    await expect(page.getByRole('heading', { name: 'Zoom API', level: 1, exact: true })).toBeVisible();
+    await expectLooksTheSame(page, 'overview-wide');
   });
 
   test('operation with an open request sample menu', async ({ page }) => {

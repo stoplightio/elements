@@ -1,15 +1,17 @@
-export * from '../../../.storybook/preview';
-
-import * as React from 'react';
-import { subscribeTheme, Provider as MosaicProvider, Box } from '@stoplight/mosaic';
-import { PersistenceContextProvider, Styled, MarkdownComponentsProvider } from '../src';
 import '../src/styles.css';
+
+import { Box, Provider as MosaicProvider, subscribeTheme } from '@stoplight/mosaic';
+import * as React from 'react';
+
+import { MarkdownComponentsProvider, PersistenceContextProvider, Styled } from '../src';
+
+export * from '../../../.storybook/preview';
 
 const ThemeProvider = (Story, context) => {
   const theme = context.globals.theme;
   React.useEffect(() => {
     subscribeTheme({ mode: theme === 'dark' ? 'dark' : 'light' });
-  }, [subscribeTheme, theme]);
+  }, [theme]);
   return (
     <Box style={{ maxWidth: 1200 }} mx="auto" py={10}>
       <Story {...context} />

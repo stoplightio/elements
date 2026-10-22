@@ -2,6 +2,7 @@ import {
   type CustomLinkComponent,
   ElementsOptionsProvider,
   ExportButtonProps,
+  type ExtensionAddonRenderer,
   Logo,
   ParsedDocs,
   PoweredByLink,
@@ -10,7 +11,6 @@ import {
   TableOfContents,
   TableOfContentsItem,
 } from '@stoplight/elements-core';
-import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Flex, Heading } from '@stoplight/mosaic';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';

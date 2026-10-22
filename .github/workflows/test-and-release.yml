@@ -30,6 +30,11 @@ jobs:
     - uses: actions/checkout@v4.1.0
     - run: npm ci
     - run: npm run build
+    - name: Install the built packages like an app does, with the overrides the migration guide asks for
+      run: npm run test.consumer
+    - name: Same without the overrides (fails until Mosaic and the viewers are released with fixes)
+      run: npm run test.consumer -- --plain
+      continue-on-error: true
     - uses: actions/upload-artifact@v4.1.0
       with:
         name: build-output
@@ -84,7 +89,7 @@ jobs:
       run: npm run build
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Install Playwright browser
-      run: npx playwright install --with-deps chromium
+      run: npx playwright install --with-deps chromium firefox webkit
     - name: Run E2E checks
       run: npm run e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
@@ -118,7 +123,7 @@ jobs:
       run: npm run build
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Install Playwright browser
-      run: npx playwright install --with-deps chromium
+      run: npx playwright install --with-deps chromium firefox webkit
     - name: Run E2E checks
       run: npm run e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0
@@ -152,7 +157,7 @@ jobs:
       run: npm run build
       working-directory: ./examples-dev/${{ env.example-name }}
     - name: Install Playwright browser
-      run: npx playwright install --with-deps chromium
+      run: npx playwright install --with-deps chromium firefox webkit
     - name: Run E2E checks
       run: npm run e2e:run:${{ env.example-name }}
     - uses: actions/upload-artifact@v4.1.0

@@ -1,5 +1,4 @@
 import '../../process-shim';
-
 import '@stoplight/elements-core/styles.css';
 
 import { subscribeTheme } from '@stoplight/mosaic';

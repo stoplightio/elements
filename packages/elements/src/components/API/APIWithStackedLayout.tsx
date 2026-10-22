@@ -2,11 +2,11 @@ import {
   DeprecatedBadge,
   Docs,
   ExportButtonProps,
+  type ExtensionAddonRenderer,
   HttpMethodColors,
   ParsedDocs,
   TryItWithRequestSamples,
 } from '@stoplight/elements-core';
-import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { Box, Flex, Heading, Icon, Tab, TabList, TabPanel, TabPanels, Tabs } from '@stoplight/mosaic';
 import { HttpMethod, NodeType } from '@stoplight/types';
 import cn from 'classnames';

@@ -1,10 +1,10 @@
 import '../process-shim';
-
-import * as React from 'react';
-import { Title, Subtitle, Description, Primary, Controls, PRIMARY_STORY } from '@storybook/addon-docs/blocks';
-import customTheme from './theme';
-
 import './google-fonts.css';
+
+import { Controls, Description, Primary, PRIMARY_STORY, Subtitle, Title } from '@storybook/addon-docs/blocks';
+import * as React from 'react';
+
+import customTheme from './theme';
 
 export const tags = ['autodocs'];
 

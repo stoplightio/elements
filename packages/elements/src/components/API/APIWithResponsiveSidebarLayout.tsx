@@ -1,11 +1,11 @@
 import {
   ElementsOptionsProvider,
   ExportButtonProps,
+  type ExtensionAddonRenderer,
   ParsedDocs,
   resolveRelativeLink,
   ResponsiveSidebarLayout,
 } from '@stoplight/elements-core';
-import { ExtensionAddonRenderer } from '@stoplight/elements-core/components/Docs';
 import { NodeType } from '@stoplight/types';
 import * as React from 'react';
 import { Navigate, useLocation } from 'react-router';

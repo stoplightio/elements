@@ -9,8 +9,9 @@
 set -euo pipefail
 
 example=${1:?usage: visual-compat.sh <example> [elements-version] [elements-dev-portal-version]}
-elements=${2:-9.0.29}
-devPortal=${3:-3.0.29}
+# the versions default to the newest releases of Elements 9 and the dev portal 3 on npm (see e2e-baseline.sh)
+elements=${2:-$(node scripts/published-version.mjs @stoplight/elements 9)}
+devPortal=${3:-$(node scripts/published-version.mjs @stoplight/elements-dev-portal 3)}
 
 rm -rf e2e-visual-baseline
 
