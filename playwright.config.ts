@@ -11,6 +11,8 @@ const baseURL = 'http://localhost:4200';
 export default defineConfig({
   testDir: './e2e',
   outputDir: './e2e-results/artifacts',
+  // screenshots to compare builds with (see e2e/visual.spec.ts), recorded locally and not committed
+  snapshotPathTemplate: 'e2e-visual-baseline/{arg}{ext}',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,

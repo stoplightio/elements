@@ -86,7 +86,9 @@
     "e2e:execute": "playwright test",
     "e2e:run:angular": "EXAMPLE=angular playwright test",
     "e2e:run:react-vite": "EXAMPLE=react-vite playwright test",
-    "e2e:run:static-html": "EXAMPLE=static-html playwright test"
+    "e2e:run:static-html": "EXAMPLE=static-html playwright test",
+    "e2e:baseline": "scripts/e2e-baseline.sh",
+    "e2e:visual-compat": "scripts/visual-compat.sh"
   },
   "lint-staged": {
     "*.{ts,tsx}": [

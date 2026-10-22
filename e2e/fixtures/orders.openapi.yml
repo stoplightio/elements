@@ -1,0 +1,55 @@
+openapi: 3.0.3
+info:
+  title: Orders API
+  version: 1.0.0
+  description: A small API with server variables, used by the e2e tests.
+servers:
+  - url: https://{region}.orders.example.com/{version}
+    description: Regional
+    variables:
+      region:
+        default: eu
+        enum: [eu, us]
+        description: Region of the data
+      version:
+        default: v1
+        description: API version
+  - url: https://sandbox.orders.example.com
+    description: Sandbox
+paths:
+  /orders:
+    get:
+      operationId: listOrders
+      summary: List orders
+      responses:
+        '200':
+          description: The orders
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+  /orders/{orderId}:
+    get:
+      operationId: getOrder
+      summary: Retrieve an order
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The order
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string

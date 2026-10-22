@@ -1,15 +1,11 @@
-import { readFileSync } from 'node:fs';
-import { join } from 'node:path';
-
-import { expect, type Page, test } from '@playwright/test';
-
+import { expect, test } from './support/fixtures';
 import { redirectUnpkgToLocalDistFolder } from './support/redirectUnpkg';
-
-const ZOOM_OPENAPI_URL = 'https://raw.githubusercontent.com/stoplightio/Public-APIs/master/reference/zoom/openapi.yaml';
+import { loadZoomApiPage, mockZoomApiDescription } from './support/zoom';
 
 test.describe('API component', () => {
   test.beforeEach(async ({ page }) => {
     await redirectUnpkgToLocalDistFolder(page, 'elements');
+    await mockZoomApiDescription(page);
   });
 
   test.describe('Api page', () => {
@@ -81,14 +77,3 @@ test.describe('API component', () => {
     await expect(page.getByRole('heading', { name: /Create a group/i })).toBeVisible();
   });
 });
-
-async function loadZoomApiPage(page: Page) {
-  const zoomOpenApi = readFileSync(join(__dirname, 'fixtures', 'zoom.openapi.yml'), 'utf-8');
-  await page.route(ZOOM_OPENAPI_URL, route => route.fulfill({ status: 200, body: zoomOpenApi }));
-
-  const zoomRequest = page.waitForRequest(ZOOM_OPENAPI_URL);
-  await page.goto('/zoom-api');
-  await zoomRequest;
-
-  await expect(page.getByRole('heading', { name: 'Zoom API', level: 1, exact: true })).toBeVisible();
-}

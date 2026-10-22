@@ -2,20 +2,26 @@
 
 Learn how to get started with Elements Dev Portal in a React project.
 
-## Create React App Template
+## Requirements
 
-Use the [React App template](https://github.com/stoplightio/cra-template-elements-dev-portal) to create a new Elements Dev Portal website in React without additional setup.
+- React and React DOM **19.2.7 or later**.
+- If your app has its own router, it has to be [React Router](https://reactrouter.com) 8. Elements uses the router of your app when it finds one. See [Migrating to Elements 10](../../guides/migrating-to-v10.md).
 
-> Note: [The Create React App template only works with version 4 of create-react-app because of Webpack 5 polyfill issues.](https://github.com/facebook/create-react-app/issues/11756)
-> To run it with new create-react-app and Webpack 5 check [Polyfills](#polyfills-create-react-app) section
+Coming from an earlier version of Elements? Read [Migrating to Elements 10](../../guides/migrating-to-v10.md).
+
+## Quick Start with Vite
+
+The quickest way to get an Elements Dev Portal website in a new React project is [Vite](https://vite.dev):
 
 ```bash
-npx create-react-app my-dir --template @stoplight/elements-dev-portal
+npm create vite@latest my-app -- --template react-ts
+cd my-app
+npm install @stoplight/elements-dev-portal vite-plugin-node-polyfills
 ```
 
-Then, run `cd my-dir` and `npm start` to see a basic Elements Dev Portal website in the browser.
+Add the polyfills plugin to `vite.config.ts` as described in the [Vite](#vite) section below, then follow the [Manual Setup](#manual-setup) steps. Run `npm run dev` to start the development server.
 
-When the server has started, navigate to `http://localhost:3000` to see Elements Dev Portal rendering an [example Git project](https://github.com/stoplightio/studio-demo). Follow the instructions below to change your `projectId` and load up one of your projects.
+> **Create React App** is no longer maintained and doesn't support React 19, so the Create React App templates for Elements (`cra-template-elements` and `cra-template-elements-dev-portal`) don't work with Elements 10.
 
 ## Manual Setup
 
@@ -76,10 +82,12 @@ See [Dev Portal Configuration Options](dev-portal-options.md).
 Now start the development server.
 
 ```bash
-npm start
+npm run dev
 ```
 
-And you should see the API reference documentation for the Zoom API.
+(`npm start` in projects that were not created with Vite.)
+
+And you should see the documentation of the project you configured, rendered by Elements Dev Portal.
 
 ## Vite
 
@@ -96,8 +104,10 @@ export default defineConfig({
 });
 ```
 
-## Polyfills (Create React App)
-Create React App is now using Webpack 5 that doesn't come with node polyfills anymore. Since elements dependencies use `url` and `buffer` packages they need to be added separately. The easiest way to do that is to include [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) in webpack configuration file:
+## Polyfills (webpack 5)
+
+webpack 5 doesn't come with Node.js polyfills anymore. Since the dependencies of Elements use the `url` and `buffer` packages, they need to be added separately. The easiest way to do that is to add [node-polyfill-webpack-plugin](https://github.com/Richienb/node-polyfill-webpack-plugin) to your webpack configuration file:
+
 ```js
 const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 ...
@@ -106,35 +116,7 @@ plugins: [
   new NodePolyfillPlugin(),
 ]
 ```
-In case of CRA it can be done either by:
-1. Ejecting CRA configuration:
-- running `npm eject` script
-- installing `node-polyfill-webpack-plugin`
-- adding `NodePolyfillPlugin` to `config/webpack.config.js` as shown above
 
-2. Using `react-app-rewired` package that overrides CRA webpack config without ejecting:
-- installing `react-app-rewired`
-- installing  `node-polyfill-webpack-plugin`
-- overriding default scripts in `package.json`:
-```json
-"scripts": {
-  "start": "react-app-rewired start",
-  "build": "react-app-rewired build",
-  "test": "react-app-rewired test",
-  "eject": "react-scripts eject"
-}
-```
-- creating `config-overrides.js` configuration file in root directory:
-```js
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
-
-module.exports = function override(config, env) {
-  config.plugins.push(
-    new NodePolyfillPlugin()
-  );
-  return config;
-};
-```
 In case of Docusaurus it can be done by:
 - installing `node-polyfill-webpack-plugin`
 - creating a new file for the plugin such as `./plugins/webpackPolyfillPlugin.js`:

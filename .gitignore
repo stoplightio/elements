@@ -49,3 +49,5 @@ dist-storybook
 .stoplight/custom-functions
 .spectral.json
 .spectral.mjs
+e2e-visual-baseline
+

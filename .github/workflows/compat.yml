@@ -1,0 +1,43 @@
+name: stoplightio/elements/compat
+# Checks that the code in the branch behaves and looks the same as a published version of Elements, by running the
+# same end-to-end tests against both and comparing screenshots. See "Compare a build with a published version" in
+# CONTRIBUTING.md. Run it by hand, for example before a major release.
+on:
+  workflow_dispatch:
+    inputs:
+      elements-version:
+        description: Published version of @stoplight/elements to compare with
+        default: 9.0.29
+      dev-portal-version:
+        description: Published version of @stoplight/elements-dev-portal to compare with
+        default: 3.0.29
+
+jobs:
+  compat:
+    runs-on: ubuntu-latest
+    container:
+      image: node:24
+      env:
+        TERM: xterm
+    strategy:
+      fail-fast: false
+      matrix:
+        example:
+        - react-vite
+        - angular
+        - static-html
+    steps:
+    - uses: actions/checkout@v4.1.0
+    - run: npm ci
+    - run: npm run build
+    - name: Install Playwright browser
+      run: npx playwright install --with-deps chromium
+    - name: Behavior - same tests against the published version
+      run: npm run e2e:baseline -- ${{ matrix.example }} ${{ inputs.elements-version }} ${{ inputs.dev-portal-version }}
+    - name: Appearance - screenshots against the published version
+      run: npm run e2e:visual-compat -- ${{ matrix.example }} ${{ inputs.elements-version }} ${{ inputs.dev-portal-version }}
+    - uses: actions/upload-artifact@v4.1.0
+      if: always()
+      with:
+        name: compat-${{ matrix.example }}-results
+        path: e2e-results

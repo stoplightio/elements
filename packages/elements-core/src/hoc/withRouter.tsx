@@ -19,17 +19,24 @@ const components: Partial<DefaultComponentMapping> = {
 };
 
 const InternalRoutes = ({ children }: { children: React.ReactNode }): React.JSX.Element => {
+  // The content is rendered by a route that does not end in a splat, with the splat as its child. Relative links
+  // (such as the ones in the table of contents) resolve against the route they are rendered in, and from a route
+  // that ends in a splat React Router 7+ includes the part of the URL the splat matched. That would append every
+  // link to the current page: from `/api/operations/a` a link to `operations/b` would lead to
+  // `/api/operations/a/operations/b` instead of `/api/operations/b`.
   return (
     <Routes>
       <Route
-        path="/*"
+        path="/"
         element={
           <MarkdownComponentsProvider value={components}>
             <ScrollToHashElement />
             {children}
           </MarkdownComponentsProvider>
         }
-      />
+      >
+        <Route path="*" element={null} />
+      </Route>
     </Routes>
   );
 };

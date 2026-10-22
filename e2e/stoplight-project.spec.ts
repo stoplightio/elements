@@ -1,5 +1,6 @@
-import { expect, type Page, test } from '@playwright/test';
+import type { Page } from '@playwright/test';
 
+import { expect, test } from './support/fixtures';
 import { redirectUnpkgToLocalDistFolder } from './support/redirectUnpkg';
 
 const PROJECT_API = 'https://stoplight.io/api/v1/projects/cHJqOjYwNjYx';

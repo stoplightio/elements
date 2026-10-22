@@ -4,6 +4,7 @@ import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 import { StoplightAPI } from './components/API';
 import { Navigation } from './components/Navigation';
 import { NotFound } from './components/NotFound';
+import { ProxiedAPI } from './components/ProxiedAPI';
 import { StoplightProjectDocs } from './components/StoplightProject';
 
 export default function App() {
@@ -17,6 +18,7 @@ export default function App() {
           <main className="main-content">
             <Routes>
               <Route path="/zoom-api/*" element={<StoplightAPI />} />
+              <Route path="/proxied-api/*" element={<ProxiedAPI />} />
               <Route path="/stoplight-project/*" element={<StoplightProjectDocs />} />
               <Route path="/" element={<Navigate to="stoplight-project" replace />} />
               <Route path="*" element={<NotFound />} />

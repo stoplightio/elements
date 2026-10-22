@@ -12,6 +12,8 @@ Available as React Components, or Web Components, you can use Elements all toget
 # Overview
 
 - [Overview](#overview)
+  - [✅ Requirements](#-requirements)
+  - [⬆️ Upgrading](#️-upgrading)
   - [📖 Community](#-community)
   - [👁️🗨 ️️Examples](#️-️️examples)
   - [🏁 Usage](#-usage)
@@ -24,6 +26,21 @@ Available as React Components, or Web Components, you can use Elements all toget
   - [👏 Contributing](#-contributing)
   - [🎉 Thanks](#-thanks)
   - [🌲 Sponsor Elements by Planting a Tree](#-sponsor-elements-by-planting-a-tree)
+
+## ✅ Requirements
+
+- **React Components**: React and React DOM 19.2.7 or later. If your app has its own router and you want Elements to use
+  it, that has to be [React Router](https://reactrouter.com) 8.
+- **Web Components**: no framework, they come with everything they need. Browsers that support ES2020 (Chrome and Edge
+  80, Firefox 74, Safari 13.1 and later).
+- **Build tooling and server-side rendering**: Node.js 22.22 or later.
+
+Need to stay on an older React? Use `@stoplight/elements` 9.x and `@stoplight/elements-dev-portal` 3.x.
+
+## ⬆️ Upgrading
+
+Upgrading from `@stoplight/elements` 9 or `@stoplight/elements-dev-portal` 3? Read the
+[migration guide](docs/guides/migrating-to-v10.md). The [changelog](CHANGELOG.md) lists what changed in each release.
 
 ## 📖 Community
 

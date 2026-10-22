@@ -14,6 +14,7 @@
     - [Run the tests manually](#run-the-tests-manually)
     - [Edit the tests](#edit-the-tests)
     - [Inspect test results](#inspect-test-results)
+  - [Compare a build with a published version](#compare-a-build-with-a-published-version)
 - [Build](#build)
 - [Yalc into platform-internal](#yalc-into-platform-internal)
 - [Release Elements](#release-elements)
@@ -195,6 +196,24 @@ Test results can be found under the `e2e-results` directory.
 *Playwright* keeps a trace, screenshot and video for every failing test (under `e2e-results/artifacts`; open a trace with `npx playwright show-trace <path>/trace.zip`). In addition, a machine-readable `output.xml` is generated that contains a summary of the results.
 
 In CI, each e2e job uploads `e2e-results` (including traces, screenshots and videos of failing tests) as a build artifact named `e2e-<example>-results`.
+
+### Compare a build with a published version
+
+After a big change (a major upgrade of a dependency, or of the build tooling), it is not enough that the tests pass: you want to know that Elements still behaves and looks the way it did. Two scripts check that by running the *same* tests against a published version of Elements and against your local build. Both need a local build (`npm run build`) and take the example to use (`react-vite`, `angular` or `static-html`) and, optionally, the versions of `@stoplight/elements` and `@stoplight/elements-dev-portal` to compare with (they default to the last 9.x and 3.x releases).
+
+```bash
+# Run the end-to-end tests against the published version. The tests that are about the local build only are skipped.
+npm run e2e:baseline -- react-vite
+# Same, with other versions, and only some of the tests
+npm run e2e:baseline -- react-vite 9.0.29 3.0.29 persistence
+
+# Record screenshots of pages with the published version, then compare the local build with them
+npm run e2e:visual-compat -- react-vite
+# Allow no difference at all, instead of 0.2% of the pixels
+VISUAL_TOLERANCE=0 npm run e2e:visual-compat -- react-vite
+```
+
+A test that passes with the published version but fails with your build is a change in behavior, so it is worth a look. A test that fails with the published version is a test that describes something new, mark it with `test.skip(process.env.BASELINE === '1', '...')`. The same checks can be run in CI for all examples at once with the "compat" workflow on GitHub Actions (run it by hand and give it the versions to compare with). The screenshots are recorded in `e2e-visual-baseline`, which git ignores. Differences are written to `e2e-results/artifacts`, as the expected page, the actual page and an image of the difference.
 
 ## Build
 

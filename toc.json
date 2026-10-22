@@ -12,6 +12,11 @@
     },
     {
       "type": "item",
+      "title": "Changelog",
+      "uri": "CHANGELOG.md"
+    },
+    {
+      "type": "item",
       "title": "Elements vs Elements Dev Portal",
       "uri": "docs/elements-vs-dev-portal.md"
     },
