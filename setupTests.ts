@@ -16,6 +16,7 @@ window.ResizeObserver = ResizeObserver;
 window.IntersectionObserver = class implements IntersectionObserver {
   readonly root!: Element | null;
   readonly rootMargin!: string;
+  readonly scrollMargin!: string;
   readonly thresholds!: ReadonlyArray<number>;
 
   public readonly observe = vi.fn();

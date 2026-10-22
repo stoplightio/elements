@@ -2,7 +2,6 @@
 import '@testing-library/jest-dom';
 
 import { act, render } from '@testing-library/react';
-import * as React from 'react';
 import { BrowserRouter, HashRouter } from 'react-router';
 
 import { RouterTypeContext } from '../../context/RouterType';

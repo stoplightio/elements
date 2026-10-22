@@ -1,0 +1,20 @@
+{
+  // What the tsconfig.json of each package leaves out of `npm run type-check`: tests, fixtures, stories, test setup and
+  // the configuration of the build tools
+  "extends": "./tsconfig.json",
+  "compilerOptions": { "noEmit": true, "declaration": false },
+  "include": [
+    "packages/*/src/react-19-compat.d.ts",
+    "packages/*/src/**/__tests__/**/*",
+    "packages/*/src/**/__fixtures__/**/*",
+    "packages/*/src/**/__stories__/**/*",
+    "packages/*/vite*.mts",
+    "packages/*/vitest.config.mts",
+    "packages/*/.storybook/*.ts",
+    ".storybook/*.ts",
+    "test-utils",
+    "setupTests.ts",
+    "vite*.mts"
+  ],
+  "exclude": ["**/node_modules", "**/dist"]
+}

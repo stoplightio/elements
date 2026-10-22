@@ -9,6 +9,9 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=22.22.0"
+  },
   "workspaces": [
     "demo",
     "packages/*"
@@ -63,11 +66,12 @@
   "scripts": {
     "build": "npm run build -w @stoplight/elements-core && npm run build -w @stoplight/elements && npm run build -w @stoplight/elements-dev-portal",
     "build.docs": "npm run build.docs -w @stoplight/elements",
-    "postbuild": "npm run test.packaging -w @stoplight/elements && npm run test.packaging -w @stoplight/elements-core && npm run test.packaging -w @stoplight/elements-dev-portal",
+    "postbuild": "npm run test.packaging -w @stoplight/elements && npm run test.packaging -w @stoplight/elements-core && npm run test.packaging -w @stoplight/elements-dev-portal && npm run test.packaging.types",
+    "test.packaging.types": "tsc -p scripts/consumer-types",
     "lint": "eslint 'packages/*/src/**/*.{ts,tsx}'",
     "version": "lerna version --no-push",
     "release": "lerna publish from-package --yes --registry https://registry.npmjs.org --loglevel silly",
-    "type-check": "npm run type-check --workspaces --if-present && tsc -p e2e",
+    "type-check": "npm run type-check --workspaces --if-present && tsc -p e2e && tsc -p tsconfig.check.json",
     "test": "npm test -w @stoplight/elements && npm test -w @stoplight/elements-core && npm test -w @stoplight/elements-dev-portal -- --passWithNoTests",
     "test.prod": "npm run test.prod -w @stoplight/elements && npm run test.prod -w @stoplight/elements-core && npm run test.prod -w @stoplight/elements-dev-portal -- --passWithNoTests",
     "prepublishOnly": "npm run build",

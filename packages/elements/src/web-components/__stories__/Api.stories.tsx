@@ -1,11 +1,12 @@
 import '../index';
 
 import { parse } from '@stoplight/yaml';
+import type { StoryFn } from '@storybook/react-vite';
 import React from 'react';
 
 import { zoomApiYaml } from '../../__fixtures__/api-descriptions/zoomApiYaml';
 
-declare global {
+declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       'elements-api': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
@@ -13,7 +14,7 @@ declare global {
   }
 }
 
-const Template = (props: any) => <elements-api {...props} />;
+const Template: StoryFn = (props: any) => <elements-api {...props} />;
 
 export default {
   title: 'web-components/API',
@@ -34,7 +35,7 @@ TodosAPI.args = {
   apiDescriptionUrl: 'https://raw.githubusercontent.com/stoplightio/elements/main/demo/src/reference/todo.v1.yaml',
 };
 
-export const TodosAPIWithFixHeight = (props: any) => (
+export const TodosAPIWithFixHeight: StoryFn = (props: any) => (
   <div style={{ height: 400 }}>
     <elements-api {...props} />
   </div>

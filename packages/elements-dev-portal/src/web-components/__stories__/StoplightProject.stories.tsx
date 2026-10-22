@@ -3,7 +3,7 @@ import '../index';
 import { StoryFn } from '@storybook/react-vite';
 import React from 'react';
 
-declare global {
+declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       'elements-stoplight-project': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;

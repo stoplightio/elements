@@ -26,8 +26,12 @@ you need to do.
   `status` is `'pending'` instead of `'loading'`.
 - **`PersistenceContextProvider`** of `@stoplight/elements-core` is the `Provider` of jotai 3. It takes a `store`
   prop instead of the `initialValues` and `scope` props of jotai 1.
-- **Node.js 22.22 or later** (the `engines` of the packages) for build tooling and server-side rendering.
-- **The JavaScript that Elements ships targets ES2020** instead of ES2015. This applies to the CommonJS and ESM builds
+- **ES modules only.** The packages no longer ship a CommonJS build, and `dist/index.mjs` and `dist/index.esm.js` are
+  gone. `require()` works on Node 22.12 and later; TypeScript in CommonJS mode with `node16` or
+  `nodenext` module resolution needs 5.8 or later; Jest needs its native ES module mode. See
+  [ES modules only](docs/guides/migrating-to-v10.md#es-modules-only).
+- **Node.js 22.22 or later** for build tooling and server-side rendering, which is what React Router 8 requires. The packages don't set `engines` themselves, but React Router 8 does (`>=22.22.0`), so a package manager that enforces `engines` for dependencies (Yarn Classic, or npm with `engine-strict`) refuses older versions anyway.
+- **The JavaScript that Elements ships targets ES2020** instead of ES2015. This applies to the ES module build
   and to the web component bundles, so browsers need to support ES2020 (Chrome and Edge 80, Firefox 74, Safari 13.1).
 - **TypeScript:** the type declarations use `React.JSX` and the types of React 19. `withStyles`,
   `withMosaicProvider`, `withQueryClientProvider` and `withPersistenceBoundary` only accept components whose props are
@@ -35,10 +39,14 @@ you need to do.
 
 ### Changed
 
-- The `exports` of the packages have a `types` condition, so TypeScript finds the declarations when importing the ESM
-  build.
+- The `exports` of the packages have a `types` condition, and the relative imports in the type declarations name the
+  files they import, so TypeScript finds the declarations with `node16`, `nodenext` and `bundler` module resolution.
 - The web component bundles (`web-components.min.js`) are built with Vite and are still self-contained, they now
-  include React 19 and React Router 8. `web-components.min.js.LICENSE.txt` is no longer part of the packages.
+  include React 19 and React Router 8.
+- `web-components.min.js.LICENSE.txt` now lists every package that is bundled into the web components with its license
+  text, instead of the license comments that were found in their code. The packages that bundle dependencies into
+  `index.js` (Font Awesome icons, `use-debounce`) have an `index.js.LICENSE.txt` in the same way, and both files are
+  mentioned in a comment at the top of the bundle they belong to.
 - `@stoplight/elements-dev-portal` and `@stoplight/elements-core` use jotai 3 and TanStack Query 5.
 
 ### Security

@@ -2,7 +2,6 @@ import '@testing-library/jest-dom';
 
 import { fetchMock } from '@test-utils/fetchMock';
 import { renderHook, waitFor } from '@testing-library/react';
-import * as React from 'react';
 
 import { DevPortalProvider } from '../../components/DevPortalProvider';
 import { useGetBranches } from '../useGetBranches';

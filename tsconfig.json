@@ -15,6 +15,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUncheckedSideEffectImports": false,
+    "allowImportingTsExtensions": true,
     "isolatedModules": true,
 
     "esModuleInterop": true,

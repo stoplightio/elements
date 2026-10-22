@@ -19,7 +19,8 @@ Components, props and web component attributes are the same, and so is how the d
 5. If you use `PersistenceContextProvider` or the data hooks of `@stoplight/elements-dev-portal`: see [below](#if-you-use-the-lower-level-apis).
 6. Use Node.js 22.22 or later for your build tooling and server-side rendering.
 7. If you use npm: add the [override for `use-resize-observer`](#if-you-use-npm-avoid-a-second-copy-of-react).
-8. Install `@stoplight/elements` 10 and `@stoplight/elements-dev-portal` 4.
+8. If you `require()` Elements, test with Jest, or compile CommonJS with TypeScript older than 5.8: see [ES modules only](#es-modules-only).
+9. Install `@stoplight/elements` 10 and `@stoplight/elements-dev-portal` 4.
 
 If you can't move to React 19 yet, stay on `@stoplight/elements` 9.x and `@stoplight/elements-dev-portal` 3.x.
 
@@ -32,6 +33,7 @@ If you can't move to React 19 yet, stay on `@stoplight/elements` 9.x and `@stopl
 | React Router (if you bring your own router) | `react-router-dom` 6 | `react-router` 8 |
 | React Query (if you bring your own client) | `react-query` 3 | `@tanstack/react-query` 5 |
 | Browsers | ES2015 | ES2020: Chrome and Edge 80, Firefox 74, Safari 13.1 |
+| Module format | CommonJS and ES modules | [ES modules only](#es-modules-only) |
 
 ## Who needs to do what
 
@@ -42,7 +44,7 @@ Nothing about React or React Router. The web component bundle ships its own copy
 Two things can still affect you:
 
 - **Browsers.** The bundle uses ES2020 syntax (such as `?.` and `??`). It doesn't run in browsers older than the ones in the table above.
-- **Node.js.** Your build tooling needs Node.js 22.22 or later if you build your app with the packages installed from npm.
+- **Node.js.** Your build tooling needs Node.js 22.22 or later if you build your app with the packages installed from npm. The packages don't set `engines` themselves, but React Router 8 does (`>=22.22.0`). Package managers that enforce `engines` for dependencies (npm with `engine-strict`, Yarn Classic) refuse older versions because of that.
 
 ### Using the React components
 
@@ -151,9 +153,20 @@ Run `npm ls react react-dom` to check that there is a single version of each. Ya
 
   Remove it once Mosaic publishes React 19 types.
 
-### Bundlers
+### ES modules only
 
-React Router 8 is ESM-only. Modern bundlers (Vite, webpack 5, esbuild) handle this without configuration. If you `require()` Elements from CommonJS, you need Node 22.12 or later.
+The packages are ES modules only: there is no CommonJS build any more (and `dist/index.mjs` and `dist/index.esm.js` are gone, import from the package name). This follows the dependencies that Elements now uses (React Router 8 and jotai 3 are ES modules only too), and it avoids loading two copies of Elements, with two sets of contexts, when a project mixes `require` and `import`.
+
+| Where | What it means |
+| --- | --- |
+| Bundlers (Vite, webpack 5, esbuild, Angular CLI, Next.js) | Nothing to do. |
+| Node.js with `import` | Nothing to do. |
+| Node.js with `require()` | Works on Node 22.12 and later. Earlier versions fail with `ERR_REQUIRE_ESM`; use `await import('@stoplight/elements')` there. |
+| TypeScript with `module` set to `node16` or `nodenext` in a CommonJS project | Needs TypeScript 5.8 or later. Earlier versions report TS1479 ("The current file is a CommonJS module whose imports will produce 'require' calls"). Use `await import()` or move to ES modules. |
+| TypeScript with `moduleResolution` set to `bundler`, or to `node16`/`nodenext` in an ES module project | Nothing to do. |
+| Jest (CommonJS mode, the default) | Fails with "Must use import to load ES Module", and transforming Elements with `babel-jest` doesn't help, because its dependencies declare `"type": "module"`. Run Jest in its [native ES module mode](https://jestjs.io/docs/ecmascript-modules) (`NODE_OPTIONS=--experimental-vm-modules`, with your tests written as ES modules), or use Vitest, which needs no setup. |
+
+### Bundlers
 
 Elements ships ES2020. If your bundler transpiles `node_modules` for older browsers than that, add the `@stoplight/*` packages to the list of what it transpiles (for example `transpilePackages` in Next.js).
 
@@ -184,7 +197,9 @@ We run the same end-to-end tests against the published Elements 9 and against El
 | `Cannot read properties of undefined (reading 'ReactCurrentBatchConfig')` | A second copy of React, see [If you use npm](#if-you-use-npm-avoid-a-second-copy-of-react). |
 | `global is not defined` or `process is not defined` in a Vite app | Add the Node.js polyfills, see [the Vite section of the React guide](../getting-started/elements/react.md#vite). |
 | Clicking inside Elements changes the address bar but not your app's navigation | Your app and Elements don't share one copy of React Router 8, see [If you provide your own router](#if-you-provide-your-own-router). |
-| `ERR_REQUIRE_ESM` | `require()` of an ES module needs Node 22.12 or later. |
+| `ERR_REQUIRE_ESM` | `require()` of an ES module needs Node 22.12 or later, see [ES modules only](#es-modules-only). |
+| TS1479 "The current file is a CommonJS module whose imports will produce 'require' calls" | TypeScript older than 5.8 with `module` set to `node16` or `nodenext` in a CommonJS project, see [ES modules only](#es-modules-only). |
+| "Must use import to load ES Module" in Jest | Jest runs in CommonJS mode, see [ES modules only](#es-modules-only). |
 | A `SyntaxError` ("Unexpected token") when the script loads in an older browser | Elements ships ES2020, see [Bundlers](#bundlers) and the browsers in [Requirements](#requirements). |
 | Elements creates its own query client although your app has one | Your `QueryClientProvider` comes from `react-query` 3. Move to `@tanstack/react-query` 5. |
 

@@ -32,11 +32,11 @@ describe('isRequired', () => {
     tree.populate();
     const root = tree.root.children[0];
     if (!isRegularNode(root)) {
-      fail('the schema should have been parsed so that this is a RegularNode');
+      expect.unreachable('the schema should have been parsed so that this is a RegularNode');
     }
 
     if (!root.children) {
-      fail('the combined properties in the allOf should be the children of this RegularNode');
+      expect.unreachable('the combined properties in the allOf should be the children of this RegularNode');
     }
 
     const children = root.children ?? [];

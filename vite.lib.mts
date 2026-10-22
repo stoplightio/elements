@@ -4,8 +4,10 @@ import { resolve } from 'node:path';
 import { optimizeLodashImports } from '@optimize-lodash/rollup-plugin';
 import { defineConfig } from 'vite';
 
+import { thirdPartyLicenses } from './vite.licenses.mts';
+
 /**
- * Builds `src/index.ts` of a package into `dist/` as CommonJS (`index.js`) and ESM (`index.mjs`).
+ * Builds `src/index.ts` of a package into `dist/` as an ES module (`index.js`). The packages are ESM-only.
  *
  * Dependencies and peer dependencies are external, unless listed in `rollup.bundleDeps` of the package's package.json.
  * Type declarations are emitted separately by `tsc` (see the `build.react` script of each package).
@@ -21,7 +23,7 @@ export const createLibraryConfig = (packageDir: string) => {
     root: packageDir,
     // the build output is a library, not an app: don't copy a `public` folder into it
     publicDir: false,
-    plugins: [optimizeLodashImports()],
+    plugins: [optimizeLodashImports(), thirdPartyLicenses('index.js')],
     build: {
       target: 'es2020',
       minify: false,
@@ -29,8 +31,8 @@ export const createLibraryConfig = (packageDir: string) => {
       emptyOutDir: true,
       lib: {
         entry: resolve(packageDir, 'src/index.ts'),
-        formats: ['cjs', 'es'],
-        fileName: format => (format === 'es' ? 'index.mjs' : 'index.js'),
+        formats: ['es'],
+        fileName: () => 'index.js',
       },
       rolldownOptions: {
         external: id => matches(id, dependencies) && !matches(id, bundleDeps),

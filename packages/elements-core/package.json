@@ -14,21 +14,19 @@
     "url": "https://github.com/stoplightio/elements"
   },
   "license": "Apache-2.0",
-  "type": "commonjs",
+  "type": "module",
   "main": "./dist/index.js",
-  "module": "./dist/index.esm.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
-      "require": "./dist/index.js",
-      "import": "./dist/index.mjs"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     }
   },
   "files": [
     "**/*"
   ],
-  "engines": {
-    "node": ">=22.22.0"
-  },
   "scripts": {
     "build": "npm run build.react",
     "postbuild": "npm run build.styles",
@@ -41,7 +39,7 @@
     "test.prod": "vitest run --coverage --maxWorkers=2",
     "test.update": "vitest run --update",
     "test.watch": "vitest",
-    "test.packaging": "node --input-type=commonjs -e \"require('./dist/index.js')\" && node --input-type=module -e \"import './dist/index.mjs'\"",
+    "test.packaging": "node --input-type=module -e \"import './dist/index.js'\" && node -e \"require('./dist/index.js')\"",
     "type-check": "tsc --noEmit"
   },
   "peerDependencies": {

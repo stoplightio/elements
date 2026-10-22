@@ -3,7 +3,6 @@ import '@testing-library/jest-dom';
 import { screen } from '@testing-library/dom';
 import { cleanup, render, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import * as React from 'react';
 
 import { withPersistenceBoundary } from '../../../context/Persistence';
 import { withMosaicProvider } from '../../../hoc/withMosaicProvider';

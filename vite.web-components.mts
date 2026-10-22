@@ -3,6 +3,8 @@ import { resolve } from 'node:path';
 
 import { defineConfig } from 'vite';
 
+import { thirdPartyLicenses } from './vite.licenses.mts';
+
 const ignoredWarnings = new Set(['MODULE_LEVEL_DIRECTIVE', 'EMPTY_IMPORT_META', 'COMMONJS_VARIABLE_IN_ESM']);
 
 const require = createRequire(import.meta.url);
@@ -17,6 +19,7 @@ export const createWebComponentsConfig = (packageDir: string) =>
   defineConfig({
     root: packageDir,
     publicDir: false,
+    plugins: [thirdPartyLicenses('web-components.min.js')],
     resolve: {
       // `@stoplight/elements-core` and friends resolve to their sources, see `paths` in the root tsconfig.json
       tsconfigPaths: true,
@@ -37,7 +40,7 @@ export const createWebComponentsConfig = (packageDir: string) =>
         onwarn(warning, defaultHandler) {
           // Known to be harmless in this bundle: "use client" in @tanstack/react-query, an `import.meta.hot` guard in
           // react-router and a `typeof module` check in @jsdevtools/ono
-          if (ignoredWarnings.has(warning.code)) return;
+          if (warning.code && ignoredWarnings.has(warning.code)) return;
           defaultHandler(warning);
         },
         transform: {

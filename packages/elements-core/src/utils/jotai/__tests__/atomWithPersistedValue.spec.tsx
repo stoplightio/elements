@@ -1,6 +1,5 @@
 import { act, render, renderHook, screen } from '@testing-library/react';
 import { atom, useAtom } from 'jotai';
-import * as React from 'react';
 
 import { PersistenceContextProvider } from '../../../context/Persistence';
 import { atomWithPersistedValue } from '../atomWithPersistedValue';

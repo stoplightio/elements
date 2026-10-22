@@ -33,7 +33,7 @@ Available as React Components, or Web Components, you can use Elements all toget
   it, that has to be [React Router](https://reactrouter.com) 8.
 - **Web Components**: no framework, they come with everything they need. Browsers that support ES2020 (Chrome and Edge
   80, Firefox 74, Safari 13.1 and later).
-- **Build tooling and server-side rendering**: Node.js 22.22 or later.
+- **Build tooling and server-side rendering**: Node.js 22.22 or later (React Router 8 sets it as `engines`).
 
 Need to stay on an older React? Use `@stoplight/elements` 9.x and `@stoplight/elements-dev-portal` 3.x.
 
