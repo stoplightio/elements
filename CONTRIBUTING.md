@@ -243,15 +243,31 @@ Elements is used in the Stoplight Platform, as well as in open source projects. 
 
 ## Release Elements
 
+**Merging to `main` can publish to npm.** The `release` job of the [test-and-release workflow](.github/workflows/test-and-release.yml) runs on every push to `main`, after the other jobs pass. It runs `npm run release` ([scripts/release.mjs](scripts/release.mjs)), which publishes every package whose version in `package.json` is not on npm yet. A pull request that changes no version publishes nothing, which is why a feature branch must never change the version of a package. Versions change only in a release pull request, made as described below.
+
+`node scripts/release.mjs --dry-run` lists what the job would publish, without publishing. A prerelease version (such as `10.0.0-next.0`) is published with the dist-tag `next`, and a release version with `latest`. The script refuses to publish both kinds in one go.
+
 1. Make sure you are in the root directory of this repo and on the `main` branch.
 2. Pull all the latest changes.
 3. Create a new branch. The name doesn't matter, but here's an example: `chore/release`.
 4. Run `npm run version` (this runs `lerna version`, not `npm version`). You are asked a few questions.
     - Don't release `elements-demo`. You have to choose "Custom Version" and enter the same, old version by hand. Awkward, but it works.
-    - For other packages, choose the proposed version (patch or minor update) from the console. Remember to read the [versioning guidelines](#versioning-guidelines).
+    - For other packages, choose the proposed version (patch or minor update) from the console. Remember to read the [versioning guidelines](#versioning-guidelines). For a prerelease, choose "Custom Prerelease" and `next` (`10.0.0-next.0`).
 5. After the script gets finalized, a commit is created for you.
 6. *IMPORTANT*: If `elements-core` version was updated in `elements` and/or `elements-dev-portal`, the script has changed `~` sign to `^` in front of `elements-core` version. Change it back to `~` in both places manually and make a new commit. The commit message doesn't matter here; something like `fix: ^ to ~ for elements-core` is more than enough.
-7. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the release obeys the versioning guidelines.
+7. Run `node scripts/release.mjs --dry-run` and check that the packages, versions and dist-tag are the ones you mean to publish.
+8. Now make a push, create a PR and ask someone for a review. The purpose of the review is to make sure the release obeys the versioning guidelines. The packages are published when the PR is merged.
+
+### A release that changes the major version
+
+Before the release pull request is merged:
+
+- Run the "compat" workflow (see [Compare a build with a published version](#compare-a-build-with-a-published-version)) and look at every difference.
+- Run `npm run build` and `npm run test.consumer -- --plain`. A release that npm users can't install should not become `latest`.
+- Update what the version bump leaves behind, because `lerna version` only changes the packages in `packages/`: the ranges of `@stoplight/elements` and `@stoplight/elements-dev-portal` in `demo/package.json` and in the `package.json` of each folder in `examples/`, and the unpkg URLs in the README, `docs/` and `examples/bootstrap`, which should name the major version (`https://unpkg.com/@stoplight/elements@10/web-components.min.js`), so that a later major release doesn't change pages that copied them.
+- Update `CHANGELOG.md`, and revert any change that a build made to `packages/elements-dev-portal/src/version.ts` (`npm run build` writes the version of the package into it).
+
+Publish a prerelease first, so that the release can be tried before anybody gets it by default. Make a release pull request with `-next.0` versions and, after it is merged, install `@stoplight/elements@next` in a real project. When it works, make a second release pull request with the release versions. If a release has to be moved or undone, that is done on npm: `npm dist-tag add @stoplight/elements@<version> latest` (or `npm dist-tag rm`) for each package, by someone with publish rights.
 
 ## Versioning Guidelines
 

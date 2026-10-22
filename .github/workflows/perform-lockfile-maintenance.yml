@@ -7,7 +7,7 @@ jobs:
   lockfile-maintenance:
     runs-on: ubuntu-latest
     container:
-      image: node:lts
+      image: node:24
     steps:
-    - uses: actions/checkout@v4.1.0
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - run: weekly_lockfile_maintenance.sh

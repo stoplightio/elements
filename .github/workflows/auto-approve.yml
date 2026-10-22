@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v1.1.1
+        uses: dependabot/fetch-metadata@a3e5f86ae9f2f49b441498973ddec20035d326b8 # v1.1.1
         with:
           github-token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Approve a PR

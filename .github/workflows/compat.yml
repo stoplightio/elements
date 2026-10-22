@@ -33,7 +33,7 @@ jobs:
         - example: react-vite
           react: '18'
     steps:
-    - uses: actions/checkout@v4.1.0
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - run: npm ci
     - run: npm run build
     - name: Install Playwright browser
@@ -45,7 +45,7 @@ jobs:
     - name: Appearance - screenshots against the published version
       if: matrix.react == '19'
       run: npm run e2e:visual-compat -- ${{ matrix.example }} '${{ inputs.elements-version }}' '${{ inputs.dev-portal-version }}'
-    - uses: actions/upload-artifact@v4.1.0
+    - uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       if: always()
       with:
         name: compat-${{ matrix.example }}-react-${{ matrix.react }}-results

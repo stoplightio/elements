@@ -71,7 +71,7 @@
     "test.consumer": "node scripts/test-consumer-install.mjs",
     "lint": "eslint .",
     "version": "lerna version --no-push",
-    "release": "lerna publish from-package --yes --registry https://registry.npmjs.org --loglevel silly",
+    "release": "node scripts/release.mjs",
     "type-check": "npm run type-check --workspaces --if-present && tsc -p e2e && tsc -p tsconfig.check.json",
     "test": "npm test -w @stoplight/elements && npm test -w @stoplight/elements-core && npm test -w @stoplight/elements-dev-portal -- --passWithNoTests",
     "test.prod": "npm run test.prod -w @stoplight/elements && npm run test.prod -w @stoplight/elements-core && npm run test.prod -w @stoplight/elements-dev-portal -- --passWithNoTests",

@@ -11,23 +11,23 @@ jobs:
   lint-and-check:
     runs-on: ubuntu-latest
     container:
-      image: node:lts
+      image: node:24
     steps:
-    - uses: actions/checkout@v4.1.0
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - run: npm ci
     - run: npm run type-check
     - run: npm run lint
     - run: npm run test.prod
-    - uses: actions/upload-artifact@v4.1.0
+    - uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       with:
         name: test-results
         path: test-results
   build:
     runs-on: ubuntu-latest
     container:
-      image: node:lts
+      image: node:24
     steps:
-    - uses: actions/checkout@v4.1.0
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - run: npm ci
     - run: npm run build
     - name: Install the built packages like an app does, with the overrides the migration guide asks for
@@ -35,7 +35,7 @@ jobs:
     - name: Same without the overrides (fails until Mosaic and the viewers are released with fixes)
       run: npm run test.consumer -- --plain
       continue-on-error: true
-    - uses: actions/upload-artifact@v4.1.0
+    - uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       with:
         name: build-output
         path: |
@@ -58,9 +58,9 @@ jobs:
   build-docs:
     runs-on: ubuntu-latest
     container:
-      image: node:lts
+      image: node:24
     steps:
-    - uses: actions/checkout@v4.1.0
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - run: npm ci
     - run: npm run build.docs
   e2e-react-vite:
@@ -74,7 +74,7 @@ jobs:
     env:
       example-name: react-vite
     steps:
-    - uses: actions/download-artifact@v4.1.3
+    - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85 # v4.1.3
       with:
         name: build-output
         path: ./
@@ -92,7 +92,7 @@ jobs:
       run: npx playwright install --with-deps chromium firefox webkit
     - name: Run E2E checks
       run: npm run e2e:run:${{ env.example-name }}
-    - uses: actions/upload-artifact@v4.1.0
+    - uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       if: always()
       with:
         name: e2e-react-vite-results
@@ -108,7 +108,7 @@ jobs:
     env:
       example-name: angular
     steps:
-    - uses: actions/download-artifact@v4.1.3
+    - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85 # v4.1.3
       with:
         name: build-output
         path: ./
@@ -126,7 +126,7 @@ jobs:
       run: npx playwright install --with-deps chromium firefox webkit
     - name: Run E2E checks
       run: npm run e2e:run:${{ env.example-name }}
-    - uses: actions/upload-artifact@v4.1.0
+    - uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       if: always()
       with:
         name: e2e-angular-results
@@ -142,7 +142,7 @@ jobs:
     env:
       example-name: static-html
     steps:
-    - uses: actions/download-artifact@v4.1.3
+    - uses: actions/download-artifact@87c55149d96e628cc2ef7e6fc2aab372015aec85 # v4.1.3
       with:
         name: build-output
         path: ./
@@ -160,7 +160,7 @@ jobs:
       run: npx playwright install --with-deps chromium firefox webkit
     - name: Run E2E checks
       run: npm run e2e:run:${{ env.example-name }}
-    - uses: actions/upload-artifact@v4.1.0
+    - uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       if: always()
       with:
         name: e2e-static-html-results
@@ -169,7 +169,7 @@ jobs:
     if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     container:
-      image: node:lts
+      image: node:24
     needs:
     - lint-and-check
     - build
@@ -178,7 +178,7 @@ jobs:
     - e2e-static-html
     - e2e-angular
     steps:
-    - uses: actions/checkout@v4.1.0
+    - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - name: Configure Git safe directory
       run: git config --global --add safe.directory /__w/elements/elements
     - name: Install Dependencies
