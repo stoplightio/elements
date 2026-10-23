@@ -12,7 +12,9 @@ export const convertRequestToSample = async (
 
   try {
     const snippet = new HTTPSnippet(request);
-    let converted = await snippet.convert(language, library);
+    // Makes cURL use --data-binary, as --data strips newlines and null bytes from the uploaded file
+    const options = request.postData?.mimeType === 'application/octet-stream' ? { binary: true } : undefined;
+    let converted = await snippet.convert(language, library, options);
 
     if (Array.isArray(converted)) {
       converted = converted[0];
