@@ -73,7 +73,7 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
           )}
 
           <Box data-test="additional-info">
-            {(data.contact?.email || data.license || data.termsOfService) && (
+            {(data.contact?.email || data.contact?.url || data.license || data.termsOfService) && (
               <AdditionalInfo
                 id={data.id}
                 contact={data.contact}
