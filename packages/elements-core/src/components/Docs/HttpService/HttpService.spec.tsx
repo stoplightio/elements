@@ -317,6 +317,42 @@ describe('HttpService', () => {
       const title = screen.queryByRole('heading', { name: 'Additional Information' });
       expect(title).not.toBeInTheDocument();
     });
+
+    it('should render the panel in HttpService when contact has a url but no email', () => {
+      const modifiedData = {
+        ...httpService,
+        contact: { name: 'Support', url: 'https://stoplight.io' },
+        license: undefined,
+        termsOfService: undefined,
+      };
+
+      render(
+        <Router>
+          <HttpService data={modifiedData} />
+        </Router>,
+      );
+
+      const title = screen.getByRole('heading', { name: 'Additional Information' });
+      expect(title).toBeInTheDocument();
+    });
+
+    it('should not render the panel in HttpService when contact has neither email nor url', () => {
+      const modifiedData = {
+        ...httpService,
+        contact: { name: 'Support' },
+        license: undefined,
+        termsOfService: undefined,
+      };
+
+      render(
+        <Router>
+          <HttpService data={modifiedData} />
+        </Router>,
+      );
+
+      const title = screen.queryByRole('heading', { name: 'Additional Information' });
+      expect(title).not.toBeInTheDocument();
+    });
   });
 
   describe('export button', () => {
