@@ -11,6 +11,7 @@ import { MarkdownViewer } from '../../MarkdownViewer';
 import { PoweredByLink } from '../../PoweredByLink';
 import { DocsComponentProps } from '..';
 import { VersionBadge } from '../HttpOperation/Badges';
+import { NodeVendorExtensions } from '../NodeVendorExtensions';
 import { AdditionalInfo } from './AdditionalInfo';
 import { ExportButton } from './ExportButton';
 import { SecuritySchemes } from './SecuritySchemes';
@@ -90,6 +91,8 @@ const HttpServiceComponent = React.memo<HttpServiceProps>(
             <NodeAnnotation change={descriptionChanged} />
           </Box>
         )}
+
+        <NodeVendorExtensions data={data} />
       </Box>
     );
   },
