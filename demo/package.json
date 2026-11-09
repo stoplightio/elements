@@ -12,7 +12,7 @@
   "dependencies": {
     "@stoplight/elements": "^9.0.0",
     "@stoplight/elements-dev-portal": "^3.0.0",
-    "@stoplight/mosaic": "^1.53.5",
+    "@stoplight/mosaic": "^1.53.6",
     "history": "^5.0.0",
     "react": "19.3.1",
     "react-dom": "19.3.1",

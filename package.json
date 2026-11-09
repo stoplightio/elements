@@ -53,11 +53,6 @@
   },
   "overrides": {
     "@types/react": "19.3.0",
-    "@stoplight/react-error-boundary": "3.0.0",
-    "use-resize-observer": {
-      "react": "^19.0.0",
-      "react-dom": "^19.0.0"
-    },
     "npm": "11.19.1",
     "nx": {
       "undici": "^7.30.1"

@@ -30,11 +30,8 @@ jobs:
     - uses: actions/checkout@8ade135a41bc03ea155e62e844d188df1ea18608 # v4.1.0
     - run: npm ci
     - run: npm run build
-    - name: Install the built packages like an app does, with the overrides the migration guide asks for
+    - name: Install the built packages like an app does
       run: npm run test.consumer
-    - name: Same without the overrides (fails until Mosaic and the viewers are released with fixes)
-      run: npm run test.consumer -- --plain
-      continue-on-error: true
     - uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4.1.0
       with:
         name: build-output

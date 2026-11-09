@@ -18,7 +18,7 @@ Components, props and web component attributes are the same, and so is how the d
 4. If you share a React Query client with Elements: move to `@tanstack/react-query` 5.
 5. If you use `PersistenceContextProvider` or the data hooks of `@stoplight/elements-dev-portal`: see [below](#if-you-use-the-lower-level-apis).
 6. Use Node.js 22.22 or later for your build tooling and server-side rendering.
-7. If you use npm: add the [two overrides](#if-you-use-npm-add-two-overrides). Without them the packages fail to load.
+7. If you use npm: make sure your lockfile has the [current Mosaic and viewers](#if-you-use-npm-update-mosaic-and-the-viewers). Older versions make the packages fail to load.
 8. If you `require()` Elements, test with Jest, or compile CommonJS with TypeScript older than 5.8: see [ES modules only](#es-modules-only).
 9. Install `@stoplight/elements` 10 and `@stoplight/elements-dev-portal` 4.
 
@@ -109,32 +109,13 @@ See the [TanStack Query migration guide](https://tanstack.com/query/latest/docs/
 
 **Other exports.** `ReactRouterMarkdownLink` takes the `LinkProps` of React Router 8. The type parameter of `withStyles`, `withMosaicProvider`, `withQueryClientProvider` and `withPersistenceBoundary` is now constrained to object types (`T extends object`), as the props of a component are.
 
-### If you use npm: add two overrides
+### If you use npm: update Mosaic and the viewers
 
-**This is required with npm, not optional.** Two dependencies of Elements have not been updated for React 19 yet, and without the overrides below the packages don't even load.
-
-- `@stoplight/mosaic` depends on `use-resize-observer` 9, whose peer dependencies stop at React 18. npm installs peer dependencies automatically, so it adds nested copies of React DOM 18 next to it, and importing Elements fails with an error such as `Cannot read properties of undefined (reading 'ReactCurrentDispatcher')` or `... (reading 'ReactCurrentBatchConfig')`.
-- `@stoplight/markdown-viewer` and `@stoplight/json-schema-viewer` depend on `@stoplight/react-error-boundary` 2, which brings two copies of `@sentry/react` 6 (and its React 18 peer dependency). Elements itself uses version 3, which has no dependencies.
-
-Add both overrides to your `package.json`:
-
-```json
-{
-  "overrides": {
-    "use-resize-observer": {
-      "react": "^19.0.0",
-      "react-dom": "^19.0.0"
-    },
-    "@stoplight/react-error-boundary": "3.0.0"
-  }
-}
-```
+Use `@stoplight/mosaic` 1.53.6 or later, `@stoplight/json-schema-viewer` 4.16.5 or later and `@stoplight/markdown-viewer` 5.7.2 or later (Elements requires them, so a fresh install gets them). Earlier versions depend on `use-resize-observer` 9 and `@stoplight/react-error-boundary` 2, which bring a second copy of React DOM 18 and `@sentry/react` 6 with npm, and the packages then fail to load with React 19. If your lockfile pins older versions, update them.
 
 Run `npm ls react react-dom @sentry/react` to check that there is one version of React and React DOM, and no `@sentry/react`. `npm run test.consumer` in this repository does the same on a fresh install of the built packages, and it is part of our CI.
 
 Don't override `use-resize-observer` to version 10. It no longer has a default export, which Mosaic imports, so parts of the page fail at runtime.
-
-Yarn Classic doesn't install peer dependencies automatically, so the first problem doesn't happen there, and neither does it with npm and `legacy-peer-deps=true`. The Sentry packages are still installed, and these overrides were tested with npm only. They can go once new versions of Mosaic and the two viewers are released.
 
 ### Server-side rendering
 
@@ -202,7 +183,7 @@ We run the same end-to-end tests against the published Elements 9 and against El
 
 | What you see | Cause and fix |
 | --- | --- |
-| `Cannot read properties of undefined (reading 'ReactCurrentDispatcher')` or `(reading 'ReactCurrentBatchConfig')` | A second copy of React DOM, see [If you use npm](#if-you-use-npm-add-two-overrides). |
+| `Cannot read properties of undefined (reading 'ReactCurrentDispatcher')` or `(reading 'ReactCurrentBatchConfig')` | A second copy of React DOM, see [If you use npm](#if-you-use-npm-update-mosaic-and-the-viewers). |
 | `global is not defined` or `process is not defined` in a Vite app | Add the Node.js polyfills, see [the Vite section of the React guide](../getting-started/elements/react.md#vite). |
 | Clicking inside Elements changes the address bar but not your app's navigation | Your app and Elements don't share one copy of React Router 8, see [If you provide your own router](#if-you-provide-your-own-router). |
 | `ERR_REQUIRE_ESM` | `require()` of an ES module needs Node 22.12 or later, see [ES modules only](#es-modules-only). |

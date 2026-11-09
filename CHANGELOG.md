@@ -37,14 +37,6 @@ you need to do.
   `withMosaicProvider`, `withQueryClientProvider` and `withPersistenceBoundary` only accept components whose props are
   objects. `ReactRouterMarkdownLink` takes the `LinkProps` of React Router 8.
 
-### Known issues
-
-- **With npm, two overrides are required** until `@stoplight/mosaic`, `@stoplight/markdown-viewer` and
-  `@stoplight/json-schema-viewer` are released with fixes: without them npm installs a second copy of React DOM 18 and
-  two copies of `@sentry/react`, and the packages fail to load with React 19. See
-  [If you use npm](docs/guides/migrating-to-v10.md#if-you-use-npm-add-two-overrides). The web components are not
-  affected.
-
 ### Changed
 
 - The `exports` of the packages have a `types` condition, and the relative imports in the type declarations name the

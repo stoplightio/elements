@@ -160,7 +160,7 @@ npm run e2e:run:react-vite
 
 #### Check that an app can install the packages
 
-After `npm run build`, `npm run test.consumer` packs the built packages, installs them in a fresh temporary project with React 19, and checks that there is one copy of React and React DOM, that all three load, and that `API` renders without errors. It uses the overrides from [the migration guide](docs/guides/migrating-to-v10.md#if-you-use-npm-add-two-overrides), which npm users need until `@stoplight/mosaic`, `@stoplight/markdown-viewer` and `@stoplight/json-schema-viewer` are released with fixes. `npm run test.consumer -- --plain` runs the same checks without them. It fails today, and it is the way to find out that the overrides can go: when it passes, remove them from the guide, this script and the root `package.json`.
+After `npm run build`, `npm run test.consumer` packs the built packages, installs them in a fresh temporary project with React 19, and checks that there is one copy of React and React DOM, that all three load, and that `API` renders without errors.
 
 #### Run the Tests Manually
 

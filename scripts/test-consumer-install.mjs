@@ -1,14 +1,9 @@
 // Installs the packages the way an app does, from the tarballs that `npm pack` makes of the built `dist` folders, and
 // checks that they load and render with React 19:
 //
-//   npm run test.consumer              with the overrides that docs/guides/migrating-to-v10.md asks for
-//   npm run test.consumer -- --plain   without them, to see if they are still needed (see below)
+//   npm run test.consumer
 //
-// Needs a build (`npm run build`) and the network. The overrides are needed while @stoplight/mosaic depends on
-// use-resize-observer 9 (its peer dependencies stop at React 18, so npm adds a second copy of React DOM that crashes
-// with React 19) and while @stoplight/markdown-viewer and @stoplight/json-schema-viewer depend on
-// @stoplight/react-error-boundary 2 (which brings @sentry/react). Once those are released with fixes, `--plain` passes
-// and the overrides, and this flag, can go.
+// Needs a build (`npm run build`) and the network.
 import { execFileSync } from 'node:child_process';
 import { cpSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -16,7 +11,6 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const plain = process.argv.includes('--plain');
 const keep = process.argv.includes('--keep');
 
 const rootPackage = JSON.parse(readFileSync(join(root, 'package.json'), 'utf-8'));
@@ -31,7 +25,7 @@ const check = (ok, message) => {
 };
 
 try {
-  console.log(`Installing the packages in ${work}${plain ? ' without overrides' : ' with the documented overrides'}`);
+  console.log(`Installing the packages in ${work}`);
 
   const dependencies = { react, 'react-dom': react, jsdom: '^26.0.0' };
   for (const name of packages) {
@@ -44,13 +38,6 @@ try {
   }
 
   const manifest = { name: 'elements-consumer', private: true, type: 'module', dependencies };
-  if (!plain) {
-    // keep in sync with "If you use npm" in docs/guides/migrating-to-v10.md
-    manifest.overrides = {
-      'use-resize-observer': { react: '^19.0.0', 'react-dom': '^19.0.0' },
-      '@stoplight/react-error-boundary': '3.0.0',
-    };
-  }
   writeFileSync(join(work, 'package.json'), JSON.stringify(manifest, null, 2));
   execFileSync('npm', ['install', '--no-audit', '--no-fund', '--loglevel=error'], { cwd: work, stdio: 'inherit' });
 
@@ -113,9 +100,7 @@ try {
 }
 
 if (failures.length > 0) {
-  console.error(
-    `\n${failures.length} check(s) failed${plain ? ' (expected until Mosaic and the viewers are released with fixes)' : ''}`,
-  );
+  console.error(`\n${failures.length} check(s) failed`);
   process.exit(1);
 }
 console.log('\nAll checks passed');

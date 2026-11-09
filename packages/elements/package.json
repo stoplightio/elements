@@ -61,7 +61,7 @@
     "@stoplight/elements-core": "~9.0.29",
     "@stoplight/http-spec": "^7.1.0",
     "@stoplight/json": "^3.18.1",
-    "@stoplight/mosaic": "^1.53.5",
+    "@stoplight/mosaic": "^1.53.6",
     "@stoplight/types": "^14.1.1",
     "@stoplight/yaml": "^4.3.0",
     "@tanstack/react-query": "^5.104.0",
