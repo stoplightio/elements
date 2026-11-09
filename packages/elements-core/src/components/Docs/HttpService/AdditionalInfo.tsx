@@ -17,10 +17,10 @@ export const AdditionalInfo: React.FC<AdditionalInfoProps> = ({ id, termsOfServi
   const hasChanged = nodeHasChanged?.({ nodeId: id, attr: ['termsOfService', 'contact', 'license'] });
 
   const contactLink =
-    contact?.name && contact?.url
-      ? `[Contact ${contact.name}](${contact.url})`
-      : contact?.email
+    contact?.email
       ? `[Contact ${contact.name || contact.email}](mailto:${contact.email})`
+      : contact?.url
+      ? `[Contact ${contact.name || contact.url}](${contact.url})`
       : '';
 
   //use spdx to look up url for license identifier if available
