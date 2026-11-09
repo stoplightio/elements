@@ -318,6 +318,33 @@ describe('HttpService', () => {
       expect(title).not.toBeInTheDocument();
     });
 
+    it('should use the url as the link text when contact has a url but no name', () => {
+      const contact = { url: 'https://stoplight.io/contact-us/' };
+
+      render(<AdditionalInfo id="a" contact={contact} />);
+
+      const contactLink = screen.getByText('Contact https://stoplight.io/contact-us/');
+      expect(contactLink).toHaveAttribute('href', 'https://stoplight.io/contact-us/');
+    });
+
+    it('should use the email as the link text when contact has an email but no name', () => {
+      const contact = { email: 'developer@stoplight.io' };
+
+      render(<AdditionalInfo id="a" contact={contact} />);
+
+      const contactLink = screen.getByText('Contact developer@stoplight.io');
+      expect(contactLink).toHaveAttribute('href', 'mailto:developer@stoplight.io');
+    });
+
+    it('should prefer email over url when contact has both', () => {
+      const contact = { name: 'Developer', email: 'developer@stoplight.io', url: 'https://stoplight.io/contact-us/' };
+
+      render(<AdditionalInfo id="a" contact={contact} />);
+
+      const contactLink = screen.getByText('Contact Developer');
+      expect(contactLink).toHaveAttribute('href', 'mailto:developer@stoplight.io');
+    });
+
     it('should render the panel in HttpService when contact has a url but no email', () => {
       const modifiedData = {
         ...httpService,
