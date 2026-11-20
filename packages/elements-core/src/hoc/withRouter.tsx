@@ -2,6 +2,7 @@ import { DefaultComponentMapping } from '@stoplight/markdown-viewer';
 import * as React from 'react';
 import { Route, Routes, useInRouterContext } from 'react-router-dom';
 
+import { HashRouterSync } from '../components/HashRouterSync';
 import { LinkHeading } from '../components/LinkHeading';
 import { MarkdownComponentsProvider } from '../components/MarkdownViewer/CustomComponents/Provider';
 import { ReactRouterMarkdownLink } from '../components/MarkdownViewer/CustomComponents/ReactRouterLink';
@@ -48,6 +49,7 @@ export function withRouter<P extends RoutingProps>(
       return (
         <RouterTypeContext.Provider value={routerType}>
           <Router {...routerProps} key={basePath}>
+            {routerType === 'hash' && <HashRouterSync basePath={basePath} />}
             <InternalRoutes>
               <WrappedComponent {...props} outerRouter={false} />
             </InternalRoutes>
